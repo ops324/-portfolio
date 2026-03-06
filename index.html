@@ -3,105 +3,97 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>瀧本 哲也</title>
+  <title>滝本 哲也</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet" />
 </head>
 <body>
 
   <nav id="navbar">
-    <a href="#" class="nav-logo">瀧本 哲也</a>
+    <a href="#" class="nav-logo">滝本 哲也</a>
     <ul class="nav-links">
       <li><a href="#about">about</a></li>
-      <li><a href="#projects">projects</a></li>
+      <li><a href="#projects">works</a></li>
       <li><a href="#contact">contact</a></li>
     </ul>
   </nav>
 
+  <!-- Hero -->
   <section id="hero">
     <div class="hero-inner fade-in">
-      <p class="hero-sub">web developer &amp; designer</p>
-      <h1 class="hero-name">瀧本 哲也</h1>
+      <p class="hero-sub">Builder</p>
+      <h1 class="hero-name">滝本 哲也</h1>
       <p class="hero-desc">
-        ユーザーに価値を届けるプロダクトづくりに情熱を持つ開発者。<br>
-        デザインと技術を組み合わせ、シンプルで美しい体験をつくります。
+        アイデアをプロダクトに変え、事業として育てることを探求しています。<br>
+        ユーザーに価値を届けるものづくりに情熱を持っています。
       </p>
     </div>
   </section>
 
+  <!-- About -->
   <section id="about">
     <div class="about-inner reveal">
       <div class="about-label">about</div>
       <div class="about-body">
         <p>
-          Webの可能性を追求し、デザインと技術を組み合わせて実用的なプロダクトを開発しています。
-          ユーザー体験を最優先に考え、シンプルで美しいインターフェースを追求しています。
+          気になったことはすぐ試す。そのくり返しからプロダクトが生まれると思っています。
+          使いやすさと美しさにはこだわります。
         </p>
         <p>
-          趣味はプログラミング・読書・カメラ。
-          新しい技術のキャッチアップを日々欠かさず行っています。
+          趣味は探索・エンタメ鑑賞・新技術のキャッチアップ。
         </p>
-        <div class="skills">
-          <span>HTML / CSS</span>
-          <span>JavaScript</span>
-          <span>React</span>
-          <span>Python</span>
-          <span>Figma</span>
-        </div>
       </div>
     </div>
   </section>
 
+  <!-- Projects -->
   <section id="projects">
     <div class="projects-header reveal">
-      <div class="projects-label">projects</div>
+      <span class="section-label">works</span>
     </div>
-    <div class="projects-grid">
 
-      <article class="project-card reveal">
-        <div class="project-img project-img-1">
-          <div class="project-caption">
-            <h2>プロジェクト名 1</h2>
-            <p>React &middot; TypeScript &middot; Firebase</p>
-          </div>
-        </div>
-        <div class="project-text">
-          <p>Webアプリケーションの説明をここに記述します。使用した技術や工夫した点を簡潔に紹介します。</p>
-          <a href="#" class="project-link">view project &rarr;</a>
+    <div class="works-grid">
+      <article class="work-card reveal">
+        <div class="work-thumb work-thumb-1"></div>
+        <div class="work-info">
+          <span class="work-cat">UI Design</span>
+          <h2 class="work-title">タスク管理アプリ</h2>
+          <p class="work-desc">タスクの優先度を空間的な距離で表し、直感的に重要度を把握できるインターフェース。余白を意識的に使い、思考の整理をアプリが自然にサポートする体験を実現。</p>
         </div>
       </article>
 
-      <article class="project-card reveal">
-        <div class="project-img project-img-2">
-          <div class="project-caption">
-            <h2>プロジェクト名 2</h2>
-            <p>Next.js &middot; CSS Modules &middot; Vercel</p>
-          </div>
-        </div>
-        <div class="project-text">
-          <p>Webアプリケーションの説明をここに記述します。使用した技術や工夫した点を簡潔に紹介します。</p>
-          <a href="#" class="project-link">view project &rarr;</a>
+      <article class="work-card reveal">
+        <div class="work-thumb work-thumb-2"></div>
+        <div class="work-info">
+          <span class="work-cat">UI Design</span>
+          <h2 class="work-title">読書記録アプリ</h2>
+          <p class="work-desc">読んだ本を記録し、感想や引用を管理するWebアプリケーション。本の世界観を画面上に再現し、静寂のインターフェースを目指した。</p>
         </div>
       </article>
 
-      <article class="project-card reveal">
-        <div class="project-img project-img-3">
-          <div class="project-caption">
-            <h2>プロジェクト名 3</h2>
-            <p>Python &middot; FastAPI &middot; PostgreSQL</p>
-          </div>
-        </div>
-        <div class="project-text">
-          <p>Webアプリケーションの説明をここに記述します。使用した技術や工夫した点を簡潔に紹介します。</p>
-          <a href="#" class="project-link">view project &rarr;</a>
+      <article class="work-card reveal">
+        <div class="work-thumb work-thumb-3"></div>
+        <div class="work-info">
+          <span class="work-cat">Web Development</span>
+          <h2 class="work-title">ポートフォリオサイト</h2>
+          <p class="work-desc">シンプルで品格のあるデザインを通じて、開発者としての姿勢を表現。余白と活字の関係性を丁寧に設計し、訪れる人に静かな印象を与えることを目指した。</p>
         </div>
       </article>
 
+      <article class="work-card reveal">
+        <div class="work-thumb work-thumb-4"></div>
+        <div class="work-info">
+          <span class="work-cat">Web Development</span>
+          <h2 class="work-title">データ可視化ダッシュボード</h2>
+          <p class="work-desc">大量のデータを直感的に理解できるダッシュボード。複雑な情報を視覚的に整理し、認知負荷を最小化した直感的な設計。</p>
+        </div>
+      </article>
     </div>
   </section>
 
+  <!-- Contact -->
   <section id="contact">
     <div class="contact-inner reveal">
       <div class="contact-label">contact</div>
@@ -117,7 +109,7 @@
   </section>
 
   <footer>
-    <p>&copy; 2026 瀧本 哲也</p>
+    <p>&copy; 2026 滝本 哲也</p>
   </footer>
 
   <script src="script.js"></script>
