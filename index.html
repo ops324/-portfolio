@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">Portfolio</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button class="hamburger" aria-label="メニュー">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero / About -->
+  <section id="hero">
+    <div class="hero-content fade-in">
+      <p class="hero-greeting">こんにちは、</p>
+      <h1 class="hero-name">瀧本 哲也<span class="accent">.</span></h1>
+      <p class="hero-title">Web Developer &amp; Designer</p>
+      <p class="hero-desc">
+        ユーザーに価値を届けるプロダクトづくりに情熱を持つ開発者です。<br />
+        フロントエンドからバックエンドまで幅広く対応します。
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">作品を見る</a>
+        <a href="#contact" class="btn btn-outline">連絡する</a>
+      </div>
+    </div>
+    <div class="hero-visual fade-in delay-1">
+      <div class="avatar-ring">
+        <div class="avatar-placeholder">TT</div>
+      </div>
+      <div class="blob"></div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="section-inner">
+      <h2 class="section-title reveal">About <span class="accent">Me</span></h2>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>
+            Webの可能性を追求し、デザインと技術を組み合わせて実用的なプロダクトを開発しています。
+            ユーザー体験を最優先に考え、シンプルで美しいインターフェースを追求しています。
+          </p>
+          <p>
+            趣味はプログラミング・読書・カメラです。
+            新しい技術のキャッチアップを日々欠かさず行っています。
+          </p>
+        </div>
+        <div class="skills reveal">
+          <h3>Skills</h3>
+          <ul class="skill-list">
+            <li>
+              <span class="skill-name">HTML / CSS</span>
+              <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+            </li>
+            <li>
+              <span class="skill-name">JavaScript</span>
+              <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+            </li>
+            <li>
+              <span class="skill-name">React</span>
+              <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
+            </li>
+            <li>
+              <span class="skill-name">Python</span>
+              <div class="skill-bar"><div class="skill-fill" data-width="65"></div></div>
+            </li>
+            <li>
+              <span class="skill-name">Design (Figma)</span>
+              <div class="skill-bar"><div class="skill-fill" data-width="60"></div></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="section-inner">
+      <h2 class="section-title reveal">Projects</h2>
+      <div class="projects-grid">
+
+        <article class="project-card reveal">
+          <div class="project-img project-img-1">
+            <div class="project-overlay">
+              <a href="#" class="btn btn-sm">詳細を見る</a>
+            </div>
+          </div>
+          <div class="project-info">
+            <h3>プロジェクト名 1</h3>
+            <p>Webアプリケーションの説明をここに記述します。使用した技術や工夫した点を簡潔に紹介します。</p>
+            <div class="project-tags">
+              <span>React</span><span>TypeScript</span><span>Firebase</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-img project-img-2">
+            <div class="project-overlay">
+              <a href="#" class="btn btn-sm">詳細を見る</a>
+            </div>
+          </div>
+          <div class="project-info">
+            <h3>プロジェクト名 2</h3>
+            <p>Webアプリケーションの説明をここに記述します。使用した技術や工夫した点を簡潔に紹介します。</p>
+            <div class="project-tags">
+              <span>Next.js</span><span>CSS Modules</span><span>Vercel</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-img project-img-3">
+            <div class="project-overlay">
+              <a href="#" class="btn btn-sm">詳細を見る</a>
+            </div>
+          </div>
+          <div class="project-info">
+            <h3>プロジェクト名 3</h3>
+            <p>Webアプリケーションの説明をここに記述します。使用した技術や工夫した点を簡潔に紹介します。</p>
+            <div class="project-tags">
+              <span>Python</span><span>FastAPI</span><span>PostgreSQL</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="section-inner">
+      <h2 class="section-title reveal">Contact</h2>
+      <p class="contact-lead reveal">お仕事のご依頼・ご質問はお気軽にどうぞ。</p>
+      <div class="contact-wrapper reveal">
+        <form class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label for="name">お名前</label>
+            <input type="text" id="name" name="name" placeholder="山田 太郎" required />
+          </div>
+          <div class="form-group">
+            <label for="email">メールアドレス</label>
+            <input type="email" id="email" name="email" placeholder="example@email.com" required />
+          </div>
+          <div class="form-group">
+            <label for="message">メッセージ</label>
+            <textarea id="message" name="message" rows="5" placeholder="お問い合わせ内容をご記入ください" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">送信する</button>
+        </form>
+        <div class="contact-links">
+          <a href="mailto:your@email.com" class="contact-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
+            your@email.com
+          </a>
+          <a href="https://github.com/" target="_blank" rel="noopener" class="contact-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.09-.745.083-.73.083-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.835 2.807 1.305 3.492.998.108-.776.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+            GitHub
+          </a>
+          <a href="https://twitter.com/" target="_blank" rel="noopener" class="contact-link">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            X (Twitter)
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 瀧本 哲也. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
