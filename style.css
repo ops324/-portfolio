@@ -220,7 +220,29 @@ ul { list-style: none; }
   margin-bottom: 20px;
   overflow: hidden;
   transition: opacity 0.3s ease;
+  position: relative;
 }
+
+.work-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Dual-image crossfade for cards with 2 screenshots */
+.work-thumb-hisuigan .work-thumb-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.6s ease;
+}
+
+.work-thumb-hisuigan .work-thumb-img-primary   { opacity: 1; }
+.work-thumb-hisuigan .work-thumb-img-secondary { opacity: 0; }
+
+.work-card:hover .work-thumb-hisuigan .work-thumb-img-primary   { opacity: 0; }
+.work-card:hover .work-thumb-hisuigan .work-thumb-img-secondary { opacity: 1; }
 
 .work-card:hover .work-thumb {
   opacity: 0.85;
@@ -251,6 +273,14 @@ ul { list-style: none; }
     radial-gradient(ellipse 55% 45% at 52% 50%, rgba(20, 130, 110, 0.3) 0%, transparent 65%);
 }
 
+.work-thumb-hisuigan {
+  background: #03120e;
+  background-image:
+    radial-gradient(ellipse 65% 55% at 48% 50%, rgba(28, 168, 96, 0.30) 0%, transparent 68%),
+    radial-gradient(ellipse 28% 28% at 74% 28%, rgba(18, 120, 68, 0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 20% 22% at 22% 72%, rgba(10, 90, 50, 0.12) 0%, transparent 55%);
+}
+
 .work-info {
   padding: 0 2px;
 }
@@ -272,6 +302,16 @@ ul { list-style: none; }
   color: var(--text);
   letter-spacing: 0.02em;
   margin-bottom: 10px;
+}
+
+.work-catchcopy {
+  font-family: var(--font-ja);
+  font-size: 0.82rem;
+  color: var(--text);
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+  font-style: italic;
 }
 
 .work-desc {
