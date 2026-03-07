@@ -2,7 +2,7 @@
 
 | 項目 | 内容 |
 |---|---|
-| バージョン | 1.8.9 |
+| バージョン | 1.9.0 |
 | 作成日 | 2026年3月7日 |
 | 最終更新 | 2026年3月8日 |
 | 作成者 | 滝本 哲也 |
@@ -39,6 +39,7 @@
 | 1.8.7 | 2026-03-08 | Vercel プロジェクト名を `takimototetsuya` に変更。公開 URL を `takimototetsuya.vercel.app` に更新 |
 | 1.8.8 | 2026-03-08 | 翡翠眼の説明文から「広告なし・会員登録なし」、Frequency Analyzerの説明文から「ブラウザ完結・会員登録不要」を削除 |
 | 1.8.9 | 2026-03-08 | Nagiサムネイル（記録１・記録２・カレンダー）をナイトモードからライトモード画像に差し替え |
+| 1.9.0 | 2026-03-08 | Nagiスライドを4枚から7枚に拡張（記録３・記録４・記録５を追加）。全6枚ライトモード画像を掲載 |
 
 ---
 
@@ -105,10 +106,12 @@ v1.2 では、参考サイト（fukushimanaoki.com）のような白背景ミニ
 │   ├── thumb-hisuigan.jpg         # 翡翠眼 マーケットデータ画面
 │   ├── thumb-hisuigan-report.jpg  # 翡翠眼 レポート画面
 │   ├── Nagi-アイコン.jpeg           # Nagi スライド1（アイコン）
-│   ├── nagi-記録１.png              # Nagi スライド2（記録画面1）
-│   ├── nagi-記録２.png              # Nagi スライド3（記録画面2）
-│   ├── Nagi-カレンダー.png          # Nagi スライド4（カレンダー画面）
-│   ├── nagi-記録一覧.jpg            # Nagi 記録一覧画面（未使用・参考）
+│   ├── nagi-記録１.png              # Nagi スライド2（記録画面1・ライトモード）
+│   ├── nagi-記録２.png              # Nagi スライド3（記録画面2・ライトモード）
+│   ├── nagi-記録３.png              # Nagi スライド4（記録画面3・ライトモード）
+│   ├── nagi-記録４.png              # Nagi スライド5（記録画面4・ライトモード）
+│   ├── nagi-記録５.png              # Nagi スライド6（記録画面5・ライトモード）
+│   ├── Nagi-カレンダー.png          # Nagi スライド7（カレンダー画面・ライトモード）
 │   ├── freq-video-light.mp4       # Frequency Analyzer 画面収録・ライトモード（188KB）
 │   └── freq-video-dark.mp4        # Frequency Analyzer 画面収録・ダークモード（3.0MB）
 └── .claude/
@@ -204,7 +207,7 @@ npx serve -l 3000 .
 | # | カテゴリ | タイトル | リンク | サムネイル |
 |---|---|---|---|---|
 | 1 | Web Development | 翡翠眼（ひすいがん） | https://hisuigan-macro-insight-engine.vercel.app/ | `thumb-hisuigan.jpg` / `thumb-hisuigan-report.jpg`（2枚手動スライド） |
-| 2 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `Nagi-アイコン.jpeg` / `nagi-記録１.png` / `nagi-記録２.png` / `Nagi-カレンダー.png`（4枚手動スライド） |
+| 2 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `Nagi-アイコン.jpeg` / `nagi-記録１〜５.png` / `Nagi-カレンダー.png`（7枚手動スライド） |
 | 3 | Web Development | Frequency Analyzer | https://frequency-analyzer.vercel.app | `freq-video-light.mp4`（ライトモード動画） / `freq-video-dark.mp4`（ダークモード動画）（2枚手動スライド・`<video autoplay muted loop>`） |
 
 ### 3.5 Events セクション
@@ -296,7 +299,7 @@ npx serve -l 3000 .
 
 | 項目 | 仕様 |
 |---|---|
-| 対象要素 | `.work-thumb[data-slide]` 内 `.work-thumb-img`（翡翠眼: 2枚 / Nagi: 4枚） |
+| 対象要素 | `.work-thumb[data-slide]` 内 `.work-thumb-img`（翡翠眼: 2枚 / Nagi: 7枚） |
 | 操作 | 左右矢印ボタン（← →）またはドットナビゲーションをクリック |
 | 切り替えアニメーション | `opacity: 0→1`（CSS transition 0.6s ease） |
 | 矢印表示 | ホバー時に表示（`.work-thumb:hover .slide-prev/.slide-next { opacity: 1 }`）。背景: `rgba(0,0,0,0.32)` 半透明黒丸（28px）、ホバーで `0.52` に強調 |
