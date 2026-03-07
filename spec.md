@@ -2,9 +2,9 @@
 
 | 項目 | 内容 |
 |---|---|
-| バージョン | 1.6.1 |
+| バージョン | 1.7.0 |
 | 作成日 | 2026年3月7日 |
-| 最終更新 | 2026年3月7日 |
+| 最終更新 | 2026年3月8日 |
 | 作成者 | 滝本 哲也 |
 | リポジトリ | github.com/ops324/-portfolio |
 | 公開URL | https://ops324.github.io/-portfolio/ |
@@ -25,6 +25,7 @@
 | 1.5.2 | 2026-03-07 | 指針テキストを案Aに修正（繰り返し表現を整理） |
 | 1.6.0 | 2026-03-07 | Works に「翡翠眼」カード追加。サムネイル実画像対応・キャッチコピー要素追加・images/ ディレクトリ新設 |
 | 1.6.1 | 2026-03-07 | 翡翠眼カードにレポート画面スクリーンショット追加。ホバー時クロスフェード切り替え（CSS only）実装 |
+| 1.7.0 | 2026-03-08 | Nagi（凪）worksカード追加。記録画面・カレンダー画面のサムネイル実画像対応・デュアル画像クロスフェード実装 |
 
 ---
 
@@ -88,8 +89,10 @@ v1.2 では、参考サイト（fukushimanaoki.com）のような白背景ミニ
 ├── script.js           # インタラクション・アニメーション
 ├── spec.md             # 本仕様書
 ├── images/
-│   ├── thumb-hisuigan.jpg         # 翡翠眼 マーケットデータ画面（1280×960）
-│   └── thumb-hisuigan-report.jpg  # 翡翠眼 レポート画面（1280×960）
+│   ├── thumb-hisuigan.jpg         # 翡翠眼 マーケットデータ画面
+│   ├── thumb-hisuigan-report.jpg  # 翡翠眼 レポート画面
+│   ├── thumb-nagi.jpg             # Nagi 記録画面（通常表示）
+│   └── thumb-nagi-calendar.jpg    # Nagi カレンダー画面（ホバー表示）
 └── .claude/
     └── launch.json     # ローカル開発サーバー設定
 ```
@@ -178,15 +181,16 @@ npx serve -l 3000 .
 | ホバー | サムネイル `opacity: 0.85`。2枚画像がある場合は primary→secondary へクロスフェード（0.6s、CSS only） |
 | リンク | カード全体を `<a>` で包む場合あり（外部サイトへ遷移） |
 
-#### 3.4.3 作品一覧（v1.6 時点）
+#### 3.4.3 作品一覧（v1.7 時点）
 
 | # | カテゴリ | タイトル | リンク | サムネイル |
 |---|---|---|---|---|
 | 1 | Web Development | 翡翠眼（ひすいがん） | https://hisuigan-macro-insight-engine.vercel.app/ | `thumb-hisuigan.jpg`（通常）/ `thumb-hisuigan-report.jpg`（ホバー） |
-| 2 | UI Design | タスク管理アプリ | なし | CSSグラデーション |
-| 3 | UI Design | 読書記録アプリ | なし | CSSグラデーション |
-| 4 | Web Development | ポートフォリオサイト | なし | CSSグラデーション |
-| 5 | Web Development | データ可視化ダッシュボード | なし | CSSグラデーション |
+| 2 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `thumb-nagi.jpg`（通常）/ `thumb-nagi-calendar.jpg`（ホバー） |
+| 3 | UI Design | タスク管理アプリ | なし | CSSグラデーション |
+| 4 | UI Design | 読書記録アプリ | なし | CSSグラデーション |
+| 5 | Web Development | ポートフォリオサイト | なし | CSSグラデーション |
+| 6 | Web Development | データ可視化ダッシュボード | なし | CSSグラデーション |
 
 ### 3.5 Contact セクション
 
