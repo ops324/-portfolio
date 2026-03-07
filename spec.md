@@ -2,7 +2,7 @@
 
 | 項目 | 内容 |
 |---|---|
-| バージョン | 1.7.0 |
+| バージョン | 1.7.2 |
 | 作成日 | 2026年3月7日 |
 | 最終更新 | 2026年3月8日 |
 | 作成者 | 滝本 哲也 |
@@ -26,6 +26,8 @@
 | 1.6.0 | 2026-03-07 | Works に「翡翠眼」カード追加。サムネイル実画像対応・キャッチコピー要素追加・images/ ディレクトリ新設 |
 | 1.6.1 | 2026-03-07 | 翡翠眼カードにレポート画面スクリーンショット追加。ホバー時クロスフェード切り替え（CSS only）実装 |
 | 1.7.0 | 2026-03-08 | Nagi（凪）worksカード追加。記録画面・カレンダー画面のサムネイル実画像対応・デュアル画像クロスフェード実装 |
+| 1.7.1 | 2026-03-08 | Nagiカードのサムネイルをアイコン画像に変更。画像ファイル名を整理 |
+| 1.7.2 | 2026-03-08 | Nagiカードに記録1・記録2を追加。4枚自動スライドショー（CSS アニメーション）に変更 |
 
 ---
 
@@ -91,8 +93,11 @@ v1.2 では、参考サイト（fukushimanaoki.com）のような白背景ミニ
 ├── images/
 │   ├── thumb-hisuigan.jpg         # 翡翠眼 マーケットデータ画面
 │   ├── thumb-hisuigan-report.jpg  # 翡翠眼 レポート画面
-│   ├── thumb-nagi.jpg             # Nagi 記録画面（通常表示）
-│   └── thumb-nagi-calendar.jpg    # Nagi カレンダー画面（ホバー表示）
+│   ├── Nagi-アイコン.jpeg           # Nagi アイコン（通常表示）
+│   ├── Nagi-カレンダー.png          # Nagi カレンダー画面（ホバー表示）
+│   ├── nagi-記録一覧.jpg            # Nagi 記録一覧画面（参考）
+│   ├── nagi-記録１.png              # Nagi 記録画面1（参考）
+│   └── nagi-記録２.png              # Nagi 記録画面2（参考）
 └── .claude/
     └── launch.json     # ローカル開発サーバー設定
 ```
@@ -178,7 +183,7 @@ npx serve -l 3000 .
 | タイトル | Noto Sans JP、0.95rem、weight 400 |
 | キャッチコピー | Noto Sans JP、0.82rem、weight 300、italic（オプション） |
 | 説明文 | Noto Sans JP、0.78rem、weight 300、`var(--muted)` |
-| ホバー | サムネイル `opacity: 0.85`。2枚画像がある場合は primary→secondary へクロスフェード（0.6s、CSS only） |
+| ホバー | サムネイル `opacity: 0.85`。2枚画像がある場合は primary→secondary へクロスフェード（0.6s、CSS only）。4枚の場合は自動スライドショー（`@keyframes`、8s サイクル、CSS only） |
 | リンク | カード全体を `<a>` で包む場合あり（外部サイトへ遷移） |
 
 #### 3.4.3 作品一覧（v1.7 時点）
@@ -186,7 +191,7 @@ npx serve -l 3000 .
 | # | カテゴリ | タイトル | リンク | サムネイル |
 |---|---|---|---|---|
 | 1 | Web Development | 翡翠眼（ひすいがん） | https://hisuigan-macro-insight-engine.vercel.app/ | `thumb-hisuigan.jpg`（通常）/ `thumb-hisuigan-report.jpg`（ホバー） |
-| 2 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `thumb-nagi.jpg`（通常）/ `thumb-nagi-calendar.jpg`（ホバー） |
+| 2 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `Nagi-アイコン.jpeg` → `nagi-記録１.png` → `nagi-記録２.png` → `Nagi-カレンダー.png`（4枚自動スライド） |
 | 3 | UI Design | タスク管理アプリ | なし | CSSグラデーション |
 | 4 | UI Design | 読書記録アプリ | なし | CSSグラデーション |
 | 5 | Web Development | ポートフォリオサイト | なし | CSSグラデーション |

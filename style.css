@@ -285,19 +285,25 @@ ul { list-style: none; }
   background: #0f1a14;
 }
 
+/* 4-image auto slideshow (アイコン → 記録1 → 記録2 → カレンダー) */
+@keyframes nagi-cycle {
+  0%, 18.75% { opacity: 1; }
+  25%, 100%  { opacity: 0; }
+}
+
 .work-thumb-nagi .work-thumb-img {
   position: absolute;
   top: 0; left: 0;
   object-fit: cover;
   object-position: top center;
-  transition: opacity 0.6s ease;
+  opacity: 0;
+  animation: nagi-cycle 8s linear infinite;
 }
 
-.work-thumb-nagi .work-thumb-img-primary   { opacity: 1; }
-.work-thumb-nagi .work-thumb-img-secondary { opacity: 0; }
-
-.work-card:hover .work-thumb-nagi .work-thumb-img-primary   { opacity: 0; }
-.work-card:hover .work-thumb-nagi .work-thumb-img-secondary { opacity: 1; }
+.work-thumb-nagi .work-thumb-img:nth-child(1) { object-position: center; animation-delay:  0s; }
+.work-thumb-nagi .work-thumb-img:nth-child(2) { animation-delay: -6s; }
+.work-thumb-nagi .work-thumb-img:nth-child(3) { animation-delay: -4s; }
+.work-thumb-nagi .work-thumb-img:nth-child(4) { animation-delay: -2s; }
 
 .work-info {
   padding: 0 2px;
