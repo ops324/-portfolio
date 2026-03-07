@@ -2,7 +2,7 @@
 
 | 項目 | 内容 |
 |---|---|
-| バージョン | 1.7.7 |
+| バージョン | 1.8.1 |
 | 作成日 | 2026年3月7日 |
 | 最終更新 | 2026年3月8日 |
 | 作成者 | 滝本 哲也 |
@@ -33,6 +33,8 @@
 | 1.7.5 | 2026-03-08 | Nagiカードを手動スライドから4枚CSSアニメーション自動スライドショーに差し戻し。UIバランス改善 |
 | 1.7.6 | 2026-03-08 | 翡翠眼・Nagi を含む全worksカードのサムネイルを手動スライド形式（JS実装）に統一。自動スライドショー廃止 |
 | 1.7.7 | 2026-03-08 | スライド矢印ボタンに半透明黒丸背景を追加し視認性を改善。ドットサイズ・shadowも強化 |
+| 1.8.0 | 2026-03-08 | Frequency Analyzer（周波数測定器）カード追加。ライト／ダークモード2枚スライド実装 |
+| 1.8.1 | 2026-03-08 | Frequency Analyzerカードのサムネイルをスクリーンショット（静止画）から画面収録動画（MP4）に変更。`<video autoplay muted loop playsinline>` 実装 |
 
 ---
 
@@ -102,7 +104,11 @@ v1.2 では、参考サイト（fukushimanaoki.com）のような白背景ミニ
 │   ├── nagi-記録１.png              # Nagi スライド2（記録画面1）
 │   ├── nagi-記録２.png              # Nagi スライド3（記録画面2）
 │   ├── Nagi-カレンダー.png          # Nagi スライド4（カレンダー画面）
-│   └── nagi-記録一覧.jpg            # Nagi 記録一覧画面（未使用・参考）
+│   ├── nagi-記録一覧.jpg            # Nagi 記録一覧画面（未使用・参考）
+│   ├── freq-light.jpg             # Frequency Analyzer ライトモード（静止画・参考用）
+│   ├── freq-dark.jpg              # Frequency Analyzer ダークモード（静止画・参考用）
+│   ├── freq-video-light.mp4       # Frequency Analyzer 画面収録・ライトモード（6.2MB）
+│   └── freq-video-dark.mp4        # Frequency Analyzer 画面収録・ダークモード（3.0MB）
 └── .claude/
     └── launch.json     # ローカル開発サーバー設定
 ```
@@ -188,19 +194,20 @@ npx serve -l 3000 .
 | タイトル | Noto Sans JP、0.95rem、weight 400 |
 | キャッチコピー | Noto Sans JP、0.82rem、weight 300、italic（オプション） |
 | 説明文 | Noto Sans JP、0.78rem、weight 300、`var(--muted)` |
-| ホバー | サムネイル `opacity: 0.85`。スライド矢印（← →）を表示 |
+| ホバー | サムネイル `opacity: 0.85`。スライド矢印（← →）を半透明黒丸ボタンで表示（白背景・暗背景どちらでも視認可能） |
 | リンク | カード全体を `<a>` で包む場合あり（外部サイトへ遷移） |
 
-#### 3.4.3 作品一覧（v1.7 時点）
+#### 3.4.3 作品一覧（v1.8.1 時点）
 
 | # | カテゴリ | タイトル | リンク | サムネイル |
 |---|---|---|---|---|
 | 1 | Web Development | 翡翠眼（ひすいがん） | https://hisuigan-macro-insight-engine.vercel.app/ | `thumb-hisuigan.jpg` / `thumb-hisuigan-report.jpg`（2枚手動スライド） |
 | 2 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `Nagi-アイコン.jpeg` / `nagi-記録１.png` / `nagi-記録２.png` / `Nagi-カレンダー.png`（4枚手動スライド） |
-| 3 | UI Design | タスク管理アプリ | なし | CSSグラデーション |
-| 4 | UI Design | 読書記録アプリ | なし | CSSグラデーション |
-| 5 | Web Development | ポートフォリオサイト | なし | CSSグラデーション |
-| 6 | Web Development | データ可視化ダッシュボード | なし | CSSグラデーション |
+| 3 | Web Development | Frequency Analyzer | https://frequency-analyzer.vercel.app | `freq-video-light.mp4`（ライトモード動画） / `freq-video-dark.mp4`（ダークモード動画）（2枚手動スライド・`<video autoplay muted loop>`） |
+| 4 | UI Design | タスク管理アプリ | なし | CSSグラデーション |
+| 5 | UI Design | 読書記録アプリ | なし | CSSグラデーション |
+| 6 | Web Development | ポートフォリオサイト | なし | CSSグラデーション |
+| 7 | Web Development | データ可視化ダッシュボード | なし | CSSグラデーション |
 
 ### 3.5 Contact セクション
 
