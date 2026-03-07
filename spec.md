@@ -2,7 +2,7 @@
 
 | 項目 | 内容 |
 |---|---|
-| バージョン | 1.7.5 |
+| バージョン | 1.7.7 |
 | 作成日 | 2026年3月7日 |
 | 最終更新 | 2026年3月8日 |
 | 作成者 | 滝本 哲也 |
@@ -31,6 +31,8 @@
 | 1.7.3 | 2026-03-08 | Nagiサムネイルをアイコン常時表示 + 手動スライド（ドットナビ・タッチスワイプ）に変更。自動アニメーション廃止 |
 | 1.7.4 | 2026-03-08 | Nagi説明文を「多角的な視点（次元の上昇）」の概念を軸に書き直し |
 | 1.7.5 | 2026-03-08 | Nagiカードを手動スライドから4枚CSSアニメーション自動スライドショーに差し戻し。UIバランス改善 |
+| 1.7.6 | 2026-03-08 | 翡翠眼・Nagi を含む全worksカードのサムネイルを手動スライド形式（JS実装）に統一。自動スライドショー廃止 |
+| 1.7.7 | 2026-03-08 | スライド矢印ボタンに半透明黒丸背景を追加し視認性を改善。ドットサイズ・shadowも強化 |
 
 ---
 
@@ -96,11 +98,11 @@ v1.2 では、参考サイト（fukushimanaoki.com）のような白背景ミニ
 ├── images/
 │   ├── thumb-hisuigan.jpg         # 翡翠眼 マーケットデータ画面
 │   ├── thumb-hisuigan-report.jpg  # 翡翠眼 レポート画面
-│   ├── Nagi-アイコン.jpeg           # Nagi アイコン（通常表示）
-│   ├── Nagi-カレンダー.png          # Nagi カレンダー画面（ホバー表示）
-│   ├── nagi-記録一覧.jpg            # Nagi 記録一覧画面（参考）
-│   ├── nagi-記録１.png              # Nagi 記録画面1（参考）
-│   └── nagi-記録２.png              # Nagi 記録画面2（参考）
+│   ├── Nagi-アイコン.jpeg           # Nagi スライド1（アイコン）
+│   ├── nagi-記録１.png              # Nagi スライド2（記録画面1）
+│   ├── nagi-記録２.png              # Nagi スライド3（記録画面2）
+│   ├── Nagi-カレンダー.png          # Nagi スライド4（カレンダー画面）
+│   └── nagi-記録一覧.jpg            # Nagi 記録一覧画面（未使用・参考）
 └── .claude/
     └── launch.json     # ローカル開発サーバー設定
 ```
@@ -186,15 +188,15 @@ npx serve -l 3000 .
 | タイトル | Noto Sans JP、0.95rem、weight 400 |
 | キャッチコピー | Noto Sans JP、0.82rem、weight 300、italic（オプション） |
 | 説明文 | Noto Sans JP、0.78rem、weight 300、`var(--muted)` |
-| ホバー | サムネイル `opacity: 0.85`。2枚画像がある場合は primary→secondary へクロスフェード（0.6s、CSS only） |
+| ホバー | サムネイル `opacity: 0.85`。スライド矢印（← →）を表示 |
 | リンク | カード全体を `<a>` で包む場合あり（外部サイトへ遷移） |
 
 #### 3.4.3 作品一覧（v1.7 時点）
 
 | # | カテゴリ | タイトル | リンク | サムネイル |
 |---|---|---|---|---|
-| 1 | Web Development | 翡翠眼（ひすいがん） | https://hisuigan-macro-insight-engine.vercel.app/ | `thumb-hisuigan.jpg`（通常）/ `thumb-hisuigan-report.jpg`（ホバー） |
-| 2 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `Nagi-アイコン.jpeg` / `nagi-記録１.png` / `nagi-記録２.png` / `Nagi-カレンダー.png`（4枚CSSアニメーション自動スライドショー、8秒サイクル） |
+| 1 | Web Development | 翡翠眼（ひすいがん） | https://hisuigan-macro-insight-engine.vercel.app/ | `thumb-hisuigan.jpg` / `thumb-hisuigan-report.jpg`（2枚手動スライド） |
+| 2 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `Nagi-アイコン.jpeg` / `nagi-記録１.png` / `nagi-記録２.png` / `Nagi-カレンダー.png`（4枚手動スライド） |
 | 3 | UI Design | タスク管理アプリ | なし | CSSグラデーション |
 | 4 | UI Design | 読書記録アプリ | なし | CSSグラデーション |
 | 5 | Web Development | ポートフォリオサイト | なし | CSSグラデーション |
@@ -268,16 +270,17 @@ npx serve -l 3000 .
 | アニメーション | `opacity: 0→1`・`translateY(12px→0)`・`transition: 0.8s ease` |
 | 再生 | 一度表示したら `unobserve` |
 
-### 5.2 Nagi カード 自動スライドショー
+### 5.2 Works カード 手動スライドショー
 
 | 項目 | 仕様 |
 |---|---|
-| 対象要素 | `.work-thumb-nagi` 内 `.work-thumb-img`（4枚） |
-| サイクル | 8秒で4枚を順番に切り替え（2秒/枚） |
-| アニメーション | `@keyframes nagi-cycle`（CSS animation）、`opacity: 0→1` |
-| 順序 | アイコン → 記録1 → 記録2 → カレンダー → （ループ） |
-| 表示位置 | 全画像 `object-position: top center`、1枚目（アイコン）のみ `center` |
-| 実装 | CSS animation のみ（JavaScript 不使用） |
+| 対象要素 | `.work-thumb[data-slide]` 内 `.work-thumb-img`（翡翠眼: 2枚 / Nagi: 4枚） |
+| 操作 | 左右矢印ボタン（← →）またはドットナビゲーションをクリック |
+| 切り替えアニメーション | `opacity: 0→1`（CSS transition 0.6s ease） |
+| 矢印表示 | ホバー時に表示（`.work-thumb:hover .slide-prev/.slide-next { opacity: 1 }`）。背景: `rgba(0,0,0,0.32)` 半透明黒丸（28px）、ホバーで `0.52` に強調 |
+| ドット | 5px 円、`box-shadow` 付き。現在: `rgba(255,255,255,0.95)` / 非選択: `rgba(255,255,255,0.45)` |
+| 実装 | JavaScript（Intersection Observer 不使用、addEventListener）|
+| Nagi 表示位置 | 全画像 `object-position: top center`、1枚目（アイコン）のみ `center` |
 
 ### 5.3 ナビゲーション アクティブ連動
 

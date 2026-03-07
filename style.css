@@ -248,13 +248,24 @@ ul { list-style: none; }
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: none;
+  background: rgba(0,0,0,0.32);
   border: none;
-  padding: 10px;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   opacity: 0;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.25s ease, background 0.2s ease;
   z-index: 10;
+  padding: 0;
+}
+
+.slide-prev:hover,
+.slide-next:hover {
+  background: rgba(0,0,0,0.52);
 }
 
 .slide-prev { left: 8px; }
@@ -264,10 +275,10 @@ ul { list-style: none; }
 .slide-next::before {
   content: '';
   display: block;
-  width: 9px;
-  height: 9px;
-  border-top: 1.5px solid rgba(255,255,255,0.9);
-  border-right: 1.5px solid rgba(255,255,255,0.9);
+  width: 8px;
+  height: 8px;
+  border-top: 1.5px solid rgba(255,255,255,0.95);
+  border-right: 1.5px solid rgba(255,255,255,0.95);
 }
 
 .slide-prev::before { transform: rotate(-135deg) translate(-1px, 1px); }
@@ -290,16 +301,17 @@ ul { list-style: none; }
 }
 
 .slide-dot {
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.45);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
   cursor: pointer;
   transition: background 0.2s;
 }
 
 .slide-dot.active {
-  background: rgba(255,255,255,0.88);
+  background: rgba(255,255,255,0.95);
 }
 
 .work-card:hover .work-thumb {
