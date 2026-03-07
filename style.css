@@ -285,55 +285,25 @@ ul { list-style: none; }
   background: #0f1a14;
 }
 
-/* Nagi スライドショー（手動スライド） */
-.nagi-slider {
-  position: relative;
-  width: 100%;
-  height: 100%;
+/* 4-image auto slideshow (アイコン → 記録1 → 記録2 → カレンダー) */
+@keyframes nagi-cycle {
+  0%, 18.75% { opacity: 1; }
+  25%, 100%  { opacity: 0; }
 }
 
-.nagi-slide {
+.work-thumb-nagi .work-thumb-img {
   position: absolute;
   top: 0; left: 0;
-  width: 100%;
-  height: 100%;
   object-fit: cover;
   object-position: top center;
   opacity: 0;
-  transition: opacity 0.45s ease;
+  animation: nagi-cycle 8s linear infinite;
 }
 
-.nagi-slide:first-child { object-position: center; }
-.nagi-slide.active { opacity: 1; }
-
-.nagi-dots {
-  position: absolute;
-  bottom: 10px;
-  left: 0; right: 0;
-  display: flex;
-  justify-content: center;
-  gap: 7px;
-  z-index: 10;
-  pointer-events: none;
-}
-
-.nagi-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.35);
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  pointer-events: auto;
-  transition: background 0.25s ease, transform 0.2s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.nagi-dot.active {
-  background: rgba(255, 255, 255, 0.92);
-  transform: scale(1.25);
-}
+.work-thumb-nagi .work-thumb-img:nth-child(1) { object-position: center; animation-delay:  0s; }
+.work-thumb-nagi .work-thumb-img:nth-child(2) { animation-delay: -6s; }
+.work-thumb-nagi .work-thumb-img:nth-child(3) { animation-delay: -4s; }
+.work-thumb-nagi .work-thumb-img:nth-child(4) { animation-delay: -2s; }
 
 .work-info {
   padding: 0 2px;

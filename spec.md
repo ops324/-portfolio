@@ -2,7 +2,7 @@
 
 | 項目 | 内容 |
 |---|---|
-| バージョン | 1.7.4 |
+| バージョン | 1.7.5 |
 | 作成日 | 2026年3月7日 |
 | 最終更新 | 2026年3月8日 |
 | 作成者 | 滝本 哲也 |
@@ -30,6 +30,7 @@
 | 1.7.2 | 2026-03-08 | Nagiカードに記録1・記録2を追加。4枚自動スライドショー（CSS アニメーション）に変更 |
 | 1.7.3 | 2026-03-08 | Nagiサムネイルをアイコン常時表示 + 手動スライド（ドットナビ・タッチスワイプ）に変更。自動アニメーション廃止 |
 | 1.7.4 | 2026-03-08 | Nagi説明文を「多角的な視点（次元の上昇）」の概念を軸に書き直し |
+| 1.7.5 | 2026-03-08 | Nagiカードを手動スライドから4枚CSSアニメーション自動スライドショーに差し戻し。UIバランス改善 |
 
 ---
 
@@ -193,7 +194,7 @@ npx serve -l 3000 .
 | # | カテゴリ | タイトル | リンク | サムネイル |
 |---|---|---|---|---|
 | 1 | Web Development | 翡翠眼（ひすいがん） | https://hisuigan-macro-insight-engine.vercel.app/ | `thumb-hisuigan.jpg`（通常）/ `thumb-hisuigan-report.jpg`（ホバー） |
-| 2 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `Nagi-アイコン.jpeg`（メイン）+ `nagi-記録１.png` / `nagi-記録２.png` / `Nagi-カレンダー.png`（手動スライド・ドットナビ・タッチスワイプ対応） |
+| 2 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `Nagi-アイコン.jpeg` / `nagi-記録１.png` / `nagi-記録２.png` / `Nagi-カレンダー.png`（4枚CSSアニメーション自動スライドショー、8秒サイクル） |
 | 3 | UI Design | タスク管理アプリ | なし | CSSグラデーション |
 | 4 | UI Design | 読書記録アプリ | なし | CSSグラデーション |
 | 5 | Web Development | ポートフォリオサイト | なし | CSSグラデーション |
@@ -267,18 +268,16 @@ npx serve -l 3000 .
 | アニメーション | `opacity: 0→1`・`translateY(12px→0)`・`transition: 0.8s ease` |
 | 再生 | 一度表示したら `unobserve` |
 
-### 5.2 Nagi カード 手動スライド
+### 5.2 Nagi カード 自動スライドショー
 
 | 項目 | 仕様 |
 |---|---|
-| 対象要素 | `.work-thumb-nagi` 内 `.nagi-slide`（4枚）・`.nagi-dot`（4個） |
-| 初期表示 | アイコン画像（1枚目）を `active` 状態で表示 |
-| 切り替え | ドットクリック または タッチスワイプ（左右 40px 以上）でスライド変更 |
-| 切り替え演出 | `opacity` トランジション（0.45s ease） |
-| ドット外観 | 6px 円、非アクティブ: `rgba(255,255,255,0.35)`、アクティブ: `rgba(255,255,255,0.92)` + scale 1.25 |
-| リンク干渉防止 | ドットクリック・スワイプ時に `stopPropagation` でカード遷移を阻止 |
-| 実装 | JavaScript（即時実行関数）+ CSS トランジション |
-| モバイル対応 | `touchstart` / `touchend` イベントでスワイプ検出、`-webkit-tap-highlight-color: transparent` 設定 |
+| 対象要素 | `.work-thumb-nagi` 内 `.work-thumb-img`（4枚） |
+| サイクル | 8秒で4枚を順番に切り替え（2秒/枚） |
+| アニメーション | `@keyframes nagi-cycle`（CSS animation）、`opacity: 0→1` |
+| 順序 | アイコン → 記録1 → 記録2 → カレンダー → （ループ） |
+| 表示位置 | 全画像 `object-position: top center`、1枚目（アイコン）のみ `center` |
+| 実装 | CSS animation のみ（JavaScript 不使用） |
 
 ### 5.3 ナビゲーション アクティブ連動
 
