@@ -204,7 +204,24 @@ npx serve -l 3000 .
 | 2 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `Nagi-アイコン.jpeg` / `nagi-記録１.png` / `nagi-記録２.png` / `Nagi-カレンダー.png`（4枚手動スライド） |
 | 3 | Web Development | Frequency Analyzer | https://frequency-analyzer.vercel.app | `freq-video-light.mp4`（ライトモード動画） / `freq-video-dark.mp4`（ダークモード動画）（2枚手動スライド・`<video autoplay muted loop>`） |
 
-### 3.5 Contact セクション
+### 3.5 Events セクション
+
+| 要素 | 仕様 |
+|---|---|
+| 位置 | Works と Contact の間 |
+| ラベル | `events`（section-label スタイル） |
+| レイアウト | 2カラムグリッド（`events-grid`）、gap 40px、max-width 1100px |
+| 埋め込み方式 | Instagram 公式 blockquote embed（`embed.js` 非同期ロード） |
+| レスポンシブ | 860px 以下で1カラム |
+
+#### 3.5.1 掲載イベント一覧
+
+| # | Instagram URL |
+|---|---|
+| 1 | https://www.instagram.com/p/C5VzL4orpJZ/ |
+| 2 | https://www.instagram.com/p/C71jN7USIc2/ |
+
+### 3.6 Contact セクション
 
 | 要素 | 仕様 |
 |---|---|

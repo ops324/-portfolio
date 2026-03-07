@@ -401,6 +401,32 @@ ul { list-style: none; }
 }
 
 /* ============================
+   Events
+   ============================ */
+#events {
+  border-top: 1px solid var(--border);
+  padding: 100px 48px;
+}
+
+.events-grid {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.event-card {
+  display: flex;
+  justify-content: center;
+}
+
+.event-card .instagram-media {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* ============================
    Contact
    ============================ */
 #contact {
@@ -504,10 +530,13 @@ footer {
     gap: 28px;
   }
 
-  .works-grid {
+  .works-grid,
+  .events-grid {
     grid-template-columns: 1fr;
     gap: 40px;
   }
+
+  #events { padding: 72px 28px; }
 }
 
 @media (max-width: 540px) {
