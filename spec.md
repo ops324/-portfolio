@@ -2,12 +2,12 @@
 
 | 項目 | 内容 |
 |---|---|
-| バージョン | 1.8.2 |
+| バージョン | 1.8.8 |
 | 作成日 | 2026年3月7日 |
 | 最終更新 | 2026年3月8日 |
 | 作成者 | 滝本 哲也 |
 | リポジトリ | github.com/ops324/-portfolio |
-| 公開URL | https://ops324.github.io/-portfolio/ |
+| 公開URL | https://takimototetsuya.vercel.app |
 
 ---
 
@@ -36,6 +36,8 @@
 | 1.8.0 | 2026-03-08 | Frequency Analyzer（周波数測定器）カード追加。ライト／ダークモード2枚スライド実装 |
 | 1.8.1 | 2026-03-08 | Frequency Analyzerカードのサムネイルをスクリーンショット（静止画）から画面収録動画（MP4）に変更。`<video autoplay muted loop playsinline>` 実装 |
 | 1.8.2 | 2026-03-08 | freq-video-light.mp4 をクリーン再録画版に差し替え（カーソル・他アプリの映り込みを除去）。静止画参考ファイル（freq-light.jpg / freq-dark.jpg）を削除 |
+| 1.8.7 | 2026-03-08 | Vercel プロジェクト名を `takimototetsuya` に変更。公開 URL を `takimototetsuya.vercel.app` に更新 |
+| 1.8.8 | 2026-03-08 | 翡翠眼の説明文から「広告なし・会員登録なし」、Frequency Analyzerの説明文から「ブラウザ完結・会員登録不要」を削除 |
 
 ---
 
@@ -318,11 +320,11 @@ npx serve -l 3000 .
 
 | 項目 | 内容 |
 |---|---|
-| ホスティング | GitHub Pages |
+| ホスティング | Vercel |
 | ブランチ | `main` |
 | ソース | リポジトリルート `/ (root)` |
 | ビルド | 不要（静的ファイルをそのまま配信） |
-| 公開 URL | https://ops324.github.io/-portfolio/ |
+| 公開 URL | https://takimototetsuya.vercel.app |
 
 ### 6.2 更新手順
 
