@@ -281,6 +281,24 @@ ul { list-style: none; }
     radial-gradient(ellipse 20% 22% at 22% 72%, rgba(10, 90, 50, 0.12) 0%, transparent 55%);
 }
 
+.work-thumb-nagi {
+  background: #0f1a14;
+}
+
+.work-thumb-nagi .work-thumb-img {
+  position: absolute;
+  top: 0; left: 0;
+  object-fit: cover;
+  object-position: top center;
+  transition: opacity 0.6s ease;
+}
+
+.work-thumb-nagi .work-thumb-img-primary   { opacity: 1; }
+.work-thumb-nagi .work-thumb-img-secondary { opacity: 0; }
+
+.work-card:hover .work-thumb-nagi .work-thumb-img-primary   { opacity: 0; }
+.work-card:hover .work-thumb-nagi .work-thumb-img-secondary { opacity: 1; }
+
 .work-info {
   padding: 0 2px;
 }
