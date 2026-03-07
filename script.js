@@ -33,3 +33,40 @@ const activeObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.4 });
 
 sections.forEach(s => activeObserver.observe(s));
+
+// ============================
+// Manual slideshow
+// ============================
+document.querySelectorAll('.work-thumb[data-slide]').forEach(thumb => {
+  const imgs = thumb.querySelectorAll('.work-thumb-img');
+  const dots = thumb.querySelectorAll('.slide-dot');
+  let current = 0;
+
+  function goTo(n) {
+    imgs[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = (n + imgs.length) % imgs.length;
+    imgs[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  thumb.querySelector('.slide-prev').addEventListener('click', e => {
+    e.preventDefault();
+    e.stopPropagation();
+    goTo(current - 1);
+  });
+
+  thumb.querySelector('.slide-next').addEventListener('click', e => {
+    e.preventDefault();
+    e.stopPropagation();
+    goTo(current + 1);
+  });
+
+  dots.forEach((dot, i) => {
+    dot.addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      goTo(i);
+    });
+  });
+});

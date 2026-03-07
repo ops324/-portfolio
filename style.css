@@ -230,19 +230,77 @@ ul { list-style: none; }
   display: block;
 }
 
-/* Dual-image crossfade for cards with 2 screenshots */
-.work-thumb-hisuigan .work-thumb-img {
+/* Manual slideshow */
+.work-thumb[data-slide] .work-thumb-img {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
+  opacity: 0;
   transition: opacity 0.6s ease;
 }
 
-.work-thumb-hisuigan .work-thumb-img-primary   { opacity: 1; }
-.work-thumb-hisuigan .work-thumb-img-secondary { opacity: 0; }
+.work-thumb[data-slide] .work-thumb-img.active {
+  opacity: 1;
+}
 
-.work-card:hover .work-thumb-hisuigan .work-thumb-img-primary   { opacity: 0; }
-.work-card:hover .work-thumb-hisuigan .work-thumb-img-secondary { opacity: 1; }
+/* Slide navigation arrows */
+.slide-prev,
+.slide-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 10;
+}
+
+.slide-prev { left: 8px; }
+.slide-next { right: 8px; }
+
+.slide-prev::before,
+.slide-next::before {
+  content: '';
+  display: block;
+  width: 9px;
+  height: 9px;
+  border-top: 1.5px solid rgba(255,255,255,0.9);
+  border-right: 1.5px solid rgba(255,255,255,0.9);
+}
+
+.slide-prev::before { transform: rotate(-135deg) translate(-1px, 1px); }
+.slide-next::before { transform: rotate(45deg) translate(-1px, 1px); }
+
+.work-thumb:hover .slide-prev,
+.work-thumb:hover .slide-next {
+  opacity: 1;
+}
+
+/* Slide dots */
+.slide-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 5px;
+  z-index: 10;
+}
+
+.slide-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.slide-dot.active {
+  background: rgba(255,255,255,0.88);
+}
 
 .work-card:hover .work-thumb {
   opacity: 0.85;
@@ -285,25 +343,9 @@ ul { list-style: none; }
   background: #0f1a14;
 }
 
-/* 4-image auto slideshow (アイコン → 記録1 → 記録2 → カレンダー) */
-@keyframes nagi-cycle {
-  0%, 18.75% { opacity: 1; }
-  25%, 100%  { opacity: 0; }
-}
-
-.work-thumb-nagi .work-thumb-img {
-  position: absolute;
-  top: 0; left: 0;
-  object-fit: cover;
-  object-position: top center;
-  opacity: 0;
-  animation: nagi-cycle 8s linear infinite;
-}
-
-.work-thumb-nagi .work-thumb-img:nth-child(1) { object-position: center; animation-delay:  0s; }
-.work-thumb-nagi .work-thumb-img:nth-child(2) { animation-delay: -6s; }
-.work-thumb-nagi .work-thumb-img:nth-child(3) { animation-delay: -4s; }
-.work-thumb-nagi .work-thumb-img:nth-child(4) { animation-delay: -2s; }
+/* Nagi image object-position */
+.work-thumb-nagi .work-thumb-img { object-position: top center; }
+.work-thumb-nagi .work-thumb-img:nth-child(1) { object-position: center; }
 
 .work-info {
   padding: 0 2px;
