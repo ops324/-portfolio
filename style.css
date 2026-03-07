@@ -46,11 +46,22 @@ ul { list-style: none; }
 }
 
 .nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
   font-family: var(--font-ja);
   font-size: 0.88rem;
   font-weight: 400;
   letter-spacing: 0.04em;
   color: var(--text);
+}
+
+.nav-icon {
+  width: 20px;
+  height: 20px;
+  opacity: 0.75;
+  flex-shrink: 0;
 }
 
 .nav-links {
