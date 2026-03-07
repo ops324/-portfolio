@@ -196,17 +196,13 @@ npx serve -l 3000 .
 | ホバー | サムネイル `opacity: 0.85`。スライド矢印（← →）を半透明黒丸ボタンで表示（白背景・暗背景どちらでも視認可能） |
 | リンク | カード全体を `<a>` で包む場合あり（外部サイトへ遷移） |
 
-#### 3.4.3 作品一覧（v1.8.1 時点）
+#### 3.4.3 作品一覧（v1.8.3 時点）
 
 | # | カテゴリ | タイトル | リンク | サムネイル |
 |---|---|---|---|---|
 | 1 | Web Development | 翡翠眼（ひすいがん） | https://hisuigan-macro-insight-engine.vercel.app/ | `thumb-hisuigan.jpg` / `thumb-hisuigan-report.jpg`（2枚手動スライド） |
 | 2 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `Nagi-アイコン.jpeg` / `nagi-記録１.png` / `nagi-記録２.png` / `Nagi-カレンダー.png`（4枚手動スライド） |
 | 3 | Web Development | Frequency Analyzer | https://frequency-analyzer.vercel.app | `freq-video-light.mp4`（ライトモード動画） / `freq-video-dark.mp4`（ダークモード動画）（2枚手動スライド・`<video autoplay muted loop>`） |
-| 4 | UI Design | タスク管理アプリ | なし | CSSグラデーション |
-| 5 | UI Design | 読書記録アプリ | なし | CSSグラデーション |
-| 6 | Web Development | ポートフォリオサイト | なし | CSSグラデーション |
-| 7 | Web Development | データ可視化ダッシュボード | なし | CSSグラデーション |
 
 ### 3.5 Contact セクション
 
