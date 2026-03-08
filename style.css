@@ -438,6 +438,69 @@ ul { list-style: none; }
 }
 
 /* ============================
+   Note
+   ============================ */
+#note {
+  border-top: 1px solid var(--border);
+  padding: 100px 48px;
+}
+
+.note-cards {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.note-card {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+  color: var(--text);
+  transition: opacity 0.2s;
+}
+
+.note-card:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.note-card:hover {
+  opacity: 0.5;
+}
+
+.note-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.note-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.note-card-handle {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+.note-card-desc {
+  font-family: var(--font-ja);
+  font-size: 0.82rem;
+  color: var(--text);
+  font-weight: 300;
+  line-height: 1.85;
+}
+
+/* ============================
    Contact
    ============================ */
 #contact {
@@ -548,6 +611,7 @@ footer {
   }
 
   #events { padding: 72px 28px; }
+  #note { padding: 72px 28px; }
 }
 
 @media (max-width: 540px) {
