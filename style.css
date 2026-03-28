@@ -369,6 +369,8 @@ ul { list-style: none; }
     linear-gradient(170deg, #f7f3ec 0%, #ebe5d8 100%);
 }
 
+.work-thumb-chushinmei .work-thumb-img { object-position: top center; }
+
 .work-thumb-nagi {
   background: #0f1a14;
 }
