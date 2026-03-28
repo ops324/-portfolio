@@ -2,7 +2,7 @@
 
 | 項目 | 内容 |
 |---|---|
-| バージョン | 2.1.3 |
+| バージョン | 2.2.0 |
 | 作成日 | 2026年3月7日 |
 | 最終更新 | 2026年3月28日 |
 | 作成者 | 滝本 哲也 |
@@ -44,6 +44,7 @@
 | 2.1.0 | 2026-03-08 | noteセクション追加（独立タブ・丸型アイコン表示）。@bright_yarrow261・@life_ops の2アカウント掲載 |
 | 2.1.2 | 2026-03-26 | @tech_news_ アカウントを削除。noteセクションは2アカウント構成に変更 |
 | 2.1.3 | 2026-03-28 | メールアドレスを contact@flowmate.jp に変更。noteセクションに @_minase_ritsu アカウントを追加（3アカウント構成） |
+| 2.2.0 | 2026-03-28 | Worksに「中心銘（ちゅうしんめい）」カード追加。和紙調ベージュ背景のサムネイル・1枚スライド実装。作品一覧4件構成 |
 
 ---
 
@@ -118,6 +119,7 @@ v1.2 では、参考サイト（fukushimanaoki.com）のような白背景ミニ
 │   ├── nagi-記録４.png              # Nagi スライド5（記録画面4・ライトモード）
 │   ├── nagi-記録５.png              # Nagi スライド6（記録画面5・ライトモード）
 │   ├── Nagi-カレンダー.png          # Nagi スライド7（カレンダー画面・ライトモード）
+│   ├── thumb-chushinmei.png        # 中心銘 メイン画面
 │   ├── freq-video-light.mp4       # Frequency Analyzer 画面収録・ライトモード（188KB）
 │   ├── freq-video-dark.mp4        # Frequency Analyzer 画面収録・ダークモード（3.0MB）
 │   └── サイトアイコン.png            # サイトアイコン（favicon・navbar掲載）
@@ -209,13 +211,14 @@ npx serve -l 3000 .
 | ホバー | サムネイル `opacity: 0.85`。スライド矢印（← →）を半透明黒丸ボタンで表示（白背景・暗背景どちらでも視認可能） |
 | リンク | カード全体を `<a>` で包む場合あり（外部サイトへ遷移） |
 
-#### 3.4.3 作品一覧（v1.8.3 時点）
+#### 3.4.3 作品一覧（v2.2.0 時点）
 
 | # | カテゴリ | タイトル | リンク | サムネイル |
 |---|---|---|---|---|
 | 1 | Web Development | 翡翠眼（ひすいがん） | https://hisuigan-macro-insight-engine.vercel.app/ | `thumb-hisuigan.jpg` / `thumb-hisuigan-report.jpg`（2枚手動スライド） |
 | 2 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `Nagi-アイコン.jpeg` / `nagi-記録１〜５.png` / `Nagi-カレンダー.png`（7枚手動スライド） |
-| 3 | Web Development | Frequency Analyzer | https://frequency-analyzer.vercel.app | `freq-video-light.mp4`（ライトモード動画） / `freq-video-dark.mp4`（ダークモード動画）（2枚手動スライド・`<video autoplay muted loop>`） |
+| 3 | Web Development | 中心銘（ちゅうしんめい） | https://chushinmei.vercel.app | `thumb-chushinmei.png`（1枚・和紙調ベージュ背景） |
+| 4 | Web Development | Frequency Analyzer | https://frequency-analyzer.vercel.app | `freq-video-light.mp4`（ライトモード動画） / `freq-video-dark.mp4`（ダークモード動画）（2枚手動スライド・`<video autoplay muted loop>`） |
 
 ### 3.5 Events セクション
 
@@ -324,7 +327,7 @@ npx serve -l 3000 .
 
 | 項目 | 仕様 |
 |---|---|
-| 対象要素 | `.work-thumb[data-slide]` 内 `.work-thumb-img`（翡翠眼: 2枚 / Nagi: 7枚） |
+| 対象要素 | `.work-thumb[data-slide]` 内 `.work-thumb-img`（翡翠眼: 2枚 / Nagi: 7枚 / 中心銘: 1枚 / Frequency Analyzer: 2枚） |
 | 操作 | 左右矢印ボタン（← →）またはドットナビゲーションをクリック |
 | 切り替えアニメーション | `opacity: 0→1`（CSS transition 0.6s ease） |
 | 矢印表示 | ホバー時に表示（`.work-thumb:hover .slide-prev/.slide-next { opacity: 1 }`）。背景: `rgba(0,0,0,0.32)` 半透明黒丸（28px）、ホバーで `0.52` に強調 |

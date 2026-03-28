@@ -362,6 +362,13 @@ ul { list-style: none; }
     radial-gradient(ellipse 20% 22% at 22% 72%, rgba(10, 90, 50, 0.12) 0%, transparent 55%);
 }
 
+.work-thumb-chushinmei {
+  background: #f5f0e8;
+  background-image:
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(210, 195, 168, 0.35) 0%, transparent 70%),
+    linear-gradient(170deg, #f7f3ec 0%, #ebe5d8 100%);
+}
+
 .work-thumb-nagi {
   background: #0f1a14;
 }
