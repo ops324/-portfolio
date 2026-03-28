@@ -67,6 +67,7 @@ ul { list-style: none; }
 .nav-links {
   display: flex;
   gap: 36px;
+  white-space: nowrap;
 }
 
 .nav-links a {
@@ -603,7 +604,15 @@ footer {
    Responsive
    ============================ */
 @media (max-width: 860px) {
-  #navbar { padding: 0 28px; }
+  #navbar { padding: 0 28px; gap: 16px; }
+  .nav-links {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-shrink: 1;
+    min-width: 0;
+    scrollbar-width: none;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
   #hero { padding: 0 28px; }
   #about, #contact, #projects { padding: 72px 28px; }
 
