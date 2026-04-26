@@ -2,9 +2,9 @@
 
 | 項目 | 内容 |
 |---|---|
-| バージョン | 2.2.4 |
+| バージョン | 2.3.0 |
 | 作成日 | 2026年3月7日 |
-| 最終更新 | 2026年3月28日 |
+| 最終更新 | 2026年4月27日 |
 | 作成者 | 滝本 哲也 |
 | リポジトリ | github.com/ops324/-portfolio |
 | 公開URL | https://takimototetsuya.vercel.app |
@@ -49,6 +49,8 @@
 | 2.2.2 | 2026-03-28 | 中心銘サムネイルの表示位置を上部基準（`object-position: top center`）に変更 |
 | 2.2.3 | 2026-03-28 | ナビバー左側のロゴテキスト（名前）を削除しアイコンのみに変更。モバイルでナビリンクを横スクロール可能に |
 | 2.2.4 | 2026-03-28 | Nagi説明文を全面改訂。AIキャラクター「凪」の役割・感情ラベル自動抽出・多面的視点の概念をより具体的に記述 |
+| 2.2.5 | 2026-03-30 | OGPメタタグ追加（og:title / og:description / og:image / twitter:card）。専用OGP画像（`ogp.png` 1200×630px）を設置。リンク共有時にプレビュー画像が表示されるよう対応 |
+| 2.3.0 | 2026-04-27 | UI全体を上品に刷新。背景色をオフホワイト（#f7f6f3）に変更、ヒーロー名をNoto Serif JPに変更、ナビにbackdrop-blur追加、セクションラベルに左ボーダーアクセント追加。Aboutセクションをシングルカラム中央寄せに変更、生年月日を縦仕切り線付き横並びに、「指針」を両側ライン付きセンター区切りに変更、本文テキスト中央揃え。About本文を文語調に改訂（「好奇心の向くまま——探索し、鑑賞し、新しい技術と出会う。与え、分かち合う。」）。翡翠眼サムネイルをダークグリーンのヒービジュアルに差し替え（1枚）。スライド画像が1枚の場合は矢印・ドットを非表示に変更 |
 
 ---
 
@@ -126,6 +128,7 @@ v1.2 では、参考サイト（fukushimanaoki.com）のような白背景ミニ
 │   ├── thumb-chushinmei.png        # 中心銘 メイン画面
 │   ├── freq-video-light.mp4       # Frequency Analyzer 画面収録・ライトモード（188KB）
 │   ├── freq-video-dark.mp4        # Frequency Analyzer 画面収録・ダークモード（3.0MB）
+│   ├── ogp.png                      # OGP画像（1200×630px・リンク共有プレビュー用）
 │   └── サイトアイコン.png            # サイトアイコン（favicon・navbar掲載）
 └── .claude/
     └── launch.json     # ローカル開発サーバー設定
@@ -353,7 +356,19 @@ npx serve -l 3000 .
 
 ## 6. デプロイ・運用
 
-### 6.1 デプロイ情報
+### 6.1 OGP（Open Graph Protocol）
+
+| 項目 | 値 |
+|---|---|
+| og:title | 滝本 哲也 |
+| og:description | Web開発・自動化フロー・ツール開発と、非日常体験イベントの企画主催。生活を豊かにするアイデアを形にしています。 |
+| og:type | website |
+| og:url | https://takimototetsuya.vercel.app |
+| og:image | `images/ogp.png`（1200×630px） |
+| og:site_name | 滝本 哲也 |
+| twitter:card | summary_large_image |
+
+### 6.2 デプロイ情報
 
 | 項目 | 内容 |
 |---|---|
@@ -363,7 +378,7 @@ npx serve -l 3000 .
 | ビルド | 不要（静的ファイルをそのまま配信） |
 | 公開 URL | https://takimototetsuya.vercel.app |
 
-### 6.2 更新手順
+### 6.3 更新手順
 
 ```bash
 git add <変更ファイル>
@@ -371,7 +386,7 @@ git commit -m "Update: <変更内容>"
 git push origin main
 ```
 
-### 6.3 主な変更箇所の対応表
+### 6.4 主な変更箇所の対応表
 
 | 作業内容 | 変更ファイル |
 |---|---|

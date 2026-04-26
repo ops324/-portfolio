@@ -40,7 +40,16 @@ sections.forEach(s => activeObserver.observe(s));
 document.querySelectorAll('.work-thumb[data-slide]').forEach(thumb => {
   const imgs = thumb.querySelectorAll('.work-thumb-img');
   const dots = thumb.querySelectorAll('.slide-dot');
+  const prevBtn = thumb.querySelector('.slide-prev');
+  const nextBtn = thumb.querySelector('.slide-next');
   let current = 0;
+
+  if (imgs.length <= 1) {
+    prevBtn.style.display = 'none';
+    nextBtn.style.display = 'none';
+    thumb.querySelector('.slide-dots').style.display = 'none';
+    return;
+  }
 
   function goTo(n) {
     imgs[current].classList.remove('active');
@@ -50,13 +59,13 @@ document.querySelectorAll('.work-thumb[data-slide]').forEach(thumb => {
     dots[current].classList.add('active');
   }
 
-  thumb.querySelector('.slide-prev').addEventListener('click', e => {
+  prevBtn.addEventListener('click', e => {
     e.preventDefault();
     e.stopPropagation();
     goTo(current - 1);
   });
 
-  thumb.querySelector('.slide-next').addEventListener('click', e => {
+  nextBtn.addEventListener('click', e => {
     e.preventDefault();
     e.stopPropagation();
     goTo(current + 1);

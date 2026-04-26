@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400&family=Noto+Sans+JP:wght@300;400&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet" />
 </head>
 <body>
 
@@ -51,13 +51,21 @@
     <div class="about-inner reveal">
       <div class="about-label">about</div>
       <div class="about-body">
-        <p class="about-meta">1993 / 11 / 9&emsp;蠍座&emsp;酉年</p>
-        <p class="about-section-label">指針</p>
-        <p>
+        <div class="about-meta-row">
+          <span class="about-meta-item">1993 / 11 / 9</span>
+          <span class="about-meta-sep"></span>
+          <span class="about-meta-item">蠍座</span>
+          <span class="about-meta-sep"></span>
+          <span class="about-meta-item">酉年</span>
+        </div>
+        <div class="about-divider">
+          <span class="about-divider-label">指針</span>
+        </div>
+        <p class="about-text">
           現世とは心を高めるために与えられた期間であり、魂を磨くための修養の場である。人間の生きる意味と価値は、その錬磨にある。
         </p>
-        <p>
-          楽しみは、探索・エンタメ鑑賞・新技術のキャッチアップ。
+        <p class="about-text about-text--sub">
+          好奇心の向くまま——探索し、鑑賞し、新しい技術と出会う。与え、分かち合う。
         </p>
       </div>
     </div>
@@ -73,12 +81,10 @@
       <a href="https://hisuigan-macro-insight-engine.vercel.app/" target="_blank" rel="noopener" class="work-card reveal">
         <div class="work-thumb work-thumb-hisuigan" data-slide="0">
           <img src="images/thumb-hisuigan.jpg" alt="翡翠眼 — マーケットデータ" class="work-thumb-img active" />
-          <img src="images/thumb-hisuigan-report.jpg" alt="翡翠眼 — レポート" class="work-thumb-img" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
           <div class="slide-dots">
             <span class="slide-dot active"></span>
-            <span class="slide-dot"></span>
           </div>
         </div>
         <div class="work-info">
