@@ -263,7 +263,7 @@ npx serve -l 3000 .
 |---|---|---|---|
 | 1 | @bright_yarrow261 | Claude・AI活用を実践ベースで発信。「使いこなす技術」をテーマに、プロンプト・ワークフロー・ツール活用を体系的にまとめています。 | https://note.com/bright_yarrow261 |
 | 2 | @life_ops | 頭が良いとは、どういうことか。構造で考え、本質を見抜き、判断の精度を上げる。地頭は才能ではなく、フォームだ。 | https://note.com/life_ops |
-| 3 | @_minase_ritsu | 好奇心の多動。ジャンル不問で気になったことを調べて記事にしています。 | https://note.com/_minase_ritsu |
+| 3 | @minase_ritsu | 好奇心の多動。ジャンル不問で気になったことを調べて記事にしています。 | https://note.com/minase_ritsu |
 
 ### 3.7 Contact セクション
 
