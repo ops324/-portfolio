@@ -16,7 +16,7 @@
   --font-serif-ja: 'Noto Serif JP', serif;
 }
 
-html { scroll-behavior: smooth; }
+/* scroll handled by Lenis */
 
 body {
   background: var(--bg);
@@ -92,6 +92,7 @@ ul { list-style: none; }
    Hero
    ============================ */
 #hero {
+  position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -106,6 +107,7 @@ ul { list-style: none; }
 }
 
 .hero-sub {
+  overflow: hidden;
   font-size: 0.70rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -114,14 +116,25 @@ ul { list-style: none; }
   font-weight: 400;
 }
 
+.hero-sub-inner {
+  display: block;
+  will-change: transform;
+}
+
 .hero-name {
+  overflow: hidden;
   font-family: var(--font-serif-ja);
   font-size: clamp(2.8rem, 6vw, 5.5rem);
   font-weight: 300;
-  line-height: 1.15;
+  line-height: 1.2;
   letter-spacing: 0.08em;
   margin-bottom: 32px;
   color: var(--text);
+}
+
+.hero-name-inner {
+  display: block;
+  will-change: transform;
 }
 
 .hero-desc {
@@ -133,12 +146,27 @@ ul { list-style: none; }
   max-width: 480px;
 }
 
+.hero-desc-inner {
+  display: block;
+  will-change: transform;
+}
+
+.hero-line {
+  position: absolute;
+  bottom: 0;
+  left: 48px;
+  right: 48px;
+  height: 1px;
+  background: var(--border);
+  transform-origin: left;
+}
+
 /* ============================
    About
    ============================ */
 #about {
+  position: relative;
   padding: 100px 48px;
-  border-top: 1px solid var(--border);
 }
 
 .about-inner {
@@ -220,6 +248,10 @@ ul { list-style: none; }
   text-align: center;
 }
 
+.about-text-line {
+  display: block;
+}
+
 .about-text--sub {
   margin-top: 20px;
   color: var(--muted);
@@ -247,7 +279,7 @@ ul { list-style: none; }
    Projects — Works Grid
    ============================ */
 #projects {
-  border-top: 1px solid var(--border);
+  position: relative;
   padding: 100px 48px;
 }
 
@@ -366,15 +398,6 @@ ul { list-style: none; }
 
 .work-card {
   display: block;
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.work-card:hover {
-  transform: translateY(-3px);
-}
-
-.work-card:hover .work-thumb {
-  opacity: 0.9;
 }
 
 .work-thumb-1 {
@@ -474,7 +497,7 @@ ul { list-style: none; }
    Events
    ============================ */
 #events {
-  border-top: 1px solid var(--border);
+  position: relative;
   padding: 100px 48px;
 }
 
@@ -500,7 +523,7 @@ ul { list-style: none; }
    Note
    ============================ */
 #note {
-  border-top: 1px solid var(--border);
+  position: relative;
   padding: 100px 48px;
 }
 
@@ -568,8 +591,8 @@ ul { list-style: none; }
    Contact
    ============================ */
 #contact {
+  position: relative;
   padding: 100px 48px;
-  border-top: 1px solid var(--border);
 }
 
 .contact-inner {
@@ -633,31 +656,39 @@ footer {
 /* ============================
    Animations
    ============================ */
-.fade-in {
-  opacity: 0;
-  transform: translateY(16px);
-  animation: fadeUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s forwards;
+/* .reveal の初期状態は GSAP が inline style で管理 — CSS には記述しない */
+
+/* ============================
+   Page Intro Overlay
+   ============================ */
+#page-intro {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 9999;
+  pointer-events: none;
+  transform-origin: top;
 }
 
-@keyframes fadeUp {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.reveal {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
+/* ============================
+   Section Line
+   ============================ */
+.section-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border);
+  transform-origin: left;
+  transform: scaleX(0);
 }
 
 /* ============================
    Responsive
    ============================ */
 @media (max-width: 860px) {
+  .hero-line { left: 28px; right: 28px; }
   #navbar { padding: 0 28px; gap: 16px; }
   .nav-links {
     overflow-x: auto;
