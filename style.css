@@ -671,39 +671,6 @@ footer {
 }
 
 /* ============================
-   Custom Cursor
-   ============================ */
-@media (hover: hover) and (pointer: fine) {
-  body, a, button { cursor: none; }
-}
-
-#cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 99998;
-}
-
-.cursor-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--accent);
-  opacity: 0.7;
-  transform: translate(-50%, -50%);
-  transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-}
-
-#cursor.cursor--hover .cursor-dot {
-  width: 28px;
-  height: 28px;
-  opacity: 0;
-  background: transparent;
-  box-shadow: 0 0 0 1px var(--accent);
-}
-
-/* ============================
    Section Line
    ============================ */
 .section-line {

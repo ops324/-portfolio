@@ -88,20 +88,6 @@ introTl
   .add(heroEntrance(), '-=0.3');
 
 // ============================
-// Custom Cursor (PC only)
-// ============================
-const cursor = document.getElementById('cursor');
-if (cursor && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-  const xTo = gsap.quickTo(cursor, 'x', { duration: 0.35, ease: 'power3.out' });
-  const yTo = gsap.quickTo(cursor, 'y', { duration: 0.35, ease: 'power3.out' });
-  document.addEventListener('mousemove', e => { xTo(e.clientX); yTo(e.clientY); });
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => cursor.classList.add('cursor--hover'));
-    el.addEventListener('mouseleave', () => cursor.classList.remove('cursor--hover'));
-  });
-}
-
-// ============================
 // Scroll Reveals (.reveal)
 // ============================
 gsap.utils.toArray('.reveal').forEach(el => {
