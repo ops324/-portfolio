@@ -2,7 +2,7 @@
 
 | 項目 | 内容 |
 |---|---|
-| バージョン | 2.5.0 |
+| バージョン | 2.5.1 |
 | 作成日 | 2026年3月7日 |
 | 最終更新 | 2026年5月25日 |
 | 作成者 | 滝本 哲也 |
@@ -56,6 +56,7 @@
 | 2.4.0 | 2026-05-24 | GSAP + ScrollTrigger + Lenis を導入し、シネマティックなスクロール演出へ刷新（ページイントロのオーバーレイ、ヒーロー入場、セクション罫線描画、交互スライドインのリビール、ヒーローのパララックス）。Intersection Observer ベースの reveal を GSAP/ScrollTrigger へ移行 |
 | 2.4.1 | 2026-05-24 | カスタムカーソルを廃止 |
 | 2.4.2 | 2026-05-24 | Aboutの区切りラベルを「指針」→「軸」に変更 |
+| 2.5.1 | 2026-05-25 | Events のキャプションから「非日常体験イベント」を削除（出典表記「Instagram」のみに） |
 | 2.5.0 | 2026-05-25 | **エディトリアル昇華リデザイン。** 見出し書体を Shippori Mincho B1（格のある明朝）へ更新。タイプ階層を再設計（ベース15px、`--ink/--text/--muted` の3層）。全セクションに「Latin小ラベル＋和文明朝見出し」のヘッダー体系を新設（works=制作 / events=催し / note=言葉 / contact=連絡）。配色を深化（生成り継続・`--paper-2`・タウープ `--accent #a3937a` / 可読版 `--accent-ink #7c6f59`）。Worksカードに索引番号01-04・明朝題字・「View →」アフォーダンス・細罫サムネ枠を追加。EventsのInstagram埋め込みを paper-2 フレーム＋細罫＋figcaption で世界観に統一。About本文を明朝化。Note/Contactを洗練。`prefers-reduced-motion` 対応・`:focus-visible` を追加。Worksタイトルの読み仮名（翡翠眼・中心銘）を省略 |
 
 ---
@@ -259,7 +260,7 @@ npx serve -l 3000 .
 | レイアウト | 2カラムグリッド（`events-grid`）、gap 48px、max-width 1100px |
 | 埋め込み方式 | Instagram 公式 blockquote embed（`embed.js` 非同期ロード） |
 | フレーム | 各埋め込みを `.event-frame`（背景 `--paper-2`・`1px solid var(--line)`・padding 22px）で包み、白いIGカードの浮きを解消 |
-| キャプション | `<figcaption>`：「非日常体験イベント」＋ ソース表記「Instagram」 |
+| キャプション | `<figcaption>`：ソース表記「Instagram」 |
 | レスポンシブ | 860px 以下で1カラム |
 
 #### 3.5.1 掲載イベント一覧
