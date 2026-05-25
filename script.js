@@ -3,8 +3,10 @@
 // ============================
 gsap.registerPlugin(ScrollTrigger);
 
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 const lenis = new Lenis({
-  duration: 1.2,
+  duration: reduceMotion ? 0 : 1.2,
   easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   lerp: 0.1,
 });
@@ -15,7 +17,6 @@ lenis.on('scroll', () => ScrollTrigger.update());
 gsap.ticker.add(time => lenis.raf(time * 1000));
 gsap.ticker.lagSmoothing(0);
 
-// 全トリガー位置を初期計算
 ScrollTrigger.refresh();
 
 // アンカーリンクを Lenis に委譲
@@ -30,12 +31,24 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 // ============================
+// Navbar scrolled state
+// ============================
+const navbar = document.getElementById('navbar');
+function updateNav() { navbar.classList.toggle('scrolled', window.scrollY > 8); }
+lenis.on('scroll', updateNav);
+updateNav();
+
+// ============================
 // Helper: スクロールリビール登録
-// gsap.set の初期トゥイーンとの競合を防ぐため overwrite: true を使用
+// reduceMotion 時はアニメーションせず最終状態を即時表示
 // ============================
 function revealOn(trigger, start, animProps, targets) {
   var els = typeof targets === 'string' ? gsap.utils.toArray(targets) : targets;
   if (!els || els.length === 0) return;
+  if (reduceMotion) {
+    gsap.set(els, { opacity: 1, x: 0, y: 0 });
+    return;
+  }
   gsap.set(els, { opacity: 0, y: animProps.y || 0, x: animProps.x || 0 });
   ScrollTrigger.create({
     trigger: trigger,
@@ -76,16 +89,22 @@ function heroEntrance() {
 }
 
 // ページロード → ヒーロー
-const introTl = gsap.timeline();
-introTl
-  .to('#page-intro', {
-    scaleY: 0,
-    duration: 0.9,
-    ease: 'expo.inOut',
-    delay: 0.15,
-    transformOrigin: 'top',
-  })
-  .add(heroEntrance(), '-=0.3');
+if (reduceMotion) {
+  gsap.set('#page-intro', { scaleY: 0 });
+  gsap.set('.hero-sub-inner, .hero-name-inner, .hero-desc-inner', { yPercent: 0, opacity: 1 });
+  gsap.set('.hero-line', { scaleX: 1 });
+} else {
+  const introTl = gsap.timeline();
+  introTl
+    .to('#page-intro', {
+      scaleY: 0,
+      duration: 0.9,
+      ease: 'expo.inOut',
+      delay: 0.15,
+      transformOrigin: 'top',
+    })
+    .add(heroEntrance(), '-=0.3');
+}
 
 // ============================
 // Scroll Reveals (.reveal)
@@ -98,6 +117,7 @@ gsap.utils.toArray('.reveal').forEach(el => {
 // Section Border Lines
 // ============================
 gsap.utils.toArray('.section-line').forEach(line => {
+  if (reduceMotion) { gsap.set(line, { scaleX: 1 }); return; }
   gsap.set(line, { scaleX: 0 });
   ScrollTrigger.create({
     trigger: line,
@@ -110,7 +130,7 @@ gsap.utils.toArray('.section-line').forEach(line => {
 // ============================
 // About Section
 // ============================
-revealOn('#about', 'top 80%', { y: 16, duration: 0.8 }, '.about-label');
+revealOn('#about', 'top 80%', { y: 16, duration: 0.8 }, '.about-eyebrow');
 revealOn('#about', 'top 74%', { y: 14, duration: 0.8 }, '.about-meta-row');
 revealOn('#about', 'top 68%', { y: 12, duration: 0.7 }, '.about-divider');
 revealOn('#about', 'top 62%', { y: 10, duration: 0.7, stagger: 0.13 }, '.about-text-line');
@@ -122,6 +142,7 @@ revealOn('#about', 'top 55%', { y: 8,  duration: 0.7 }, '.about-text--sub');
 const workCards = document.querySelectorAll('.work-card');
 
 workCards.forEach((card, i) => {
+  if (reduceMotion) { gsap.set(card, { opacity: 1, x: 0 }); return; }
   const xDir = i % 2 === 0 ? -24 : 24;
   gsap.set(card, { opacity: 0, x: xDir });
   ScrollTrigger.create({
@@ -133,23 +154,25 @@ workCards.forEach((card, i) => {
 });
 
 // GSAP ホバー（画像を overflow: hidden 内でズーム）
-workCards.forEach(card => {
-  const imgs = card.querySelectorAll('.work-thumb-img');
+if (!reduceMotion) {
+  workCards.forEach(card => {
+    const imgs = card.querySelectorAll('.work-thumb-img');
 
-  card.addEventListener('mouseenter', () => {
-    gsap.to(card, { y: -4,     duration: 0.4, ease: 'power2.out' });
-    gsap.to(imgs, { scale: 1.05, duration: 0.6, ease: 'power2.out' });
+    card.addEventListener('mouseenter', () => {
+      gsap.to(card, { y: -4,     duration: 0.4, ease: 'power2.out' });
+      gsap.to(imgs, { scale: 1.05, duration: 0.6, ease: 'power2.out' });
+    });
+    card.addEventListener('mouseleave', () => {
+      gsap.to(card, { y: 0,   duration: 0.5, ease: 'power2.inOut' });
+      gsap.to(imgs, { scale: 1, duration: 0.6, ease: 'power2.inOut' });
+    });
   });
-  card.addEventListener('mouseleave', () => {
-    gsap.to(card, { y: 0,   duration: 0.5, ease: 'power2.inOut' });
-    gsap.to(imgs, { scale: 1, duration: 0.6, ease: 'power2.inOut' });
-  });
-});
+}
 
 // ============================
 // Hero Parallax (desktop only)
 // ============================
-if (!window.matchMedia('(max-width: 860px)').matches) {
+if (!reduceMotion && !window.matchMedia('(max-width: 860px)').matches) {
   gsap.to('.hero-name', {
     yPercent: -12,
     ease: 'none',
@@ -178,6 +201,7 @@ if (!window.matchMedia('(max-width: 860px)').matches) {
 // ============================
 (function() {
   const noteCards = gsap.utils.toArray('.note-card');
+  if (reduceMotion) { gsap.set(noteCards, { opacity: 1, y: 0 }); return; }
   gsap.set(noteCards, { opacity: 0, y: 10 });
   ScrollTrigger.create({
     trigger: '#note',
@@ -189,7 +213,6 @@ if (!window.matchMedia('(max-width: 860px)').matches) {
       duration: 0.7,
       stagger: 0.1,
       ease: 'power2.out',
-      // CSS hover 用に inline style を最後にクリア
       onComplete: () => gsap.set(noteCards, { clearProps: 'opacity,y' }),
     }),
   });

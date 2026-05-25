@@ -2,9 +2,9 @@
 
 | 項目 | 内容 |
 |---|---|
-| バージョン | 2.3.2 |
+| バージョン | 2.5.0 |
 | 作成日 | 2026年3月7日 |
-| 最終更新 | 2026年4月27日 |
+| 最終更新 | 2026年5月25日 |
 | 作成者 | 滝本 哲也 |
 | リポジトリ | github.com/ops324/-portfolio |
 | 公開URL | https://takimototetsuya.vercel.app |
@@ -50,9 +50,13 @@
 | 2.2.3 | 2026-03-28 | ナビバー左側のロゴテキスト（名前）を削除しアイコンのみに変更。モバイルでナビリンクを横スクロール可能に |
 | 2.2.4 | 2026-03-28 | Nagi説明文を全面改訂。AIキャラクター「凪」の役割・感情ラベル自動抽出・多面的視点の概念をより具体的に記述 |
 | 2.2.5 | 2026-03-30 | OGPメタタグ追加（og:title / og:description / og:image / twitter:card）。専用OGP画像（`ogp.png` 1200×630px）を設置。リンク共有時にプレビュー画像が表示されるよう対応 |
-| 2.3.0 | 2026-04-27 | UI全体を上品に刷新。背景色をオフホワイト（#f7f6f3）に変更、ヒーロー名をNoto Serif JPに変更、ナビにbackdrop-blur追加、セクションラベルに左ボーダーアクセント追加。Aboutセクションをシングルカラム中央寄せに変更、生年月日を縦仕切り線付き横並びに、「指針」を両側ライン付きセンター区切りに変更、本文テキスト中央揃え。About本文を文語調に改訂（「好奇心の向くまま——探索し、鑑賞し、新しい技術と出会う。与え、分かち合う。」）。翡翠眼サムネイルをダークグリーンのヒービジュアルに差し替え（1枚）。スライド画像が1枚の場合は矢印・ドットを非表示に変更 |
-| 2.3.1 | 2026-04-27 | 翡翠眼の説明文を全面改訂。「AI（翡翠眼）が7層の情報ソースを統合分析し、日次・週次・月次の3モードで複数シナリオ付きレポートを生成する。「読むと視界が変わる」——それを設計の核に置いた。」に変更 |
-| 2.3.2 | 2026-04-27 | Nagiの説明文を全面改訂。3段落構成（キャッチ・コンセプト・機能説明）に変更。「評価しない、ただ問う。」から始まる新文に差し替え |
+| 2.3.0 | 2026-04-27 | UI全体を上品に刷新。背景色をオフホワイト（#f7f6f3）に変更、ヒーロー名をNoto Serif JPに変更、ナビにbackdrop-blur追加、セクションラベルに左ボーダーアクセント追加。Aboutセクションをシングルカラム中央寄せに変更、生年月日を縦仕切り線付き横並びに、「指針」を両側ライン付きセンター区切りに変更、本文テキスト中央揃え。About本文を文語調に改訂。翡翠眼サムネイルをダークグリーンのヒービジュアルに差し替え（1枚）。スライド画像が1枚の場合は矢印・ドットを非表示に変更 |
+| 2.3.1 | 2026-04-27 | 翡翠眼の説明文を全面改訂 |
+| 2.3.2 | 2026-04-27 | Nagiの説明文を全面改訂。3段落構成（キャッチ・コンセプト・機能説明）に変更 |
+| 2.4.0 | 2026-05-24 | GSAP + ScrollTrigger + Lenis を導入し、シネマティックなスクロール演出へ刷新（ページイントロのオーバーレイ、ヒーロー入場、セクション罫線描画、交互スライドインのリビール、ヒーローのパララックス）。Intersection Observer ベースの reveal を GSAP/ScrollTrigger へ移行 |
+| 2.4.1 | 2026-05-24 | カスタムカーソルを廃止 |
+| 2.4.2 | 2026-05-24 | Aboutの区切りラベルを「指針」→「軸」に変更 |
+| 2.5.0 | 2026-05-25 | **エディトリアル昇華リデザイン。** 見出し書体を Shippori Mincho B1（格のある明朝）へ更新。タイプ階層を再設計（ベース15px、`--ink/--text/--muted` の3層）。全セクションに「Latin小ラベル＋和文明朝見出し」のヘッダー体系を新設（works=制作 / events=催し / note=言葉 / contact=連絡）。配色を深化（生成り継続・`--paper-2`・タウープ `--accent #a3937a` / 可読版 `--accent-ink #7c6f59`）。Worksカードに索引番号01-04・明朝題字・「View →」アフォーダンス・細罫サムネ枠を追加。EventsのInstagram埋め込みを paper-2 フレーム＋細罫＋figcaption で世界観に統一。About本文を明朝化。Note/Contactを洗練。`prefers-reduced-motion` 対応・`:focus-visible` を追加。Worksタイトルの読み仮名（翡翠眼・中心銘）を省略 |
 
 ---
 
@@ -73,9 +77,9 @@
 
 ### 1.1 プロジェクト概要
 
-Builder・滝本哲也のポートフォリオサイト。制作したプロダクト・自己紹介・連絡先を掲載する。採用担当者・クライアント・協業パートナーを主な閲覧対象とし、シンプルで誠実な印象を与えることを目的とする。
+Builder・滝本哲也のポートフォリオサイト。制作したプロダクト・自己紹介・連絡先を掲載する。採用担当者・クライアント・協業パートナーを主な閲覧対象とし、静かで誠実、文語的で格調ある印象を与えることを目的とする。
 
-v1.2 では、参考サイト（fukushimanaoki.com）のような白背景ミニマルデザインを採用。エディトリアル・スプレッド形式を廃止し、作品をシンプルなグリッドで表示する構成に変更。あわせてコンテンツ（職業・テキスト）を実態に合わせて整理した。
+v2.5 では、静かで文語的な世界観を保ったまま視覚レイヤーをプロ水準のエディトリアル（雑誌的な版面）へ昇華。設計規律として genre=editorial / macrostructure=Long Document を採用（`style.css` 冒頭に Hallmark スタンプを記載）。
 
 ### 1.2 プロフィール
 
@@ -104,18 +108,20 @@ v1.2 では、参考サイト（fukushimanaoki.com）のような白背景ミニ
 |---|---|
 | HTML5 | マークアップ・セマンティクス |
 | CSS3 | スタイリング・アニメーション・レスポンシブ |
-| JavaScript (ES2020) | インタラクション・Intersection Observer |
+| JavaScript (ES2020) | インタラクション・スライドショー・アクティブナビ |
+| GSAP 3.12.5 + ScrollTrigger | 入場演出・スクロールリビール・パララックス |
+| Lenis 1.1.14 | スムーススクロール |
 | Google Fonts | Web フォント配信 |
 
-フレームワーク・ビルドツールは使用しない。依存パッケージなし、ビルド手順不要。
+フレームワーク・ビルドツールは使用しない（静的サイト）。GSAP / ScrollTrigger / Lenis は CDN から読み込み。依存パッケージなし、ビルド手順不要。
 
 ### 2.2 ファイル構成
 
 ```
 -portfolio/
 ├── index.html          # メインページ（全セクション）
-├── style.css           # 全スタイル定義
-├── script.js           # インタラクション・アニメーション
+├── style.css           # 全スタイル定義（冒頭に Hallmark スタンプ）
+├── script.js           # GSAP/Lenis 演出・スライドショー・アクティブナビ
 ├── spec.md             # 本仕様書
 ├── images/
 │   ├── thumb-hisuigan.jpg         # 翡翠眼 マーケットデータ画面
@@ -136,12 +142,16 @@ v1.2 では、参考サイト（fukushimanaoki.com）のような白背景ミニ
     └── launch.json     # ローカル開発サーバー設定
 ```
 
-### 2.3 外部リソース（Google Fonts）
+### 2.3 外部リソース
 
-| フォント | スタイル | 用途 |
+| リソース | 配信 | 用途 |
 |---|---|---|
-| Inter | 300 / 400 | 英字 UI・ラベル・キャプション |
-| Noto Sans JP | 300 / 400 | 日本語本文・全般 |
+| Inter（300 / 400 / 500） | Google Fonts | 英字 UI・ラベル・索引・キャプション |
+| Noto Sans JP（300 / 400） | Google Fonts | 日本語本文・説明文 |
+| Shippori Mincho B1（400 / 500 / 600） | Google Fonts | 見出し・名前・about本文・work題字（明朝） |
+| GSAP 3.12.5 / ScrollTrigger | cdnjs | アニメーション |
+| Lenis 1.1.14 | unpkg | スムーススクロール |
+| Instagram embed.js | instagram.com | Events 埋め込み |
 
 ### 2.4 ローカル開発
 
@@ -155,19 +165,21 @@ npx serve -l 3000 .
 
 ## 3. ページ構成・セクション仕様
 
+各セクションは共通のヘッダー体系を持つ：**Latin小ラベル（eyebrow）＋和文明朝見出し（`.sec-title`）を縦積み**（works=制作 / events=催し / note=言葉 / contact=連絡。about は eyebrow を中央配置し、本文の「軸」ステートメントを主役とする）。
+
 ### 3.1 ナビゲーション
 
 | 項目 | 仕様 |
 |---|---|
 | 種別 | 固定（`position: fixed`） |
 | 高さ | `--nav-h: 60px` |
-| 背景 | `#ffffff` |
-| 下ボーダー | `1px solid var(--border)` |
-| 左側 | アイコン（`サイトアイコン.png` 20px・opacity 0.75）のみ |
+| 背景 | `rgba(247,246,243,0.78)` + `backdrop-filter: blur(16px)` |
+| スクロール連動（外観） | スクロール量 > 8px で `.scrolled` 付与 → 下罫線出現・背景不透明度を強化 |
+| 左側 | アイコン（`サイトアイコン.png` 22px・opacity 0.8）のみ |
 | 右側 | リンク（about / works / events / note / contact）、大文字表示 |
 | モバイル | ナビリンクが横スクロール可能（`overflow-x: auto`、スクロールバー非表示） |
-| リンクスタイル | 通常: `var(--muted)` / ホバー・アクティブ: `var(--text)` |
-| スクロール連動 | Intersection Observer でアクティブセクションを検出し `.active` クラスを付与 |
+| リンクスタイル | 通常: `var(--muted)` / ホバー・アクティブ: `var(--ink)`。アクティブはタウープ（`--accent-ink`）の下線（`scaleX`） |
+| スクロール連動（active） | Intersection Observer でアクティブセクションを検出し `.active` を付与 |
 
 ### 3.2 Hero セクション
 
@@ -175,69 +187,79 @@ npx serve -l 3000 .
 |---|---|
 | 高さ | `min-height: 100vh` |
 | コンテンツ位置 | 縦中央寄せ（`align-items: center`） |
-| ラベル | "Builder"（0.70rem、spaced、uppercase） |
-| 名前 | 「滝本 哲也」（Noto Sans JP、`clamp(2.8rem, 6vw, 5.5rem)`、weight: 300） |
-| 説明文 | 「Web開発・自動化フロー・ツール開発と、非日常体験イベントの企画主催。生活を豊かにするアイデアを形にしています。」Noto Sans JP、0.88rem、`var(--muted)` |
-| アニメーション | `.fade-in`：`opacity 0→1`・`translateY(12px→0)`・1s cubic-bezier |
+| ラベル | "Builder"（Inter 0.70rem、letter-spacing 0.26em、uppercase、`--accent-ink`） |
+| 名前 | 「滝本 哲也」（**Shippori Mincho B1**、`clamp(3.2rem, 7.5vw, 6rem)`、weight 400、`--ink`） |
+| 説明文 | Noto Sans JP、`--fs-body`、`var(--text)`、line-height 2.15 |
+| 底部ライン | `.hero-line`（ScrollTrigger 連動なし／入場時に `scaleX` 描画） |
+| 入場演出 | ページイントロのオーバーレイ（`#page-intro` を `scaleY` で巻き上げ）→ sub→name→desc を `yPercent` で順次スライドイン（GSAP timeline） |
+| パララックス | デスクトップのみ：スクロールに応じ name `yPercent:-12` / desc 減衰（`scrub`） |
 
 ### 3.3 About セクション
 
 | 要素 | 仕様 |
 |---|---|
-| レイアウト | 2カラムグリッド（左: ラベル 180px 固定 / 右: コンテンツ） |
-| ラベル | "about"（Inter 0.66rem、spaced、uppercase、`var(--muted)`） |
-| メタ情報 | 「1993 / 11 / 9　蠍座　酉年」Inter、0.66rem、spaced、`var(--muted)` |
-| ラベル2（指針） | 「指針」Noto Sans JP、0.62rem、letter-spacing 0.18em、`var(--muted)` |
-| 本文1（人生哲学） | 「現世とは心を高めるために与えられた期間であり、魂を磨くための修養の場である。人間の生きる意味と価値は、その錬磨にある。」 |
-| 本文2（楽しみ） | 「楽しみは、探索・エンタメ鑑賞・新技術のキャッチアップ。」 |
+| レイアウト | シングルカラム中央寄せ（`max-width: 660px`） |
+| eyebrow | "about"（`.sec-eyebrow`、中央配置） |
+| メタ情報 | 「1993 / 11 / 9 ｜ 蠍座 ｜ 酉年」Inter、縦仕切り線（`--accent`）区切り |
+| 区切りラベル | 「軸」両側に罫線が伸びるセンター区切り（Shippori Mincho、`--accent-ink`） |
+| 本文1（人生哲学） | 「現世とは心を高めるために与えられた期間であり、魂を磨くための修養の場である。人間の生きる意味と価値は、その錬磨にある。」**Shippori Mincho 明朝・中央寄せ・`--ink`・`--fs-lead`** |
+| 本文2（補助） | 「好奇心の向くまま——探索し、鑑賞し、新しい技術と出会う。与え、分かち合う。」Noto Sans JP、`--muted` |
+| リビール | eyebrow→meta→divider→本文行（stagger）→補助 の順に GSAP で順次表示 |
 
 ### 3.4 Works セクション — グリッド形式
 
-作品を2カラムグリッドで表示する。
+作品を2カラムグリッドで表示する。セクションヘッダーは「works / 制作」。
 
 #### 3.4.1 グリッド構造
 
 ```
-[ WORKS ラベル                          ]
+[ works（eyebrow） ]
+[ 制作（明朝見出し） ]
 
 [ サムネイル A ] [ サムネイル B ]
-[ カテゴリ    ] [ カテゴリ    ]
-[ タイトル    ] [ タイトル    ]
-[ 説明文      ] [ 説明文      ]
-
-[ サムネイル C ] [ サムネイル D ]
-[ ...         ] [ ...         ]
+[ 01 · CATEGORY] [ 02 · CATEGORY]
+[ タイトル(明朝)] [ タイトル(明朝)]
+[ キャッチ(明朝伊)] [ キャッチ(明朝伊)]
+[ 説明文        ] [ 説明文        ]
+[ View →       ] [ View →       ]
 ```
 
 #### 3.4.2 作品カード仕様
 
 | 要素 | 仕様 |
 |---|---|
-| サムネイル | `aspect-ratio: 4/3`、CSSグラデーション（プレースホルダー）または `<img>` 実画像 |
-| カテゴリ | 0.62rem、uppercase、`var(--muted)` |
-| タイトル | Noto Sans JP、0.95rem、weight 400 |
-| キャッチコピー | Noto Sans JP、0.82rem、weight 300、italic（オプション） |
-| 説明文 | Noto Sans JP、0.78rem、weight 300、`var(--muted)` |
-| ホバー | サムネイル `opacity: 0.85`。スライド矢印（← →）を半透明黒丸ボタンで表示（白背景・暗背景どちらでも視認可能） |
-| リンク | カード全体を `<a>` で包む場合あり（外部サイトへ遷移） |
+| サムネイル | `aspect-ratio: 4/3`、`1px solid var(--line)` の細罫枠、`<img>`/`<video>` 実画像 |
+| メタ行 | 索引番号（01-04、`--accent-ink`、Inter）＋ カテゴリ（uppercase、`--muted`） |
+| タイトル | **Shippori Mincho B1**、`--fs-work`（`clamp(1.15rem,1.8vw,1.45rem)`）、weight 500、`--ink` |
+| キャッチコピー | **Shippori Mincho B1**、0.95rem、italic、`--text` |
+| 説明文 | Noto Sans JP、0.8rem、weight 300、`--text` |
+| View アフォーダンス | 「View →」（Inter、uppercase、`--muted`）。カードホバーで `--ink` に変色・矢印が `translateX` |
+| ホバー | カードが `y:-4` 浮上、サムネ画像が `scale:1.05`（GSAP） |
+| スライド矢印 | ホバー時表示。`rgba(26,26,28,0.42)` + `blur(4px)` の丸ボタン（30px）、白シェブロン |
+| ドット | 5px 円、`box-shadow` 付き。現在: 白98%・1.15倍 / 非選択: 白50% |
+| リンク | カード全体を `<a target="_blank">` で外部サイトへ |
 
-#### 3.4.3 作品一覧（v2.2.0 時点）
+#### 3.4.3 作品一覧（v2.5.0 時点）
 
 | # | カテゴリ | タイトル | リンク | サムネイル |
 |---|---|---|---|---|
-| 1 | Web Development | 翡翠眼（ひすいがん） | https://hisuigan-macro-insight-engine.vercel.app/ | `thumb-hisuigan.jpg` / `thumb-hisuigan-report.jpg`（2枚手動スライド） |
-| 2 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `Nagi-アイコン.jpeg` / `nagi-記録１〜５.png` / `Nagi-カレンダー.png`（7枚手動スライド） |
-| 3 | Web Development | 中心銘（ちゅうしんめい） | https://chushinmei.vercel.app | `thumb-chushinmei.png`（1枚・和紙調ベージュ背景） |
-| 4 | Web Development | Frequency Analyzer | https://frequency-analyzer.vercel.app | `freq-video-light.mp4`（ライトモード動画） / `freq-video-dark.mp4`（ダークモード動画）（2枚手動スライド・`<video autoplay muted loop>`） |
+| 01 | Web Development | 翡翠眼 | https://hisuigan-macro-insight-engine.vercel.app/ | `thumb-hisuigan.jpg`（1枚） |
+| 02 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `Nagi-アイコン.jpeg` / `nagi-記録１〜５.png` / `Nagi-カレンダー.png`（7枚手動スライド） |
+| 03 | Web Development | 中心銘 | https://chushinmei.vercel.app | `thumb-chushinmei.png`（1枚・和紙調ベージュ背景） |
+| 04 | Web Development | Frequency Analyzer | https://frequency-analyzer.vercel.app | `freq-video-light.mp4` / `freq-video-dark.mp4`（2枚手動スライド・`<video autoplay muted loop>`） |
+
+※ タイトルの読み仮名（翡翠眼＝ひすいがん／中心銘＝ちゅうしんめい）は v2.5.0 で省略。
 
 ### 3.5 Events セクション
 
 | 要素 | 仕様 |
 |---|---|
-| 位置 | Works と Contact の間 |
-| ラベル | `events`（section-label スタイル） |
-| レイアウト | 2カラムグリッド（`events-grid`）、gap 40px、max-width 1100px |
+| 位置 | Works と Note の間 |
+| ヘッダー | 「events / 催し」 |
+| レイアウト | 2カラムグリッド（`events-grid`）、gap 48px、max-width 1100px |
 | 埋め込み方式 | Instagram 公式 blockquote embed（`embed.js` 非同期ロード） |
+| フレーム | 各埋め込みを `.event-frame`（背景 `--paper-2`・`1px solid var(--line)`・padding 22px）で包み、白いIGカードの浮きを解消 |
+| キャプション | `<figcaption>`：「非日常体験イベント」＋ ソース表記「Instagram」 |
 | レスポンシブ | 860px 以下で1カラム |
 
 #### 3.5.1 掲載イベント一覧
@@ -251,11 +273,11 @@ npx serve -l 3000 .
 
 | 要素 | 仕様 |
 |---|---|
-| ラベル | `note`（section-label スタイル） |
-| レイアウト | 縦積みカードリスト（`flex-direction: column`）、max-width 1100px |
-| カード構成 | アバター画像（56px・丸型）＋ ハンドル名 ＋ 説明文 |
-| リンク | カード全体が `<a>` でアカウントページへ遷移（`target="_blank"`） |
-| ホバー | `opacity: 0.5` |
+| ヘッダー | 「note / 言葉」 |
+| レイアウト | 縦積みカードリスト（`flex-direction: column`）、max-width 1100px、上下ヘアライン区切り |
+| カード構成 | アバター画像（56px・丸型）＋ ハンドル名（`--accent-ink`）＋ 説明文 ＋ 右端の矢印（→） |
+| リンク | カード全体が `<a target="_blank">` でアカウントページへ |
+| ホバー | 背景が `--paper-2`、左右パディング拡張、矢印が `--ink` に変色・`translateX` |
 
 #### 3.6.1 掲載アカウント一覧
 
@@ -269,14 +291,15 @@ npx serve -l 3000 .
 
 | 要素 | 仕様 |
 |---|---|
-| レイアウト | 2カラムグリッド（左: ラベル 180px 固定 / 右: コンテンツ） |
-| リードテキスト | なし（削除済み） |
-| リンク | `contact@flowmate.jp` のみ |
-| リンクホバー | `var(--text)` に変色 + 下線アニメーション（`scaleX`） |
+| レイアウト | シングルカラム（max-width 1100px） |
+| ヘッダー | 「contact / 連絡」 |
+| リードテキスト | 「制作のご相談、催しへのお誘い——ご連絡をお待ちしております。」（Shippori Mincho、`--text`） |
+| リンク | `contact@flowmate.jp`（Inter 0.95rem） |
+| リンクホバー | `--ink` に変色 + 下線アニメーション（`scaleX`） |
 
 ### 3.8 Footer
 
-著作権表示のみ（`© 2026 滝本 哲也`）。
+著作権表示のみ（`© 2026 滝本 哲也`）。上罫線・Inter・`--muted`。
 
 ---
 
@@ -284,65 +307,83 @@ npx serve -l 3000 .
 
 ### 4.1 デザインコンセプト
 
-白背景・サンセリフ・グリッドを基調としたシンプルミニマルデザイン。装飾を排し、コンテンツそのものを伝えることを優先する。
+genre=editorial / macrostructure=Long Document。生成りの紙面・明朝の見出し・ヘアラインの罫線言語・抑制されたモーションで、静かで文語的な世界観を雑誌的な版面へ昇華する。装飾を足すのではなく、タイプ階層と余白で「格」を立てる。
 
 ### 4.2 カラーパレット
 
 | CSS 変数 | 値 | 用途 |
 |---|---|---|
-| `--bg` | `#ffffff` | ページ背景（ピュアホワイト） |
-| `--text` | `#1a1a1a` | 本文テキスト |
-| `--muted` | `#888888` | サブテキスト・ラベル・説明文 |
-| `--border` | `#e8e8e8` | ボーダーライン・セパレータ |
+| `--paper` | `#f7f6f3` | ページ背景（生成り） |
+| `--paper-2` | `#efece6` | フレーム・微カード（Events 等） |
+| `--ink` | `#1a1a1c` | 見出し・一次本文（主役） |
+| `--text` | `#33312e` | 本文・説明文 |
+| `--muted` | `#847f77` | ラベル・メタ |
+| `--line` | `#e4e0d9` | ヘアライン・罫線 |
+| `--accent` | `#a3937a` | 罫線・装飾（タウープ） |
+| `--accent-ink` | `#7c6f59` | eyebrow・索引・ハンドル名（可読タウープ） |
 
 ### 4.3 タイポグラフィ
 
 | 用途 | フォント | ウェイト | サイズ |
 |---|---|---|---|
-| Hero 名前 | Noto Sans JP | 300 | `clamp(2.8rem, 6vw, 5.5rem)` |
-| ナビ・ラベル | Inter | 400 | 0.66rem 〜 0.88rem |
-| 日本語本文 | Noto Sans JP | 300 / 400 | 0.78rem 〜 0.95rem |
+| Hero 名前 | Shippori Mincho B1 | 400 | `--fs-hero` `clamp(3.2rem, 7.5vw, 6rem)` |
+| セクション見出し | Shippori Mincho B1 | 500 | `--fs-h2` `clamp(1.7rem, 3.6vw, 2.6rem)` |
+| about本文 / contactリード | Shippori Mincho B1 | 400 | `--fs-lead` `1.05rem` |
+| work題字 | Shippori Mincho B1 | 500 | `--fs-work` `clamp(1.15rem, 1.8vw, 1.45rem)` |
+| 日本語本文・説明文 | Noto Sans JP | 300 / 400 | `--fs-body` `0.9rem` ほか |
+| ラベル・索引・ナビ | Inter | 400 / 500 | `--fs-label` `0.68rem` 〜 |
 
-### 4.4 CSS 変数一覧
+ベース文字サイズ 15px、和文 line-height 約1.8〜2.5。
+
+### 4.4 CSS 変数一覧（抜粋）
 
 | 変数 | 値 | 用途 |
 |---|---|---|
 | `--nav-h` | `60px` | ナビゲーション高さ |
 | `--max-w` | `1100px` | コンテンツ最大幅 |
-| `--font-sans` | `'Inter', sans-serif` | 欧文サンセリフ |
-| `--font-ja` | `'Noto Sans JP', sans-serif` | 日本語書体 |
+| `--font-latin` | `'Inter', sans-serif` | 欧文サンセリフ |
+| `--font-ja` | `'Noto Sans JP', sans-serif` | 日本語サンセリフ |
+| `--font-serif-ja` | `'Shippori Mincho B1', serif` | 日本語明朝（見出し系） |
+| `--font-body` | `'Inter', 'Noto Sans JP', sans-serif` | body 既定（和文フォールバック保証） |
+| `--ease-out` | `cubic-bezier(0.16, 1, 0.3, 1)` | UI トランジション |
 
 ### 4.5 レスポンシブブレークポイント
 
 | ブレークポイント | 変更内容 |
 |---|---|
-| 860px 以下 | グリッドを1カラムに変更、About・Contact を1カラム |
-| 540px 以下 | Hero 名前の最小フォントサイズ調整 |
+| 860px 以下 | works/events グリッドを1カラム、左右パディング 28px、ナビ横スクロール |
+| 540px 以下 | works gap・about メタ間隔・note アバター/間隔の微調整 |
+
+横スクロール防止: `html, body { overflow-x: clip }`、画像グリッドは `minmax(0, 1fr)`、見出しは `overflow-wrap: anywhere`。
 
 ---
 
 ## 5. 機能仕様
 
-### 5.1 スクロールアニメーション（Reveal）
+### 5.1 スクロール演出（GSAP + Lenis）
 
 | 項目 | 仕様 |
 |---|---|
-| 実装方法 | Intersection Observer API |
-| 対象要素 | `.reveal` クラスを持つすべての要素 |
-| 閾値 | `threshold: 0.1` |
-| アニメーション | `opacity: 0→1`・`translateY(12px→0)`・`transition: 0.8s ease` |
-| 再生 | 一度表示したら `unobserve` |
+| スムーススクロール | Lenis（`duration: 1.2`）。アンカーリンクは `lenis.scrollTo` に委譲（offset -60） |
+| ページイントロ | `#page-intro` オーバーレイを `scaleY` で巻き上げ → ヒーロー入場へ連結 |
+| リビール | `.reveal` 要素を ScrollTrigger（`start: top 88%`, `once`）で `opacity/y` フェードイン |
+| セクション罫線 | `.section-line` を `scaleX` で描画（`start: top 98%`） |
+| About | サブ要素を段階的に stagger 表示 |
+| Works | カードを左右交互に `x:±24` からスライドイン |
+| Note | カードを `stagger` で表示後、ホバー用に inline style をクリア |
+| パララックス | デスクトップのみ Hero name/desc を `scrub` で連動 |
 
 ### 5.2 Works カード 手動スライドショー
 
 | 項目 | 仕様 |
 |---|---|
-| 対象要素 | `.work-thumb[data-slide]` 内 `.work-thumb-img`（翡翠眼: 2枚 / Nagi: 7枚 / 中心銘: 1枚 / Frequency Analyzer: 2枚） |
-| 操作 | 左右矢印ボタン（← →）またはドットナビゲーションをクリック |
-| 切り替えアニメーション | `opacity: 0→1`（CSS transition 0.6s ease） |
-| 矢印表示 | ホバー時に表示（`.work-thumb:hover .slide-prev/.slide-next { opacity: 1 }`）。背景: `rgba(0,0,0,0.32)` 半透明黒丸（28px）、ホバーで `0.52` に強調 |
-| ドット | 5px 円、`box-shadow` 付き。現在: `rgba(255,255,255,0.95)` / 非選択: `rgba(255,255,255,0.45)` |
-| 実装 | JavaScript（Intersection Observer 不使用、addEventListener）|
+| 対象要素 | `.work-thumb[data-slide]` 内 `.work-thumb-img`（翡翠眼: 1枚 / Nagi: 7枚 / 中心銘: 1枚 / Frequency Analyzer: 2枚） |
+| 操作 | 左右矢印ボタンまたはドットナビをクリック |
+| 切り替え | `opacity: 0→1`（CSS transition 0.6s ease） |
+| 1枚のみの場合 | 矢印・ドットを非表示（JS制御） |
+| 矢印表示 | ホバー時表示。背景 `rgba(26,26,28,0.42)` + `blur(4px)` の丸（30px）、ホバーで `0.66` |
+| ドット | 5px 円、`box-shadow` 付き。現在: 白98%・1.15倍 / 非選択: 白50% |
+| 実装 | JavaScript（`addEventListener`、`e.stopPropagation()` でカードリンクへの伝播を抑止）|
 | Nagi 表示位置 | 全画像 `object-position: top center`、1枚目（アイコン）のみ `center` |
 
 ### 5.3 ナビゲーション アクティブ連動
@@ -352,7 +393,15 @@ npx serve -l 3000 .
 | 実装方法 | Intersection Observer API |
 | 対象要素 | `section[id]` すべて |
 | 閾値 | `threshold: 0.4` |
-| 挙動 | ビューポート内に 40% 以上入ったセクションに `.active` クラスを付与 |
+| 挙動 | ビューポート内に 40% 以上入ったセクションのナビリンクに `.active` を付与 |
+
+### 5.4 アクセシビリティ
+
+| 項目 | 仕様 |
+|---|---|
+| `prefers-reduced-motion: reduce` | JS分岐で入場・リビール・パララックスを無効化し最終状態を即時表示。CSS の `@media` で全 transition/animation を実質無効化。Lenis の `duration` も 0 に |
+| フォーカス可視化 | `:focus-visible` に `--accent-ink` の 2px リング（瞬時表示） |
+| コントラスト | 主役テキストを `--ink`、本文を `--text` とし washed-out を回避 |
 
 ---
 
@@ -388,13 +437,15 @@ git commit -m "Update: <変更内容>"
 git push origin main
 ```
 
+Vercel の Git 連携により `main` への push で自動デプロイ。
+
 ### 6.4 主な変更箇所の対応表
 
 | 作業内容 | 変更ファイル |
 |---|---|
 | テキスト・リンクの変更 | `index.html` |
 | スタイル・レイアウトの変更 | `style.css` |
-| インタラクションの変更 | `script.js` |
+| インタラクション・演出の変更 | `script.js` |
 | 作品追加 | `index.html`（`.work-card` ブロックを追加） |
-| サムネイル差し替え | `images/` に画像を配置し `index.html` の `<img>` src を更新、または `style.css`（`.work-thumb-N`）でCSSグラデーション定義 |
+| サムネイル差し替え | `images/` に画像を配置し `index.html` の `<img>` src を更新、または `style.css`（`.work-thumb-*`）で背景定義 |
 | 仕様変更 | `spec.md` |
