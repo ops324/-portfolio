@@ -757,15 +757,8 @@ footer {
    ============================ */
 @media (max-width: 860px) {
   .hero-line { left: 28px; right: 28px; }
-  #navbar { padding: 0 28px; gap: 16px; }
-  .nav-links {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    flex-shrink: 1;
-    min-width: 0;
-    scrollbar-width: none;
-  }
-  .nav-links::-webkit-scrollbar { display: none; }
+  #navbar { padding: 0 20px; gap: 12px; }
+  .nav-links { gap: 22px; }
   #hero { padding: 0 28px; padding-top: var(--nav-h); }
   #about, #contact, #projects, #events, #note { padding: 84px 28px; }
 
@@ -779,10 +772,21 @@ footer {
 }
 
 @media (max-width: 540px) {
+  #navbar { padding: 0 18px; gap: 10px; }
+  .nav-icon { width: 20px; height: 20px; }
+  .nav-links { gap: 14px; }
+  .nav-links a { font-size: 0.62rem; letter-spacing: 0.16em; }
+
   .works-grid { gap: 44px; }
   .about-meta-row { gap: 12px; }
   .note-card { gap: 18px; }
   .note-avatar { width: 48px; height: 48px; }
+}
+
+@media (max-width: 380px) {
+  #navbar { padding: 0 14px; gap: 8px; }
+  .nav-links { gap: 11px; }
+  .nav-links a { font-size: 0.58rem; letter-spacing: 0.12em; }
 }
 
 /* ============================
