@@ -9,27 +9,62 @@
   <meta property="og:description" content="Web開発・自動化フロー・ツール開発と、非日常体験イベントの企画主催。生活を豊かにするアイデアを形にしています。" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://takimototetsuya.vercel.app" />
-  <meta property="og:image" content="https://takimototetsuya.vercel.app/images/ogp.png" />
+  <meta property="og:image" content="https://takimototetsuya.vercel.app/images/ogp.jpg" />
   <meta property="og:site_name" content="滝本 哲也" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="滝本 哲也" />
   <meta name="twitter:description" content="Web開発・自動化フロー・ツール開発と、非日常体験イベントの企画主催。生活を豊かにするアイデアを形にしています。" />
-  <meta name="twitter:image" content="https://takimototetsuya.vercel.app/images/ogp.png" />
-  <link rel="icon" href="images/サイトアイコン.png" type="image/png" />
+  <meta name="twitter:image" content="https://takimototetsuya.vercel.app/images/ogp.jpg" />
+  <link rel="canonical" href="https://takimototetsuya.vercel.app/" />
+  <link rel="icon" href="images/favicon.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Noto+Sans+JP:wght@300;400&family=Shippori+Mincho+B1:wght@400;500;600&display=swap" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script defer src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script defer src="script.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "滝本 哲也",
+    "alternateName": "Tetsuya Takimoto",
+    "url": "https://takimototetsuya.vercel.app/",
+    "image": "https://takimototetsuya.vercel.app/images/ogp.jpg",
+    "jobTitle": "Builder",
+    "description": "Web開発・自動化フロー・ツール開発と、非日常体験イベントの企画主催。",
+    "email": "contact@flowmate.jp",
+    "sameAs": [
+      "https://note.com/bright_yarrow261",
+      "https://note.com/life_ops",
+      "https://note.com/minase_ritsu"
+    ]
+  }
+  </script>
+  <script>
+    // CDN障害フェイルセーフ: GSAP未読込でも一定時間後にコンテンツを必ず表示
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        if (typeof window.gsap === 'undefined') {
+          var intro = document.getElementById('page-intro');
+          if (intro) intro.style.display = 'none';
+          document.querySelectorAll('.reveal, .work-card, .note-card, .section-line, .hero-sub-inner, .hero-name-inner, .hero-desc-inner').forEach(function (el) {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+          });
+        }
+      }, 2500);
+    });
+  </script>
 </head>
 <body>
 
   <div id="page-intro" aria-hidden="true"></div>
 
   <nav id="navbar">
-    <a href="#" class="nav-logo"><img src="images/サイトアイコン.png" class="nav-icon" alt="" /></a>
+    <a href="#" class="nav-logo"><img src="images/favicon.png" class="nav-icon" alt="" width="22" height="22" /></a>
     <ul class="nav-links">
       <li><a href="#about">about</a></li>
       <li><a href="#projects">works</a></li>
@@ -91,7 +126,7 @@
     <div class="works-grid">
       <a href="https://hisuigan-macro-insight-engine.vercel.app/" target="_blank" rel="noopener" class="work-card">
         <div class="work-thumb work-thumb-hisuigan" data-slide="0">
-          <img src="images/thumb-hisuigan.jpg" alt="翡翠眼 — マーケットデータ" class="work-thumb-img active" />
+          <img src="images/thumb-hisuigan.jpg" alt="翡翠眼 — マーケットデータ" class="work-thumb-img active" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
           <div class="slide-dots">
@@ -112,13 +147,13 @@
 
       <a href="https://nagi-xi.vercel.app/" target="_blank" rel="noopener" class="work-card">
         <div class="work-thumb work-thumb-nagi" data-slide="0">
-          <img src="images/Nagi-アイコン.jpeg" alt="Nagi — アイコン" class="work-thumb-img active" />
-          <img src="images/nagi-記録１.png" alt="Nagi — 記録1" class="work-thumb-img" />
-          <img src="images/nagi-記録２.png" alt="Nagi — 記録2" class="work-thumb-img" />
-          <img src="images/nagi-記録３.png" alt="Nagi — 記録3" class="work-thumb-img" />
-          <img src="images/nagi-記録４.png" alt="Nagi — 記録4" class="work-thumb-img" />
-          <img src="images/nagi-記録５.png" alt="Nagi — 記録5" class="work-thumb-img" />
-          <img src="images/Nagi-カレンダー.png" alt="Nagi — カレンダー" class="work-thumb-img" />
+          <img src="images/nagi-icon.jpg" alt="Nagi — アイコン" class="work-thumb-img active" loading="lazy" decoding="async" />
+          <img src="images/nagi-record1.jpg" alt="Nagi — 記録1" class="work-thumb-img" loading="lazy" decoding="async" />
+          <img src="images/nagi-record2.jpg" alt="Nagi — 記録2" class="work-thumb-img" loading="lazy" decoding="async" />
+          <img src="images/nagi-record3.jpg" alt="Nagi — 記録3" class="work-thumb-img" loading="lazy" decoding="async" />
+          <img src="images/nagi-record4.jpg" alt="Nagi — 記録4" class="work-thumb-img" loading="lazy" decoding="async" />
+          <img src="images/nagi-record5.jpg" alt="Nagi — 記録5" class="work-thumb-img" loading="lazy" decoding="async" />
+          <img src="images/nagi-calendar.jpg" alt="Nagi — カレンダー" class="work-thumb-img" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
           <div class="slide-dots">
@@ -145,7 +180,7 @@
 
       <a href="https://chushinmei.vercel.app" target="_blank" rel="noopener" class="work-card">
         <div class="work-thumb work-thumb-chushinmei" data-slide="0">
-          <img src="images/thumb-chushinmei.png" alt="中心銘 — メイン画面" class="work-thumb-img active" />
+          <img src="images/thumb-chushinmei.jpg" alt="中心銘 — メイン画面" class="work-thumb-img active" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
           <div class="slide-dots">
@@ -166,8 +201,8 @@
 
       <a href="https://frequency-analyzer.vercel.app" target="_blank" rel="noopener" class="work-card">
         <div class="work-thumb work-thumb-freq" data-slide="0">
-          <video src="images/freq-video-light.mp4" class="work-thumb-img active" autoplay muted loop playsinline></video>
-          <video src="images/freq-video-dark.mp4" class="work-thumb-img" autoplay muted loop playsinline></video>
+          <video src="images/freq-video-light.mp4" class="work-thumb-img active" autoplay muted loop playsinline preload="metadata"></video>
+          <video src="images/freq-video-dark.mp4" class="work-thumb-img" autoplay muted loop playsinline preload="metadata"></video>
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
           <div class="slide-dots">
@@ -234,7 +269,7 @@
     </header>
     <div class="note-cards">
       <a href="https://note.com/bright_yarrow261" target="_blank" rel="noopener" class="note-card">
-        <img src="https://assets.st-note.com/production/uploads/images/235717363/profile_9d820b048634d6fb3ed1376ce866a8c6.png?fit=bounds&format=jpeg&quality=85&width=330" alt="bright_yarrow261" class="note-avatar" />
+        <img src="https://assets.st-note.com/production/uploads/images/235717363/profile_9d820b048634d6fb3ed1376ce866a8c6.png?fit=bounds&format=jpeg&quality=85&width=330" alt="bright_yarrow261" class="note-avatar" loading="lazy" decoding="async" width="56" height="56" />
         <div class="note-card-body">
           <span class="note-card-handle">@bright_yarrow261</span>
           <p class="note-card-desc">Claude・AI活用を実践ベースで発信。「使いこなす技術」をテーマに、プロンプト・ワークフロー・ツール活用を体系的にまとめています。</p>
@@ -242,7 +277,7 @@
         <span class="note-arrow" aria-hidden="true">→</span>
       </a>
       <a href="https://note.com/life_ops" target="_blank" rel="noopener" class="note-card">
-        <img src="https://assets.st-note.com/production/uploads/images/255199930/profile_f70b55d528da3e33c837337370c40911.png?fit=bounds&format=jpeg&quality=85&width=330" alt="life_ops" class="note-avatar" />
+        <img src="https://assets.st-note.com/production/uploads/images/255199930/profile_f70b55d528da3e33c837337370c40911.png?fit=bounds&format=jpeg&quality=85&width=330" alt="life_ops" class="note-avatar" loading="lazy" decoding="async" width="56" height="56" />
         <div class="note-card-body">
           <span class="note-card-handle">@life_ops</span>
           <p class="note-card-desc">頭が良いとは、どういうことか。構造で考え、本質を見抜き、判断の精度を上げる。地頭は才能ではなく、フォームだ。</p>
@@ -250,7 +285,7 @@
         <span class="note-arrow" aria-hidden="true">→</span>
       </a>
       <a href="https://note.com/minase_ritsu" target="_blank" rel="noopener" class="note-card">
-        <img src="https://assets.st-note.com/production/uploads/images/271000973/9876baff5fc608e3a605ee691d99101d.png?fit=bounds&format=jpeg&quality=85&width=330" alt="minase_ritsu" class="note-avatar" />
+        <img src="https://assets.st-note.com/production/uploads/images/271000973/9876baff5fc608e3a605ee691d99101d.png?fit=bounds&format=jpeg&quality=85&width=330" alt="minase_ritsu" class="note-avatar" loading="lazy" decoding="async" width="56" height="56" />
         <div class="note-card-body">
           <span class="note-card-handle">@minase_ritsu</span>
           <p class="note-card-desc">好奇心の多動。ジャンル不問で気になったことを調べて記事にしています。</p>
@@ -281,7 +316,6 @@
     <p>&copy; 2026 滝本 哲也</p>
   </footer>
 
-  <script src="script.js"></script>
   <script async src="//www.instagram.com/embed.js"></script>
 </body>
 </html>
