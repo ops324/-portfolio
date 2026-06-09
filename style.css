@@ -773,6 +773,16 @@ footer {
 /* ============================
    Responsive
    ============================ */
+/* Events は Instagram 埋め込みの min-width(326px) と2カラムが競合し、
+   880px付近でフレーム内側が326pxを下回って約2pxはみ出すため、
+   Works(860px)より早く 900px で1カラム化する */
+@media (max-width: 900px) {
+  .events-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+}
+
 @media (max-width: 860px) {
   .hero-line { left: 28px; right: 28px; }
   #navbar { padding: 0 20px; gap: 12px; }
@@ -780,8 +790,7 @@ footer {
   #hero { padding: 0 28px; padding-top: var(--nav-h); }
   #about, #contact, #projects, #events, #note { padding: 84px 28px; }
 
-  .works-grid,
-  .events-grid {
+  .works-grid {
     grid-template-columns: 1fr;
     gap: 48px;
   }
