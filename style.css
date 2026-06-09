@@ -455,6 +455,9 @@ ul { list-style: none; }
 .work-thumb-nagi .work-thumb-img { object-position: top center; }
 .work-thumb-nagi .work-thumb-img:nth-child(1) { object-position: center; }
 
+.work-thumb-lisa { background: #0d0d0d; }
+.work-thumb-lisa .work-thumb-img { object-position: center; }
+
 .work-info { padding: 0 2px; }
 
 .work-meta {
