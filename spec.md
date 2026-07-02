@@ -2,9 +2,9 @@
 
 | 項目 | 内容 |
 |---|---|
-| バージョン | 2.7.2 |
+| バージョン | 2.8.0 |
 | 作成日 | 2026年3月7日 |
-| 最終更新 | 2026年6月10日 |
+| 最終更新 | 2026年7月3日 |
 | 作成者 | 滝本 哲也 |
 | リポジトリ | github.com/ops324/-portfolio |
 | 公開URL | https://takimototetsuya.vercel.app |
@@ -63,6 +63,7 @@
 | 2.7.0 | 2026-06-10 | Works に「Lisa Mizuno」カード追加（05）。DJ・アーティスト Lisa Mizuno のポートフォリオサイト制作実績。カテゴリは他4件の "Web Development" と差別化し **"Web Design / Artist Site"** とした。サムネイル（`thumb-lisa-mizuno.jpg`）は Playwright でライブサイトを撮影しJPG最適化。`.work-thumb-lisa`（モノクローム背景 `#0d0d0d`）を追加。作品一覧5件構成に |
 | 2.7.1 | 2026-06-10 | **アクセシビリティ改善（見た目不変）。** 全セクションを `<main>` で囲みスクリーンリーダーのメイン領域ジャンプに対応。About の eyebrow を `<span>`→`<h2>` に変更し見出しアウトラインに追加（クラス・スタイルは据え置きで表示は同一）。タッチ端末（`@media (hover: none)`）でスライド矢印を常時表示。スライドドットに透明 `::after` を重ねタップ範囲を縦25px相当に拡大（WCAG 2.5.8 配慮、見た目は5pxのまま） |
 | 2.7.2 | 2026-06-10 | Events グリッドの折り返しを 860px→**900px** に変更。861〜883px 付近で Instagram 埋め込みの `min-width: 326px` と2カラムが競合し約2pxはみ出していた問題を解消（works は 860px のまま分離） |
+| 2.8.0 | 2026-07-03 | Works に「CHINJU CLI」カード追加（06）。コードの変更箇所だけでなく影響範囲まで横断レビューする確証エンジンのLP案件。**自作プロダクトではなく LP制作・市場調査・方向性整理・PR を担当した案件**のため、カテゴリを **"LP / Branding & PR"** として区別し、説明文にも担当役割を明記（製品説明と役割を `<br><br>` で段落分け）。サムネイル（`thumb-chinju.jpg`）は Playwright でライブサイトを **4:3（1400×1050）** で撮影し、cover 表示での左右見切れを回避。`.work-thumb-chinju`（LPに合わせたライトな微グラデ背景 `#f2efe9`）を追加。作品一覧6件構成に |
 
 ---
 
@@ -140,6 +141,7 @@ v2.5 では、静かで文語的な世界観を保ったまま視覚レイヤー
 │   ├── nagi-calendar.jpg         # Nagi スライド7（カレンダー画面・ライトモード）
 │   ├── thumb-chushinmei.jpg      # 中心銘 メイン画面
 │   ├── thumb-lisa-mizuno.jpg     # Lisa Mizuno アーティストサイト ヒーロー（1枚・モノクローム）
+│   ├── thumb-chinju.jpg          # CHINJU CLI LP ファーストビュー（1枚・4:3撮影・ライト背景）
 │   ├── freq-video-light.mp4      # Frequency Analyzer 画面収録・ライトモード（188KB）
 │   ├── freq-video-dark.mp4       # Frequency Analyzer 画面収録・ダークモード（112KB・720幅/無音）
 │   ├── ogp.jpg                   # OGP画像（1200×630px・リンク共有プレビュー用・84KB）
@@ -239,7 +241,7 @@ npx serve -l 3000 .
 | 要素 | 仕様 |
 |---|---|
 | サムネイル | `aspect-ratio: 4/3`、`1px solid var(--line)` の細罫枠、`<img>`/`<video>` 実画像 |
-| メタ行 | 索引番号（01-05、`--accent-ink`、Inter）＋ カテゴリ（uppercase、`--muted`） |
+| メタ行 | 索引番号（01-06、`--accent-ink`、Inter）＋ カテゴリ（uppercase、`--muted`） |
 | タイトル | **Shippori Mincho B1**、`--fs-work`（`clamp(1.15rem,1.8vw,1.45rem)`）、weight 500、`--ink` |
 | キャッチコピー | **Shippori Mincho B1**、0.95rem、italic、`--text` |
 | 説明文 | Noto Sans JP、0.8rem、weight 300、`--text` |
@@ -249,7 +251,7 @@ npx serve -l 3000 .
 | ドット | 5px 円、`box-shadow` 付き。現在: 白98%・1.15倍 / 非選択: 白50%。**透明 `::after`（`inset: -10px -2px`）でタップ範囲を縦25px相当に拡大**（見た目は5pxのまま） |
 | リンク | カード全体を `<a target="_blank">` で外部サイトへ |
 
-#### 3.4.3 作品一覧（v2.7.0 時点）
+#### 3.4.3 作品一覧（v2.8.0 時点）
 
 | # | カテゴリ | タイトル | リンク | サムネイル |
 |---|---|---|---|---|
@@ -258,9 +260,11 @@ npx serve -l 3000 .
 | 03 | Web Development | 中心銘 | https://chushinmei.vercel.app | `thumb-chushinmei.jpg`（1枚・和紙調ベージュ背景） |
 | 04 | Web Development | Frequency Analyzer | https://frequency-analyzer.vercel.app | `freq-video-light.mp4` / `freq-video-dark.mp4`（2枚手動スライド・`<video autoplay muted loop>`） |
 | 05 | Web Design / Artist Site | Lisa Mizuno | https://lisa-mizuno.vercel.app/ | `thumb-lisa-mizuno.jpg`（1枚・モノクローム背景 `#0d0d0d`） |
+| 06 | LP / Branding & PR | CHINJU CLI | https://service.chinju.org/ | `thumb-chinju.jpg`（1枚・4:3撮影・ライト背景 `#f2efe9`） |
 
 ※ タイトルの読み仮名（翡翠眼＝ひすいがん／中心銘＝ちゅうしんめい）は v2.5.0 で省略。
 ※ 05 Lisa Mizuno は他者（DJ・アーティスト）向けの制作実績であり、カテゴリを "Web Design / Artist Site" として自作プロダクト（01-04）と区別している。
+※ 06 CHINJU CLI は自作プロダクトではなく、LP制作・市場調査・方向性整理・PR を担当した案件。カテゴリを "LP / Branding & PR" とし、説明文でも担当役割を明記して制作物（01-05）と区別している。
 
 ### 3.5 Events セクション
 
