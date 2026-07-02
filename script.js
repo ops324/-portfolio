@@ -366,6 +366,107 @@ if (animReady) {
       refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 300);
     }).observe(eventsGrid);
   }
+
+  // ============================
+  // Custom Cursor（墨の粒＋細輪）
+  // fine pointer のみ。initCursor() の呼び出しを消せば丸ごと無効化できる
+  // ============================
+  function initCursor() {
+    document.documentElement.classList.add('has-cursor');
+
+    const root = document.createElement('div');
+    root.className = 'cursor';
+    root.setAttribute('aria-hidden', 'true');
+    root.innerHTML = '<div class="cursor-dot"></div><div class="cursor-ring"><span class="cursor-label">View</span></div>';
+    document.body.appendChild(root);
+
+    const dot   = root.querySelector('.cursor-dot');
+    const ring  = root.querySelector('.cursor-ring');
+    const label = root.querySelector('.cursor-label');
+
+    // 初期位置は画面外。中心合わせは xPercent/yPercent で行う
+    gsap.set([dot, ring], { xPercent: -50, yPercent: -50, x: -100, y: -100 });
+
+    const dotX  = gsap.quickTo(dot,  'x', { duration: 0.12, ease: 'power2.out' });
+    const dotY  = gsap.quickTo(dot,  'y', { duration: 0.12, ease: 'power2.out' });
+    const ringX = gsap.quickTo(ring, 'x', { duration: 0.45, ease: 'power3.out' });
+    const ringY = gsap.quickTo(ring, 'y', { duration: 0.45, ease: 'power3.out' });
+
+    window.addEventListener('mousemove', e => {
+      dotX(e.clientX);  dotY(e.clientY);
+      ringX(e.clientX); ringY(e.clientY);
+    }, { passive: true });
+
+    // 状態: default / link / view / hide / faded
+    let state = 'default';
+    function setState(next) {
+      if (state === next) return;
+      state = next;
+      const d = { duration: 0.35, ease: 'power3.out', overwrite: 'auto' };
+      if (next === 'view') {
+        gsap.to(ring, { width: 64, height: 64, backgroundColor: 'rgba(247, 246, 243, 0.92)', borderColor: '#d5cfc3', opacity: 1, ...d });
+        gsap.to(dot, { scale: 0, opacity: 1, ...d });
+        gsap.to(label, { opacity: 1, duration: 0.3, delay: 0.08 });
+      } else if (next === 'link') {
+        gsap.to(ring, { width: 40, height: 40, backgroundColor: 'rgba(0, 0, 0, 0)', borderColor: '#7c6f59', opacity: 1, ...d });
+        gsap.to(dot, { scale: 0.6, opacity: 1, ...d });
+        gsap.to(label, { opacity: 0, duration: 0.15 });
+      } else if (next === 'hide') {
+        gsap.to(ring, { width: 16, height: 16, backgroundColor: 'rgba(0, 0, 0, 0)', opacity: 0.3, ...d });
+        gsap.to(dot, { scale: 0.5, opacity: 0.5, ...d });
+        gsap.to(label, { opacity: 0, duration: 0.15 });
+      } else if (next === 'faded') {
+        gsap.to([ring, dot], { opacity: 0.25, ...d });
+        gsap.to(label, { opacity: 0, duration: 0.15 });
+      } else {
+        gsap.to(ring, { width: 28, height: 28, backgroundColor: 'rgba(0, 0, 0, 0)', borderColor: '#7c6f59', opacity: 1, ...d });
+        gsap.to(dot, { scale: 1, opacity: 1, ...d });
+        gsap.to(label, { opacity: 0, duration: 0.15 });
+      }
+    }
+
+    document.addEventListener('mouseover', e => {
+      const t = e.target;
+      if (!(t instanceof Element)) return;
+      if (t.closest('.slide-prev, .slide-next, .slide-dots')) setState('hide');
+      else if (t.closest('.work-card')) setState('view');
+      else if (t.closest('a, button')) setState('link');
+      else if (t.closest('.event-frame')) setState('faded'); // iframe内でmousemoveが途絶える前に減光
+      else setState('default');
+    });
+
+    // クリックの脈動
+    window.addEventListener('mousedown', () => gsap.to(dot, { scale: 0.6, duration: 0.15, ease: 'power2.out' }));
+    window.addEventListener('mouseup',   () => gsap.to(dot, { scale: state === 'link' ? 0.6 : 1, duration: 0.5, ease: 'elastic.out(1, 0.5)' }));
+
+    // ウィンドウ外で消灯
+    document.documentElement.addEventListener('mouseleave', () => gsap.to(root, { opacity: 0, duration: 0.3 }));
+    document.documentElement.addEventListener('mouseenter', () => gsap.to(root, { opacity: 1, duration: 0.3 }));
+  }
+
+  // ============================
+  // Magnetic Hover（小面積の要素のみ・引力係数0.3）
+  // slide-prev/next は CSS transform(translateY) と競合するため対象外
+  // ============================
+  function initMagnetic() {
+    document.querySelectorAll('.nav-links a, .footer-nav a, .contact-link, .footer-top-link').forEach(el => {
+      const xTo = gsap.quickTo(el, 'x', { duration: 0.4, ease: 'power3.out' });
+      const yTo = gsap.quickTo(el, 'y', { duration: 0.4, ease: 'power3.out' });
+      el.addEventListener('mousemove', e => {
+        const r = el.getBoundingClientRect();
+        xTo((e.clientX - r.left - r.width / 2) * 0.3);
+        yTo((e.clientY - r.top - r.height / 2) * 0.3);
+      });
+      el.addEventListener('mouseleave', () => {
+        gsap.to(el, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.45)', overwrite: 'auto' });
+      });
+    });
+  }
+
+  if (finePointer && !reduceMotion) {
+    initCursor();
+    initMagnetic();
+  }
 } else {
   // gsap / Lenis 未読込: コンテンツを即時表示（ネイティブスクロールにフォールバック）
   revealAllImmediately();

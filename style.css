@@ -1056,6 +1056,57 @@ footer {
 }
 
 /* ============================
+   Custom Cursor
+   （fine pointer 環境でのみ JS が .has-cursor を付与・DOM生成。
+     JS失敗時はクラスが付かず標準カーソルが残る）
+   ============================ */
+.has-cursor body,
+.has-cursor a,
+.has-cursor button { cursor: none; }
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink);
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cursor-label {
+  font-family: var(--font-serif-ja);
+  font-style: italic;
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--ink-2);
+  opacity: 0;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* ============================
    Page Intro Overlay
    ============================ */
 #page-intro {
