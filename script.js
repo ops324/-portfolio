@@ -4,6 +4,9 @@
 // ============================
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const animReady = typeof gsap !== 'undefined' && typeof Lenis !== 'undefined';
+// SplitText は個別判定: 欠落時は該当演出のみ既存の行送りへフォールバック
+const splitReady = animReady && typeof SplitText !== 'undefined';
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 // reduced-motion 時は autoplay 動画を停止
 if (reduceMotion) {
@@ -23,6 +26,7 @@ function revealAllImmediately() {
 // ============================
 if (animReady) {
   gsap.registerPlugin(ScrollTrigger);
+  if (splitReady) gsap.registerPlugin(SplitText);
 
   const lenis = new Lenis({
     duration: reduceMotion ? 0 : 1.2,
@@ -95,16 +99,25 @@ if (animReady) {
 
     gsap.set('.hero-sub-inner',  { yPercent: 120 });
     gsap.set('.hero-kana',       { opacity: 0, y: 14 });
-    gsap.set('.hero-name',       { opacity: 0, y: 28 });
     gsap.set('.hero-desc-inner', { yPercent: 100, opacity: 0 });
     gsap.set('.hero-vertical',   { opacity: 0 });
     gsap.set('.hero-scroll',     { opacity: 0 });
     gsap.set('.hero-line',       { scaleX: 0 });
 
     tl
-      .to('.hero-sub-inner',  { yPercent: 0, duration: 0.9, ease: 'power3.out' })
-      .to('.hero-kana',       { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.6')
-      .to('.hero-name',       { opacity: 1, y: 0, duration: 1.1, ease: 'power4.out' }, '-=0.55')
+      .to('.hero-sub-inner', { yPercent: 0, duration: 0.9, ease: 'power3.out' })
+      .to('.hero-kana',      { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.6');
+
+    // 名前: SplitText があれば文字単位のマスク出現、なければ行送り
+    if (splitReady) {
+      const nameSplit = SplitText.create('.hero-name', { type: 'chars', mask: 'chars', aria: 'auto' });
+      tl.from(nameSplit.chars, { yPercent: 115, duration: 1.0, ease: 'power4.out', stagger: 0.06 }, '-=0.55');
+    } else {
+      gsap.set('.hero-name', { opacity: 0, y: 28 });
+      tl.to('.hero-name', { opacity: 1, y: 0, duration: 1.1, ease: 'power4.out' }, '-=0.55');
+    }
+
+    tl
       .to('.hero-desc-inner', { yPercent: 0, opacity: 1, duration: 0.8, stagger: 0.12, ease: 'power2.out' }, '-=0.5')
       .to('.hero-vertical',   { opacity: 1, duration: 1.0, ease: 'power2.out' }, '-=0.5')
       .to('.hero-scroll',     { opacity: 1, duration: 1.0, ease: 'power2.out' }, '<')
@@ -115,37 +128,74 @@ if (animReady) {
     return tl;
   }
 
+  // FOUT対策: SplitText 分割を要する演出はすべてフォント確定後に初期化
+  // （1.5s タイムアウトの保険付き。分割前のグリフ幅で計測しないため）
+  const fontsReady = Promise.race([
+    document.fonts ? document.fonts.ready : Promise.resolve(),
+    new Promise(resolve => setTimeout(resolve, 2500)),
+  ]);
+
   // ページロード → ヒーロー
   if (reduceMotion) {
     gsap.set('#page-intro', { scaleY: 0 });
     gsap.set('.hero-sub-inner, .hero-name, .hero-kana, .hero-desc-inner, .hero-vertical, .hero-scroll', { yPercent: 0, y: 0, opacity: 1 });
     gsap.set('.hero-line', { scaleX: 1 });
   } else {
-    const introTl = gsap.timeline();
-    introTl
-      .to('#page-intro', {
-        scaleY: 0,
-        duration: 0.9,
-        ease: 'expo.inOut',
-        delay: 0.15,
-        transformOrigin: 'top',
-      })
-      .add(heroEntrance(), '-=0.3');
+    fontsReady.then(() => {
+      const introTl = gsap.timeline();
+      introTl
+        .to('#page-intro', {
+          scaleY: 0,
+          duration: 0.9,
+          ease: 'expo.inOut',
+          delay: 0.1,
+          transformOrigin: 'top',
+        })
+        .add(heroEntrance(), '-=0.3');
 
-    // スクロール指標: 線が上から生まれ、下へ抜けるループ
-    const scrollTl = gsap.timeline({ repeat: -1, repeatDelay: 1.1, delay: 2.2 });
-    scrollTl
-      .set('.hero-scroll-line', { transformOrigin: 'top', scaleY: 0 })
-      .to('.hero-scroll-line', { scaleY: 1, duration: 0.9, ease: 'power2.inOut' })
-      .set('.hero-scroll-line', { transformOrigin: 'bottom' })
-      .to('.hero-scroll-line', { scaleY: 0, duration: 0.9, ease: 'power2.inOut', delay: 0.25 });
+      // スクロール指標: 線が上から生まれ、下へ抜けるループ
+      const scrollTl = gsap.timeline({ repeat: -1, repeatDelay: 1.1, delay: 2.2 });
+      scrollTl
+        .set('.hero-scroll-line', { transformOrigin: 'top', scaleY: 0 })
+        .to('.hero-scroll-line', { scaleY: 1, duration: 0.9, ease: 'power2.inOut' })
+        .set('.hero-scroll-line', { transformOrigin: 'bottom' })
+        .to('.hero-scroll-line', { scaleY: 0, duration: 0.9, ease: 'power2.inOut', delay: 0.25 });
+    });
   }
 
   // ============================
   // Scroll Reveals (.reveal)
+  // sec-head は SplitText 可用時に専用演出（下記）へ委譲
   // ============================
   gsap.utils.toArray('.reveal').forEach(el => {
+    if (splitReady && !reduceMotion && el.classList.contains('sec-head')) return;
     revealOn(el, 'top 88%', { y: 18, duration: 0.9 }, [el]);
+  });
+
+  // ============================
+  // Section Headers（eyebrowトラッキング収束＋明朝題字のblur→focus）
+  // ============================
+  if (splitReady && !reduceMotion) fontsReady.then(() => {
+    gsap.utils.toArray('.sec-head').forEach(head => {
+      const eyebrow = head.querySelector('.sec-eyebrow');
+      const title   = head.querySelector('.sec-title');
+      if (!eyebrow || !title) return;
+      const split = SplitText.create(title, { type: 'chars', aria: 'auto' });
+      gsap.set(eyebrow, { opacity: 0, letterSpacing: '0.4em' });
+      gsap.set(split.chars, { opacity: 0, y: 10, filter: 'blur(6px)' });
+      ScrollTrigger.create({
+        trigger: head,
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+          gsap.to(eyebrow, { opacity: 1, letterSpacing: '0.24em', duration: 1.1, ease: 'expo.out' });
+          gsap.to(split.chars, {
+            opacity: 1, y: 0, filter: 'blur(0px)',
+            duration: 0.9, stagger: 0.09, ease: 'power2.out', delay: 0.1,
+          });
+        },
+      });
+    });
   });
 
   // ============================
@@ -168,8 +218,39 @@ if (animReady) {
   revealOn('#about', 'top 80%', { y: 16, duration: 0.8 }, '.about-eyebrow');
   revealOn('#about', 'top 74%', { y: 14, duration: 0.8 }, '.about-meta-row');
   revealOn('#about', 'top 68%', { y: 12, duration: 0.7 }, '.about-divider');
-  revealOn('#about', 'top 62%', { y: 10, duration: 0.7, stagger: 0.13 }, '.about-text-line');
   revealOn('#about', 'top 55%', { y: 8,  duration: 0.7 }, '.about-text--sub');
+
+  // 「軸」本文: 墨が乗るスクロール連動（薄墨→墨、scrub）。
+  // 文字分割は折返しでCJK禁則（行頭の句読点回避）を失うため、
+  // 全行が1行に収まる場合のみ適用。収まらない幅・SplitText非対応時は行送りへフォールバック
+  if (splitReady && !reduceMotion) {
+    fontsReady.then(() => {
+      const lines = gsap.utils.toArray('.about-text .about-text-line');
+      const fitsSingleLine = lines.every(line => {
+        const lineH = parseFloat(getComputedStyle(line).lineHeight) || 0;
+        return lineH > 0 && line.getBoundingClientRect().height < lineH * 1.6;
+      });
+      if (!fitsSingleLine) {
+        revealOn('#about', 'top 62%', { y: 10, duration: 0.7, stagger: 0.13 }, '.about-text-line');
+        return;
+      }
+      const axis = SplitText.create('.about-text .about-text-line', { type: 'chars', aria: 'auto' });
+      gsap.set(axis.chars, { color: '#cfc9bd' });
+      gsap.to(axis.chars, {
+        color: '#1a1a1c',
+        stagger: 0.35,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.about-text',
+          start: 'top 78%',
+          end: 'top 30%',
+          scrub: 0.8,
+        },
+      });
+    });
+  } else {
+    revealOn('#about', 'top 62%', { y: 10, duration: 0.7, stagger: 0.13 }, '.about-text-line');
+  }
 
   // ============================
   // Works Cards (交互スライドイン)
@@ -178,13 +259,34 @@ if (animReady) {
 
   workCards.forEach((card, i) => {
     if (reduceMotion) { gsap.set(card, { opacity: 1, x: 0 }); return; }
-    const xDir = i % 2 === 0 ? -24 : 24;
+    const xDir = i % 2 === 0 ? -16 : 16;
     gsap.set(card, { opacity: 0, x: xDir });
-    ScrollTrigger.create({
-      trigger: card,
-      start: 'top 85%',
-      once: true,
-      onEnter: () => gsap.to(card, { opacity: 1, x: 0, duration: 0.9, ease: 'power2.out', overwrite: true }),
+
+    fontsReady.then(() => {
+      // 題字: 単一行に収まる場合のみ文字単位で出現（複数行はCJK折返しを乱すため素通し）
+      let titleSplit = null;
+      if (splitReady) {
+        const titleEl = card.querySelector('.work-title');
+        const lineH = titleEl ? parseFloat(getComputedStyle(titleEl).lineHeight) || 0 : 0;
+        if (titleEl && lineH > 0 && titleEl.getBoundingClientRect().height < lineH * 1.5) {
+          titleSplit = SplitText.create(titleEl, { type: 'chars', aria: 'auto' });
+          gsap.set(titleSplit.chars, { opacity: 0, y: '0.35em' });
+        }
+      }
+
+      ScrollTrigger.create({
+        trigger: card,
+        start: 'top 85%',
+        once: true,
+        onEnter: () => {
+          gsap.to(card, { opacity: 1, x: 0, duration: 0.9, ease: 'power2.out', overwrite: true });
+          if (titleSplit) {
+            gsap.to(titleSplit.chars, {
+              opacity: 1, y: 0, duration: 0.7, stagger: 0.05, ease: 'power2.out', delay: 0.25,
+            });
+          }
+        },
+      });
     });
   });
 
@@ -252,6 +354,18 @@ if (animReady) {
       }),
     });
   })();
+
+  // ============================
+  // Instagram埋め込みの遅延リサイズで ScrollTrigger の基準位置がズレる対策
+  // ============================
+  const eventsGrid = document.querySelector('.events-grid');
+  if (eventsGrid && 'ResizeObserver' in window) {
+    let refreshTimer;
+    new ResizeObserver(() => {
+      clearTimeout(refreshTimer);
+      refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 300);
+    }).observe(eventsGrid);
+  }
 } else {
   // gsap / Lenis 未読込: コンテンツを即時表示（ネイティブスクロールにフォールバック）
   revealAllImmediately();
