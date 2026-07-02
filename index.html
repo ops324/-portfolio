@@ -50,7 +50,7 @@
         if (typeof window.gsap === 'undefined') {
           var intro = document.getElementById('page-intro');
           if (intro) intro.style.display = 'none';
-          document.querySelectorAll('.reveal, .work-card, .note-card, .section-line, .hero-sub-inner, .hero-name-inner, .hero-desc-inner').forEach(function (el) {
+          document.querySelectorAll('.reveal, .work-card, .note-card, .section-line, .hero-sub-inner, .hero-name, .hero-kana, .hero-desc-inner, .hero-vertical, .hero-scroll').forEach(function (el) {
             el.style.opacity = '1';
             el.style.transform = 'none';
           });
@@ -77,13 +77,20 @@
   <main>
   <!-- Hero -->
   <section id="hero">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
     <div class="hero-inner">
       <p class="hero-sub"><span class="hero-sub-inner">Builder</span></p>
-      <h1 class="hero-name"><span class="hero-name-inner">滝本 哲也</span></h1>
+      <p class="hero-kana" aria-hidden="true">たきもと てつや</p>
+      <h1 class="hero-name">滝本 哲也</h1>
       <p class="hero-desc">
         <span class="hero-desc-inner">Web開発・自動化フロー・ツール開発と、非日常体験イベントの企画主催。</span>
         <span class="hero-desc-inner">生活を豊かにするアイデアを形にしています。</span>
       </p>
+    </div>
+    <p class="hero-vertical" aria-hidden="true">作品集 — 二〇二六</p>
+    <div class="hero-scroll" aria-hidden="true">
+      <span class="hero-scroll-label">Scroll</span>
+      <i class="hero-scroll-line"></i>
     </div>
     <div class="hero-line" aria-hidden="true"></div>
   </section>
@@ -136,8 +143,8 @@
           </div>
         </div>
         <div class="work-info">
+          <span class="work-index-ghost" aria-hidden="true">01</span>
           <div class="work-meta">
-            <span class="work-index">01</span>
             <span class="work-cat">Web Development</span>
           </div>
           <h3 class="work-title">翡翠眼</h3>
@@ -169,8 +176,8 @@
           </div>
         </div>
         <div class="work-info">
+          <span class="work-index-ghost" aria-hidden="true">02</span>
           <div class="work-meta">
-            <span class="work-index">02</span>
             <span class="work-cat">Web Development</span>
           </div>
           <h3 class="work-title">Nagi（凪）</h3>
@@ -190,8 +197,8 @@
           </div>
         </div>
         <div class="work-info">
+          <span class="work-index-ghost" aria-hidden="true">03</span>
           <div class="work-meta">
-            <span class="work-index">03</span>
             <span class="work-cat">Web Development</span>
           </div>
           <h3 class="work-title">中心銘</h3>
@@ -213,8 +220,8 @@
           </div>
         </div>
         <div class="work-info">
+          <span class="work-index-ghost" aria-hidden="true">04</span>
           <div class="work-meta">
-            <span class="work-index">04</span>
             <span class="work-cat">Web Development</span>
           </div>
           <h3 class="work-title">Frequency Analyzer</h3>
@@ -234,8 +241,8 @@
           </div>
         </div>
         <div class="work-info">
+          <span class="work-index-ghost" aria-hidden="true">05</span>
           <div class="work-meta">
-            <span class="work-index">05</span>
             <span class="work-cat">Web Design / Artist Site</span>
           </div>
           <h3 class="work-title">Lisa Mizuno</h3>
@@ -255,8 +262,8 @@
           </div>
         </div>
         <div class="work-info">
+          <span class="work-index-ghost" aria-hidden="true">06</span>
           <div class="work-meta">
-            <span class="work-index">06</span>
             <span class="work-cat">LP / Branding &amp; PR</span>
           </div>
           <h3 class="work-title">CHINJU CLI</h3>

@@ -14,7 +14,7 @@ function revealAllImmediately() {
   const intro = document.getElementById('page-intro');
   if (intro) intro.style.display = 'none';
   document.querySelectorAll(
-    '.reveal, .work-card, .note-card, .section-line, .hero-sub-inner, .hero-name-inner, .hero-desc-inner'
+    '.reveal, .work-card, .note-card, .section-line, .hero-sub-inner, .hero-name, .hero-kana, .hero-desc-inner, .hero-vertical, .hero-scroll'
   ).forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
 }
 
@@ -94,17 +94,23 @@ if (animReady) {
     const tl = gsap.timeline();
 
     gsap.set('.hero-sub-inner',  { yPercent: 120 });
-    gsap.set('.hero-name-inner', { yPercent: 110 });
+    gsap.set('.hero-kana',       { opacity: 0, y: 14 });
+    gsap.set('.hero-name',       { opacity: 0, y: 28 });
     gsap.set('.hero-desc-inner', { yPercent: 100, opacity: 0 });
+    gsap.set('.hero-vertical',   { opacity: 0 });
+    gsap.set('.hero-scroll',     { opacity: 0 });
     gsap.set('.hero-line',       { scaleX: 0 });
 
     tl
       .to('.hero-sub-inner',  { yPercent: 0, duration: 0.9, ease: 'power3.out' })
-      .to('.hero-name-inner', { yPercent: 0, duration: 1.1, ease: 'power4.out' }, '-=0.55')
+      .to('.hero-kana',       { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.6')
+      .to('.hero-name',       { opacity: 1, y: 0, duration: 1.1, ease: 'power4.out' }, '-=0.55')
       .to('.hero-desc-inner', { yPercent: 0, opacity: 1, duration: 0.8, stagger: 0.12, ease: 'power2.out' }, '-=0.5')
-      .to('.hero-line',       { scaleX: 1, duration: 1.2, ease: 'expo.out' }, '-=0.6')
+      .to('.hero-vertical',   { opacity: 1, duration: 1.0, ease: 'power2.out' }, '-=0.5')
+      .to('.hero-scroll',     { opacity: 1, duration: 1.0, ease: 'power2.out' }, '<')
+      .to('.hero-line',       { scaleX: 1, duration: 1.2, ease: 'expo.out' }, '-=0.9')
       // アニメ完了後に will-change を解除（恒久的な合成レイヤー保持を避ける）
-      .add(() => gsap.set('.hero-sub-inner, .hero-name-inner, .hero-desc-inner', { clearProps: 'willChange' }));
+      .add(() => gsap.set('.hero-sub-inner, .hero-name, .hero-desc-inner', { clearProps: 'willChange' }));
 
     return tl;
   }
@@ -112,7 +118,7 @@ if (animReady) {
   // ページロード → ヒーロー
   if (reduceMotion) {
     gsap.set('#page-intro', { scaleY: 0 });
-    gsap.set('.hero-sub-inner, .hero-name-inner, .hero-desc-inner', { yPercent: 0, opacity: 1 });
+    gsap.set('.hero-sub-inner, .hero-name, .hero-kana, .hero-desc-inner, .hero-vertical, .hero-scroll', { yPercent: 0, y: 0, opacity: 1 });
     gsap.set('.hero-line', { scaleX: 1 });
   } else {
     const introTl = gsap.timeline();
@@ -125,6 +131,14 @@ if (animReady) {
         transformOrigin: 'top',
       })
       .add(heroEntrance(), '-=0.3');
+
+    // スクロール指標: 線が上から生まれ、下へ抜けるループ
+    const scrollTl = gsap.timeline({ repeat: -1, repeatDelay: 1.1, delay: 2.2 });
+    scrollTl
+      .set('.hero-scroll-line', { transformOrigin: 'top', scaleY: 0 })
+      .to('.hero-scroll-line', { scaleY: 1, duration: 0.9, ease: 'power2.inOut' })
+      .set('.hero-scroll-line', { transformOrigin: 'bottom' })
+      .to('.hero-scroll-line', { scaleY: 0, duration: 0.9, ease: 'power2.inOut', delay: 0.25 });
   }
 
   // ============================
@@ -288,7 +302,12 @@ const activeObserver = new IntersectionObserver(entries => {
       }
     }
   });
-}, { threshold: 0.4 });
+}, {
+  // ビューポート中央帯（上下45%を除外）との交差で判定。
+  // works等の縦長セクションは threshold 比率だと届かないため中央線基準にする
+  rootMargin: '-45% 0px -45% 0px',
+  threshold: 0,
+});
 
 sections.forEach(s => activeObserver.observe(s));
 

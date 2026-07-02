@@ -243,6 +243,15 @@ ul { list-style: none; }
 
 .hero-sub-inner { display: block; will-change: transform; }
 
+.hero-kana {
+  font-family: var(--font-serif-ja);
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.55em;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+
 .hero-name {
   overflow: hidden;
   font-family: var(--font-serif-ja);
@@ -254,8 +263,6 @@ ul { list-style: none; }
   color: var(--ink);
   overflow-wrap: anywhere;
 }
-
-.hero-name-inner { display: block; will-change: transform; }
 
 .hero-desc {
   font-family: var(--font-ja);
@@ -276,6 +283,74 @@ ul { list-style: none; }
   height: 1px;
   background: var(--line);
   transform-origin: left;
+}
+
+/* ヒーロー背景（Phase 5 WebGL用キャンバス＋静的フォールバックの滲み） */
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 58% 46% at 70% 36%, rgba(163, 147, 122, 0.08), transparent 70%);
+  transition: opacity 0.8s ease;
+}
+
+#hero.has-webgl::before { opacity: 0; }
+
+/* 右端の縦書き題字 */
+.hero-vertical {
+  position: absolute;
+  right: var(--gutter);
+  top: 50%;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  font-family: var(--font-serif-ja);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.5em;
+  color: var(--muted-2);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 左下のスクロール指標 */
+.hero-scroll {
+  position: absolute;
+  left: var(--gutter);
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.hero-scroll-label {
+  font-family: var(--font-latin);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  writing-mode: vertical-rl;
+}
+
+.hero-scroll-line {
+  display: block;
+  width: 1px;
+  height: 52px;
+  background: var(--accent-ink);
+  transform-origin: top;
 }
 
 /* ============================
@@ -385,17 +460,30 @@ ul { list-style: none; }
 .works-grid {
   max-width: var(--max-w);
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 64px 48px;
 }
 
-.work-card { display: block; }
+/* 1作品=1行の非対称12カラム交互構成（誌面スプレッド） */
+.work-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 0 clamp(24px, 4vw, 56px);
+  align-items: center;
+  padding: var(--sp-6) 0;
+  border-top: 1px solid var(--line);
+}
+
+.work-card:first-child { border-top: 0; padding-top: var(--sp-2); }
+.work-card:last-child { padding-bottom: var(--sp-2); }
+
+.work-card:nth-child(odd)  .work-thumb { grid-column: 1 / 8; }
+.work-card:nth-child(odd)  .work-info  { grid-column: 8 / 13; }
+.work-card:nth-child(even) .work-thumb { grid-column: 6 / 13; grid-row: 1; }
+.work-card:nth-child(even) .work-info  { grid-column: 1 / 6;  grid-row: 1; }
 
 .work-thumb {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  margin-bottom: 22px;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
   position: relative;
   border: 1px solid var(--line);
@@ -538,19 +626,24 @@ ul { list-style: none; }
 
 .work-info { padding: 0 2px; }
 
+/* ゴースト索引番号（白抜き大数字） */
+.work-index-ghost {
+  display: block;
+  font-family: var(--font-serif-ja);
+  font-size: clamp(3.4rem, 6vw, 5.2rem);
+  font-weight: 400;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--faint);
+  margin-bottom: 22px;
+  user-select: none;
+}
+
 .work-meta {
   display: flex;
   align-items: baseline;
   gap: 14px;
   margin-bottom: 16px;
-}
-
-.work-index {
-  font-family: var(--font-latin);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: var(--accent-ink);
 }
 
 .work-cat {
@@ -588,6 +681,7 @@ ul { list-style: none; }
   color: var(--text);
   line-height: 1.95;
   font-weight: 300;
+  max-width: 36em;
 }
 
 .work-view {
@@ -1006,6 +1100,22 @@ footer {
   .nav-links { gap: 22px; }
 
   .sec-head { margin-bottom: 44px; }
+
+  /* works: 1カラム縦積みへ（thumb→info の文書順） */
+  .work-card {
+    grid-template-columns: 1fr;
+    gap: 22px 0;
+    padding: var(--sp-5) 0;
+    align-items: start;
+  }
+  .work-card:nth-child(odd)  .work-thumb,
+  .work-card:nth-child(even) .work-thumb { grid-column: auto; grid-row: auto; }
+  .work-card:nth-child(odd)  .work-info,
+  .work-card:nth-child(even) .work-info  { grid-column: auto; grid-row: auto; }
+  .work-thumb { aspect-ratio: 4 / 3; }
+  .work-index-ghost { font-size: 3rem; margin-bottom: 14px; }
+
+  .hero-vertical, .hero-scroll { display: none; }
 }
 
 @media (max-width: 540px) {
@@ -1014,7 +1124,6 @@ footer {
   .nav-links { gap: 14px; }
   .nav-links a { font-size: 0.62rem; letter-spacing: 0.16em; }
 
-  .works-grid { gap: 44px; }
   .about-meta-row { gap: 12px; }
   .note-card { gap: 18px; }
   .note-avatar { width: 48px; height: 48px; }
