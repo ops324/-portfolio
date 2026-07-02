@@ -215,38 +215,6 @@ if (animReady) {
   revealOn('#about', 'top 68%', { y: 12, duration: 0.7 }, '.about-divider');
   revealOn('#about', 'top 55%', { y: 8,  duration: 0.7 }, '.about-text--sub');
 
-  // 「軸」本文: 墨が乗るスクロール連動（薄墨→墨、scrub）。
-  // 文字分割は折返しでCJK禁則（行頭の句読点回避）を失うため、
-  // 全行が1行に収まる場合のみ適用。収まらない幅・SplitText非対応時は行送りへフォールバック
-  if (splitReady && !reduceMotion) {
-    fontsReady.then(() => {
-      const lines = gsap.utils.toArray('.about-text .about-text-line');
-      const fitsSingleLine = lines.every(line => {
-        const lineH = parseFloat(getComputedStyle(line).lineHeight) || 0;
-        return lineH > 0 && line.getBoundingClientRect().height < lineH * 1.6;
-      });
-      if (!fitsSingleLine) {
-        revealOn('#about', 'top 62%', { y: 10, duration: 0.7, stagger: 0.13 }, '.about-text-line');
-        return;
-      }
-      const axis = SplitText.create('.about-text .about-text-line', { type: 'chars', aria: 'auto' });
-      gsap.set(axis.chars, { color: '#cfc9bd' });
-      gsap.to(axis.chars, {
-        color: '#1a1a1c',
-        stagger: 0.35,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.about-text',
-          start: 'top 78%',
-          end: 'top 30%',
-          scrub: 0.8,
-        },
-      });
-    });
-  } else {
-    revealOn('#about', 'top 62%', { y: 10, duration: 0.7, stagger: 0.13 }, '.about-text-line');
-  }
-
   // ============================
   // Works Cards (交互スライドイン)
   // ============================
