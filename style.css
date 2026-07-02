@@ -473,6 +473,12 @@ ul { list-style: none; }
 .work-thumb-lisa { background: #0d0d0d; }
 .work-thumb-lisa .work-thumb-img { object-position: center; }
 
+.work-thumb-chinju {
+  background: #f2efe9;
+  background-image: linear-gradient(170deg, #f6f3ee 0%, #eae5db 100%);
+}
+.work-thumb-chinju .work-thumb-img { object-position: top center; }
+
 .work-info { padding: 0 2px; }
 
 .work-meta {
