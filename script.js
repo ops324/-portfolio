@@ -250,10 +250,22 @@ if (animReady) {
 }
 
 // ============================
-// Active Nav Link（gsap 非依存・常時動作）
+// Active Nav Link + Page Marker（gsap 非依存・常時動作）
 // ============================
 const sections   = document.querySelectorAll('section[id]');
 const navAnchors = document.querySelectorAll('.nav-links a');
+
+// 柱・ノンブル: セクションid → 表記
+const pageMarker      = document.querySelector('.page-marker');
+const pageMarkerNo    = document.querySelector('.page-marker-no');
+const pageMarkerTitle = document.querySelector('.page-marker-title');
+const PAGE_INDEX = {
+  about:    ['01', 'about'],
+  projects: ['02', 'works'],
+  events:   ['03', 'events'],
+  note:     ['04', 'note'],
+  contact:  ['05', 'contact'],
+};
 
 const activeObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
@@ -264,6 +276,16 @@ const activeObserver = new IntersectionObserver(entries => {
           a.classList.add('active');
         }
       });
+      if (pageMarker) {
+        const page = PAGE_INDEX[entry.target.id];
+        if (page) {
+          pageMarkerNo.textContent = page[0];
+          pageMarkerTitle.textContent = page[1];
+          pageMarker.classList.add('visible');
+        } else {
+          pageMarker.classList.remove('visible'); // hero では非表示
+        }
+      }
     }
   });
 }, { threshold: 0.4 });

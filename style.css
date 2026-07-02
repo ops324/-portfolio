@@ -5,13 +5,17 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  /* paper & ink */
+  /* paper & ink（6階調のインク体系） */
   --paper:       #f7f6f3;
   --paper-2:     #efece6;
   --ink:         #1a1a1c;
+  --ink-2:       #3c3a36;
   --text:        #33312e;
   --muted:       #6f6a60;
+  --muted-2:     #8f887b;
+  --faint:       #c9c3b6;
   --line:        #e4e0d9;
+  --line-strong: #d5cfc3;
   --accent:      #a3937a;
   --accent-ink:  #7c6f59;
 
@@ -21,12 +25,20 @@
   --font-serif-ja: 'Shippori Mincho B1', serif;
   --font-body:     'Inter', 'Noto Sans JP', sans-serif;
 
-  --fs-hero:   clamp(3.2rem, 7.5vw, 6rem);
-  --fs-h2:     clamp(1.7rem, 3.6vw, 2.6rem);
-  --fs-lead:   1.05rem;
-  --fs-work:   clamp(1.15rem, 1.8vw, 1.45rem);
-  --fs-body:   0.9rem;
-  --fs-label:  0.68rem;
+  --fs-hero:    clamp(3.6rem, 9vw, 7.2rem);
+  --fs-h2:      clamp(1.8rem, 3.6vw, 2.7rem);
+  --fs-lead:    1.05rem;
+  --fs-work:    clamp(1.3rem, 2vw, 1.7rem);
+  --fs-body:    0.9rem;
+  --fs-caption: 0.78rem;
+  --fs-label:   0.68rem;
+  --fs-micro:   0.6rem;
+
+  /* spacing rhythm（8pxベース＋セクション律動） */
+  --sp-1: 8px;  --sp-2: 16px; --sp-3: 24px;
+  --sp-4: 40px; --sp-5: 64px; --sp-6: 104px;
+  --rhythm: clamp(96px, 14vh, 168px);
+  --gutter: clamp(24px, 5vw, 48px);
 
   /* layout & motion */
   --nav-h:     60px;
@@ -45,6 +57,51 @@ body {
   overflow-x: clip;
 }
 html { overflow-x: clip; }
+
+/* ============================
+   Paper Grain（SVG feTurbulence・静止粒子）
+   ============================ */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998; /* page-intro(9999)の下・全コンテンツの上 */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+}
+
+/* ============================
+   Registration Marks（四隅のトンボ風十字）
+   ============================ */
+@media (min-width: 1100px) {
+  html::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9997;
+    --cross-v: linear-gradient(var(--faint), var(--faint));
+    --cross-h: linear-gradient(var(--faint), var(--faint));
+    background-image:
+      var(--cross-v), var(--cross-h),
+      var(--cross-v), var(--cross-h),
+      var(--cross-v), var(--cross-h),
+      var(--cross-v), var(--cross-h);
+    background-size:
+      1px 11px, 11px 1px,
+      1px 11px, 11px 1px,
+      1px 11px, 11px 1px,
+      1px 11px, 11px 1px;
+    background-position:
+      17px 12px, 12px 17px,
+      calc(100% - 17px) 12px, calc(100% - 12px) 17px,
+      17px calc(100% - 12px), 12px calc(100% - 17px),
+      calc(100% - 17px) calc(100% - 12px), calc(100% - 12px) calc(100% - 17px);
+    background-repeat: no-repeat;
+  }
+}
 
 a { color: inherit; text-decoration: none; }
 ul { list-style: none; }
@@ -94,7 +151,7 @@ ul { list-style: none; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 48px;
+  padding: 0 var(--gutter);
   background: rgba(247, 246, 243, 0.78);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -163,7 +220,7 @@ ul { list-style: none; }
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 0 48px;
+  padding: 0 var(--gutter);
   padding-top: var(--nav-h);
 }
 
@@ -214,8 +271,8 @@ ul { list-style: none; }
 .hero-line {
   position: absolute;
   bottom: 0;
-  left: 48px;
-  right: 48px;
+  left: var(--gutter);
+  right: var(--gutter);
   height: 1px;
   background: var(--line);
   transform-origin: left;
@@ -226,7 +283,7 @@ ul { list-style: none; }
    ============================ */
 #about {
   position: relative;
-  padding: 120px 48px;
+  padding: var(--rhythm) var(--gutter);
 }
 
 .about-inner {
@@ -322,7 +379,7 @@ ul { list-style: none; }
    ============================ */
 #projects {
   position: relative;
-  padding: 120px 48px;
+  padding: var(--rhythm) var(--gutter);
 }
 
 .works-grid {
@@ -560,7 +617,7 @@ ul { list-style: none; }
    ============================ */
 #events {
   position: relative;
-  padding: 120px 48px;
+  padding: var(--rhythm) var(--gutter);
 }
 
 .events-grid {
@@ -610,7 +667,7 @@ ul { list-style: none; }
    ============================ */
 #note {
   position: relative;
-  padding: 120px 48px;
+  padding: var(--rhythm) var(--gutter);
 }
 
 .note-cards {
@@ -686,7 +743,7 @@ ul { list-style: none; }
    ============================ */
 #contact {
   position: relative;
-  padding: 120px 48px;
+  padding: var(--rhythm) var(--gutter);
 }
 
 .contact-inner {
@@ -739,15 +796,169 @@ ul { list-style: none; }
 .contact-link:hover::after { transform: scaleX(1); }
 
 /* ============================
-   Footer
+   Footer（奥付）
    ============================ */
 footer {
-  padding: 32px 48px;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--line-strong);
+  padding: var(--sp-5) var(--gutter) var(--sp-4);
+}
+
+.footer-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
+.footer-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: var(--sp-5);
+}
+
+.footer-name {
+  font-family: var(--font-serif-ja);
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.footer-name-en {
   font-family: var(--font-latin);
-  font-size: 0.64rem;
-  letter-spacing: 0.14em;
+  font-size: var(--fs-micro);
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+
+.footer-nav {
+  display: flex;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+
+.footer-nav a {
+  position: relative;
+  font-family: var(--font-latin);
+  font-size: var(--fs-label);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   color: var(--muted);
+  padding: 4px 0;
+  transition: color 0.25s ease;
+}
+
+.footer-nav a::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--accent-ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease-out);
+}
+
+.footer-nav a:hover { color: var(--ink); }
+.footer-nav a:hover::after { transform: scaleX(1); }
+
+.footer-bottom {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--line);
+  padding-top: var(--sp-3);
+}
+
+.footer-colophon {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  font-family: var(--font-ja);
+  font-size: var(--fs-micro);
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  color: var(--muted-2);
+}
+
+.footer-top-link {
+  font-family: var(--font-serif-ja);
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  transition: color 0.25s ease;
+  flex-shrink: 0;
+}
+
+.footer-top-link:hover { color: var(--ink); }
+
+/* ============================
+   Page Marker（柱・ノンブル）
+   ============================ */
+.page-marker {
+  position: fixed;
+  right: var(--gutter);
+  bottom: 26px;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-latin);
+  font-size: var(--fs-micro);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--muted-2);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.page-marker.visible { opacity: 1; }
+
+.page-marker-no { color: var(--accent-ink); }
+
+.page-marker-sep {
+  display: block;
+  width: 14px;
+  height: 1px;
+  background: var(--faint);
+}
+
+.page-marker-title { text-transform: lowercase; }
+
+@media (max-width: 900px) {
+  .page-marker { display: none; }
+}
+
+/* ============================
+   Margin Label（欄外の柱・縦書き章題）
+   ============================ */
+.sec-margin {
+  position: absolute;
+  left: calc(var(--gutter) / 2);
+  top: var(--rhythm);
+  transform: translateX(-50%);
+  writing-mode: vertical-rl;
+  font-family: var(--font-serif-ja);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.42em;
+  color: var(--faint);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+@media (max-width: 1099px) {
+  .sec-margin { display: none; }
 }
 
 /* ============================
@@ -790,16 +1001,9 @@ footer {
 }
 
 @media (max-width: 860px) {
-  .hero-line { left: 28px; right: 28px; }
+  :root { --rhythm: clamp(84px, 12vh, 120px); }
   #navbar { padding: 0 20px; gap: 12px; }
   .nav-links { gap: 22px; }
-  #hero { padding: 0 28px; padding-top: var(--nav-h); }
-  #about, #contact, #projects, #events, #note { padding: 84px 28px; }
-
-  .works-grid {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
 
   .sec-head { margin-bottom: 44px; }
 }
