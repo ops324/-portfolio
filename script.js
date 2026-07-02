@@ -17,7 +17,7 @@ function revealAllImmediately() {
   const intro = document.getElementById('page-intro');
   if (intro) intro.style.display = 'none';
   document.querySelectorAll(
-    '.reveal, .work-card, .note-card, .section-line, .hero-sub-inner, .hero-name, .hero-kana, .hero-desc-inner, .hero-vertical, .hero-scroll'
+    '.reveal, .work-card, .note-card, .section-line, .hero-sub-inner, .hero-name, .hero-desc-inner, .hero-scroll'
   ).forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
 }
 
@@ -98,15 +98,11 @@ if (animReady) {
     const tl = gsap.timeline();
 
     gsap.set('.hero-sub-inner',  { yPercent: 120 });
-    gsap.set('.hero-kana',       { opacity: 0, y: 14 });
     gsap.set('.hero-desc-inner', { yPercent: 100, opacity: 0 });
-    gsap.set('.hero-vertical',   { opacity: 0 });
     gsap.set('.hero-scroll',     { opacity: 0 });
     gsap.set('.hero-line',       { scaleX: 0 });
 
-    tl
-      .to('.hero-sub-inner', { yPercent: 0, duration: 0.9, ease: 'power3.out' })
-      .to('.hero-kana',      { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.6');
+    tl.to('.hero-sub-inner', { yPercent: 0, duration: 0.9, ease: 'power3.out' });
 
     // 名前: SplitText があれば文字単位のマスク出現、なければ行送り
     if (splitReady) {
@@ -119,8 +115,7 @@ if (animReady) {
 
     tl
       .to('.hero-desc-inner', { yPercent: 0, opacity: 1, duration: 0.8, stagger: 0.12, ease: 'power2.out' }, '-=0.5')
-      .to('.hero-vertical',   { opacity: 1, duration: 1.0, ease: 'power2.out' }, '-=0.5')
-      .to('.hero-scroll',     { opacity: 1, duration: 1.0, ease: 'power2.out' }, '<')
+      .to('.hero-scroll',     { opacity: 1, duration: 1.0, ease: 'power2.out' }, '-=0.5')
       .to('.hero-line',       { scaleX: 1, duration: 1.2, ease: 'expo.out' }, '-=0.9')
       // アニメ完了後に will-change を解除（恒久的な合成レイヤー保持を避ける）
       .add(() => gsap.set('.hero-sub-inner, .hero-name, .hero-desc-inner', { clearProps: 'willChange' }));
@@ -138,7 +133,7 @@ if (animReady) {
   // ページロード → ヒーロー
   if (reduceMotion) {
     gsap.set('#page-intro', { scaleY: 0 });
-    gsap.set('.hero-sub-inner, .hero-name, .hero-kana, .hero-desc-inner, .hero-vertical, .hero-scroll', { yPercent: 0, y: 0, opacity: 1 });
+    gsap.set('.hero-sub-inner, .hero-name, .hero-desc-inner, .hero-scroll', { yPercent: 0, y: 0, opacity: 1 });
     gsap.set('.hero-line', { scaleX: 1 });
   } else {
     fontsReady.then(() => {

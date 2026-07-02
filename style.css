@@ -243,15 +243,6 @@ ul { list-style: none; }
 
 .hero-sub-inner { display: block; will-change: transform; }
 
-.hero-kana {
-  font-family: var(--font-serif-ja);
-  font-size: 0.72rem;
-  font-weight: 400;
-  letter-spacing: 0.55em;
-  color: var(--muted);
-  margin-bottom: 18px;
-}
-
 .hero-name {
   overflow: hidden;
   font-family: var(--font-serif-ja);
@@ -306,22 +297,6 @@ ul { list-style: none; }
 }
 
 #hero.has-webgl::before { opacity: 0; }
-
-/* 右端の縦書き題字 */
-.hero-vertical {
-  position: absolute;
-  right: var(--gutter);
-  top: 50%;
-  transform: translateY(-50%);
-  writing-mode: vertical-rl;
-  font-family: var(--font-serif-ja);
-  font-size: 0.75rem;
-  font-weight: 400;
-  letter-spacing: 0.5em;
-  color: var(--muted-2);
-  pointer-events: none;
-  user-select: none;
-}
 
 /* 左下のスクロール指標 */
 .hero-scroll {
@@ -1115,7 +1090,7 @@ footer {
   .work-thumb { aspect-ratio: 4 / 3; }
   .work-index-ghost { font-size: 3rem; margin-bottom: 14px; }
 
-  .hero-vertical, .hero-scroll { display: none; }
+  .hero-scroll { display: none; }
 }
 
 @media (max-width: 540px) {
