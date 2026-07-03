@@ -659,6 +659,10 @@ ul { list-style: none; }
   max-width: 36em;
 }
 
+.work-desc + .work-desc {
+  margin-top: 0.9em;
+}
+
 .work-view {
   display: inline-flex;
   align-items: center;
