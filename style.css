@@ -599,6 +599,12 @@ ul { list-style: none; }
 }
 .work-thumb-chinju .work-thumb-img { object-position: top center; }
 
+.work-thumb-arisa {
+  background: #f2efe9;
+  background-image: linear-gradient(170deg, #f6f3ee 0%, #eae5db 100%);
+}
+.work-thumb-arisa .work-thumb-img { object-position: center; }
+
 .work-info { padding: 0 2px; }
 
 /* ゴースト索引番号（白抜き大数字） */
