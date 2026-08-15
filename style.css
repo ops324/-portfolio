@@ -605,6 +605,9 @@ ul { list-style: none; }
 }
 .work-thumb-arisa .work-thumb-img { object-position: center; }
 
+.work-thumb-dimension { background: #05060f; }
+.work-thumb-dimension .work-thumb-img { object-position: center; }
+
 .work-info { padding: 0 2px; }
 
 /* ゴースト索引番号（白抜き大数字） */
