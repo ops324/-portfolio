@@ -2,9 +2,9 @@
 
 | 項目 | 内容 |
 |---|---|
-| バージョン | 3.0.4 |
+| バージョン | 3.2.0 |
 | 作成日 | 2026年3月7日 |
-| 最終更新 | 2026年7月3日 |
+| 最終更新 | 2026年8月16日 |
 | 作成者 | 滝本 哲也 |
 | リポジトリ | github.com/ops324/-portfolio |
 | 公開URL | https://takimototetsuya.vercel.app |
@@ -67,6 +67,7 @@
 | 2.8.0 | 2026-07-03 | Works に「CHINJU CLI」カード追加（06）。コードの変更箇所だけでなく影響範囲まで横断レビューする確証エンジンのLP案件。**自作プロダクトではなく LP制作・市場調査・方向性整理・PR を担当した案件**のため、カテゴリを **"LP / Branding & PR"** として区別し、説明文にも担当役割を明記（製品説明と役割を `<br><br>` で段落分け）。サムネイル（`thumb-chinju.jpg`）は Playwright でライブサイトを **4:3（1400×1050）** で撮影し、cover 表示での左右見切れを回避。`.work-thumb-chinju`（LPに合わせたライトな微グラデ背景 `#f2efe9`）を追加。作品一覧6件構成に |
 | 3.0.7 | 2026-07-04 | 制作実績01「翡翠眼」の説明文を全面改訂。技術スタック中心の記述（Next.js・5つの外部API・障害耐性・Vitest/CI等）から、事業内容（マクロ経済・金融市場の先行きを読み解く情報サイト）とプロダクト特徴（AIが自動で執筆・公開／過去の見通しを検証・学習して精度を高める予測学習／複数情報源による環境変化への強さ）を平易に伝える内容に刷新。2段落構成は維持 |
 | 3.1.0 | 2026-07-10 | Works に「領収書仕分けAI」カード追加（07）。撮影業の個人事業主向けに領収書のOCR読み取り〜経費集計〜会計ソフト向けエクスポートを自動化するWebアプリ（アリサ／`ops324/receipt-sorter-ai`）。**Web版が未デプロイで公開URLが無いため、リンクなしの静的カード**として掲載（他カードの `<a href>` ではなく `<div class="work-card">`、`View →` アフォーダンスも省略）。サムネイル（`thumb-arisa.jpg`）は提供されたアプリアイコン（`icon_transparent.png`）を **16:10（1400×875）の生成りグラデ背景（`#f6f3ee`→`#eae5db`）中央に PIL で合成**（中心銘/CHINJU と同系のライトトーン）。`.work-thumb-arisa` を追加。作品一覧7件構成に |
+| 3.2.0 | 2026-08-16 | Works に「DIMENSION」カード追加。**唯一の先頭挿入（01）** で、既存7件を **02-08 へ繰り下げ**。0次元の点から6次元超立方体までをスクロールで連続変形させ、ホップ・ファイブレーション／クリフォード・トーラス／多胞体エクスプローラ／パースペクティブの4展示を持つ、高次元構造の可視化サイト（Vite + TypeScript + Three.js / `ops324/dimension`）。実験的ビジュアライゼーションであり他の自作プロダクト（02-05）と性格が異なるため、カテゴリを **"Experimental / Data Art"** として区別。サムネイル（`thumb-dimension.jpg`）は**先方サイトの OGP 画像（`og.jpg` 1200×630）を等倍のまま 1200×750（16:10）中央へレターボックス合成**。上下60pxの帯は単色ではなく**画像端をミラー反射→ぼかし→`#05060f` へフェード**させ継ぎ目を消している（og.jpg の上下端は四隅 `#060610` に対し辺中央 `#161223`/`#11172d` と光が滲むため単色帯では継ぎ目が出る）。等倍のためリサンプリング劣化ゼロで、サムネ実描画幅 約618px（DPR2 で 1236px）に対し 1200px はほぼ 1:1。`.work-thumb-dimension`（背景 `#05060f` ＝先方の `theme-color`）を追加。**先頭挿入により `.work-card:nth-child(odd/even)` の偶奇が全件反転し、誌面スプレッドの左右が既存7件すべてで入れ替わる**（奇偶とも 7カラム/5カラムで幅は同一のためリフローは発生しない。860px以下は偶奇が `auto` に打ち消されるため無影響。`script.js` のスライドイン方向 `i % 2` は同じ序数由来のため自動同期）。`.work-card:first-child`（上罫線なし・上余白 `--sp-2`）が DIMENSION へ移り、翡翠眼に区切り罫が付く。作品一覧8件構成に |
 | 3.0.6 | 2026-07-03 | 制作実績06「CHINJU CLI」サムネイル（`thumb-chinju.jpg`）を差し替え。旧画像（v2.8.0）は全ページを 4:3（1400×1050）で撮影しており左右見切れは無いものの、**上部ナビ（ロゴ＋「βに申し込む」ボタン）や下部の別セクション見出しが写り込み**、素のスクショ感が強かった。v3.0.5 Lisa と同じ方針で、**ヒーロー主要部（大見出し「ベテランエンジニアの手厚いレビューを。」＋iMacのCLIレビュー画面＋枯山水/盆栽＋信頼バー）を 16:10（1500×937）で切り出して撮影**する方式に刷新。撮影時に上部ナビ（`nav.nav`）・右端ドットナビ（`nav.path-nav`）・ヒーロー以降の全セクション/フッターをCSSで非表示にし、`#demo` に軽い `margin-top` を付与してヒーローを淡い背景の中央に配置。cover の枠比率と一致しPC見切れゼロ、上下の余白は860px以下の `4/3` 枠での左右トリムの安全マージンにもなる。他5件と同じ細罫スクショ枠の一貫性を維持（HTML/CSS変更なし・画像差し替えのみ） |
 | 3.0.5 | 2026-07-03 | 制作実績05「Lisa Mizuno」サムネイル（`thumb-lisa-mizuno.jpg`）を差し替え。旧画像は全ページを **1400×800（比率1.75）** で撮影しており、サムネ枠 `aspect-ratio:16/10`（=1.6）＋`object-fit:cover` に対し横長すぎて**左右が見切れて**いた（左上ロゴ・右上ナビが欠ける。860px以下の `4/3` 枠ではさらに悪化）。対処として、v2.8.0 CHINJU と同じ「枠比率に合わせた撮影」の方針を発展させ、**サイト全体ではなくヒーローの主要ビジュアル（モノクロの人物＋大見出しタイポ＋DJ·ARTIST）を 16:10（1600×1000）で切り出して撮影**する方式に変更。撮影時に上部ナビと右下「scroll」指標（`#hero::after` 疑似要素）を非表示にして余白・ブラウザ的要素を排し作品性を強調。cover の枠比率と完全一致しPC表示で見切れゼロ、他5件と同じ細罫スクショ枠の一貫性も維持（HTML/CSS変更なし・画像差し替えのみ） |
 | 3.0.4 | 2026-07-03 | 制作実績02「Nagi（凪）」の説明文を改訂。キャッチ「自己を観る。」は維持し、本文を「書くほどに、視界がひらく自己観察アプリ。」のコンセプト1文＋機能説明1段落の簡潔な2段構成に刷新（AI「凪 -Nagi-」が静かな問いを返す・褒めず諭さず隣で問いかける・多角的に眺め直し視界がひらく、という体験価値を平易に表現）。従来の抽象的な「次元の上昇／多面的視点」表現を平明化 |
@@ -142,7 +143,8 @@ v2.5 では、静かで文語的な世界観を保ったまま視覚レイヤー
 ├── script.js           # GSAP/Lenis 演出・SplitTextテキスト演出・磁気ホバー・スライドショー・アクティブナビ
 ├── fx.js               # ヒーロー背景「墨の靄」WebGLシェーダ（自己完結・フォールバック内蔵）
 ├── spec.md             # 本仕様書
-├── images/                         # 最適化済みアセット（合計約1.0MB）
+├── images/                         # 最適化済みアセット（合計約1.4MB）
+│   ├── thumb-dimension.jpg        # DIMENSION OGP画像のレターボックス合成（1枚・16:10・1200×750・ミラー帯／背景 `#05060f`・126KB）
 │   ├── thumb-hisuigan.jpg         # 翡翠眼 マーケットデータ画面（1枚）
 │   ├── nagi-icon.jpg              # Nagi スライド1（アイコン）
 │   ├── nagi-record1.jpg          # Nagi スライド2（記録画面1・ライトモード）
@@ -261,7 +263,7 @@ npx serve -l 3000 .
 | 要素 | 仕様 |
 |---|---|
 | サムネイル | デスクトップ `aspect-ratio: 16/10` / 860px以下 `4/3`、`1px solid var(--line)` の細罫枠、`<img>`/`<video>` 実画像 |
-| ゴースト索引 | 白抜き明朝大数字（01-06、`clamp(3.4rem, 6vw, 5.2rem)`、`-webkit-text-stroke: 1px var(--faint)`、aria-hidden） |
+| ゴースト索引 | 白抜き明朝大数字（01-08、`clamp(3.4rem, 6vw, 5.2rem)`、`-webkit-text-stroke: 1px var(--faint)`、aria-hidden） |
 | メタ行 | カテゴリ（uppercase、`--muted`）のみ（小索引番号はゴースト索引へ統合） |
 | タイトル | **Shippori Mincho B1**、`--fs-work`（`clamp(1.15rem,1.8vw,1.45rem)`）、weight 500、`--ink` |
 | キャッチコピー | **Shippori Mincho B1**、0.95rem、italic、`--text` |
@@ -270,24 +272,27 @@ npx serve -l 3000 .
 | ホバー | カードが `y:-4` 浮上、サムネ画像が `scale:1.05`（GSAP） |
 | スライド矢印 | ホバー時表示。`rgba(26,26,28,0.42)` + `blur(4px)` の丸ボタン（30px）、白シェブロン。**タッチ端末（`@media (hover: none)`）では opacity 0.85 で常時表示**（1枚のみのカードは JS が `display:none` にするため対象外） |
 | ドット | 5px 円、`box-shadow` 付き。現在: 白98%・1.15倍 / 非選択: 白50%。**透明 `::after`（`inset: -10px -2px`）でタップ範囲を縦25px相当に拡大**（見た目は5pxのまま） |
-| リンク | カード全体を `<a target="_blank">` で外部サイトへ |
+| リンク | カード全体を `<a target="_blank" rel="noopener">` で外部サイトへ。**唯一の例外は 08 領収書仕分けAI**（公開URLが無く `<div class="work-card">` のリンクなし静的カード。`View →` も省略） |
 
-#### 3.4.3 作品一覧（v3.0.0 時点）
+#### 3.4.3 作品一覧
 
 | # | カテゴリ | タイトル | リンク | サムネイル |
 |---|---|---|---|---|
-| 01 | Web Development | 翡翠眼 | https://hisuigan-macro-insight-engine.vercel.app/ | `thumb-hisuigan.jpg`（1枚） |
-| 02 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `nagi-icon.jpg` / `nagi-record1〜5.jpg` / `nagi-calendar.jpg`（7枚手動スライド） |
-| 03 | Web Development | 中心銘 | https://chushinmei.vercel.app | `thumb-chushinmei.jpg`（1枚・和紙調ベージュ背景） |
-| 04 | Web Development | Frequency Analyzer | https://frequency-analyzer.vercel.app | `freq-video-light.mp4` / `freq-video-dark.mp4`（2枚手動スライド・`<video autoplay muted loop>`） |
-| 05 | Web Design / Artist Site | Lisa Mizuno | https://lisa-mizuno.vercel.app/ | `thumb-lisa-mizuno.jpg`（1枚・モノクローム背景 `#0d0d0d`） |
-| 06 | LP / Branding & PR | CHINJU CLI | https://service.chinju.org/ | `thumb-chinju.jpg`（1枚・4:3撮影・ライト背景 `#f2efe9`） |
-| 07 | Web Development | 領収書仕分けAI | なし（未デプロイ・静的カード） | `thumb-arisa.jpg`（1枚・アプリアイコン合成・生成りグラデ背景 `#f2efe9`） |
+| 01 | Experimental / Data Art | DIMENSION | https://dimension-vert.vercel.app/ | `thumb-dimension.jpg`（1枚・OGP画像のレターボックス合成・暗背景 `#05060f`） |
+| 02 | Web Development | 翡翠眼 | https://hisuigan-macro-insight-engine.vercel.app/ | `thumb-hisuigan.jpg`（1枚） |
+| 03 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `nagi-icon.jpg` / `nagi-record1〜5.jpg` / `nagi-calendar.jpg`（7枚手動スライド） |
+| 04 | Web Development | 中心銘 | https://chushinmei.vercel.app | `thumb-chushinmei.jpg`（1枚・和紙調ベージュ背景） |
+| 05 | Web Development | Frequency Analyzer | https://frequency-analyzer.vercel.app | `freq-video-light.mp4` / `freq-video-dark.mp4`（2枚手動スライド・`<video autoplay muted loop>`） |
+| 06 | Web Design / Artist Site | Lisa Mizuno | https://lisa-mizuno.vercel.app/ | `thumb-lisa-mizuno.jpg`（1枚・モノクローム背景 `#0d0d0d`） |
+| 07 | LP / Branding & PR | CHINJU CLI | https://service.chinju.org/ | `thumb-chinju.jpg`（1枚・4:3撮影・ライト背景 `#f2efe9`） |
+| 08 | Web Development | 領収書仕分けAI | なし（未デプロイ・静的カード） | `thumb-arisa.jpg`（1枚・アプリアイコン合成・生成りグラデ背景 `#f2efe9`） |
 
 ※ タイトルの読み仮名（翡翠眼＝ひすいがん／中心銘＝ちゅうしんめい）は v2.5.0 で省略。
-※ 05 Lisa Mizuno は他者（DJ・アーティスト）向けの制作実績であり、カテゴリを "Web Design / Artist Site" として自作プロダクト（01-04）と区別している。
-※ 06 CHINJU CLI は自作プロダクトではなく、LP制作・市場調査・方向性整理・PR を担当した案件。カテゴリを "LP / Branding & PR" とし、説明文でも担当役割を明記して制作物（01-05）と区別している。
-※ 07 領収書仕分けAI は Web版が未デプロイで公開URLが無いため、唯一 `<a href>` ではなく `<div class="work-card">` の**リンクなし静的カード**（`View →` も省略）。他カードのアンカー前提の挙動には依存しない（`.work-card` に cursor/hover のアンカー依存なし、reveal/GSAP は class セレクタで拾う）。
+※ 01 DIMENSION は自作だが「使うためのプロダクト」ではなく高次元構造の可視化そのものを目的とした実験作のため、実務向けの自作プロダクト（02-05）とはカテゴリを分け "Experimental / Data Art" としている。
+※ 06 Lisa Mizuno は他者（DJ・アーティスト）向けの制作実績であり、カテゴリを "Web Design / Artist Site" として自作プロダクト（01-05）と区別している。
+※ 07 CHINJU CLI は自作プロダクトではなく、LP制作・市場調査・方向性整理・PR を担当した案件。カテゴリを "LP / Branding & PR" とし、説明文でも担当役割を明記して制作物（01-06）と区別している。
+※ 08 領収書仕分けAI は Web版が未デプロイで公開URLが無いため、唯一 `<a href>` ではなく `<div class="work-card">` の**リンクなし静的カード**（`View →` も省略）。他カードのアンカー前提の挙動には依存しない（`.work-card` に cursor/hover のアンカー依存なし、reveal/GSAP は class セレクタで拾う）。
+※ 作品の**掲載順＝DOM順**であり、`.work-card:nth-child(odd/even)` がサムネの左右を決める。**先頭や中間へのカード挿入は以降すべてのカードの左右を反転させる**（幅は奇偶とも同一のためリフローは起きず、860px以下では偶奇指定が `auto` に打ち消されるため無影響）。ゴースト索引は自動採番ではなく**各カードにハードコード**しているため、挿入時は全件の振り直しが必要。
 
 ### 3.5 Events セクション
 
@@ -450,7 +455,8 @@ genre=editorial / macrostructure=Long Document。生成りの紙面・明朝の�
 
 | 項目 | 仕様 |
 |---|---|
-| 対象要素 | `.work-thumb[data-slide]` 内 `.work-thumb-img`（翡翠眼: 1枚 / Nagi: 7枚 / 中心銘: 1枚 / Frequency Analyzer: 2枚 / Lisa Mizuno: 1枚 / CHINJU CLI: 1枚 / 領収書仕分けAI: 1枚） |
+| 対象要素 | `.work-thumb[data-slide]` 内 `.work-thumb-img`（DIMENSION: 1枚 / 翡翠眼: 1枚 / Nagi: 7枚 / 中心銘: 1枚 / Frequency Analyzer: 2枚 / Lisa Mizuno: 1枚 / CHINJU CLI: 1枚 / 領収書仕分けAI: 1枚） |
+| **必須マークアップ** | 画像が1枚のカードでも `data-slide` / `.slide-prev` / `.slide-next` / `.slide-dots` の4点をすべて記述すること。初期化は `imgs.length <= 1` の分岐でこれらへ無条件アクセスするため、欠けると `TypeError` が `forEach` の外へ抜けて**ループが中断し、以降のカードのスライドショーがすべて初期化されない**（`<head>` のCDNフェイルセーフは `gsap === undefined` にしか反応せず救済できない） |
 | 操作 | 左右矢印ボタン・ドットナビのクリック、またはタッチスワイプ（横方向40px超かつ縦移動より大きい場合のみ反応し、縦スクロールと誤判定しない） |
 | 切り替え | `opacity: 0→1`（CSS transition 0.6s ease） |
 | 1枚のみの場合 | 矢印・ドットを非表示（JS制御） |
