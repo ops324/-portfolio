@@ -335,18 +335,6 @@ if (animReady) {
   })();
 
   // ============================
-  // Instagram埋め込みの遅延リサイズで ScrollTrigger の基準位置がズレる対策
-  // ============================
-  const eventsGrid = document.querySelector('.events-grid');
-  if (eventsGrid && 'ResizeObserver' in window) {
-    let refreshTimer;
-    new ResizeObserver(() => {
-      clearTimeout(refreshTimer);
-      refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 300);
-    }).observe(eventsGrid);
-  }
-
-  // ============================
   // Magnetic Hover（小面積の要素のみ・引力係数0.3）
   // slide-prev/next は CSS transform(translateY) と競合するため対象外
   // ============================
@@ -394,9 +382,8 @@ const pageMarkerTitle = document.querySelector('.page-marker-title');
 const PAGE_INDEX = {
   about:    ['01', 'about'],
   projects: ['02', 'works'],
-  events:   ['03', 'events'],
-  note:     ['04', 'note'],
-  contact:  ['05', 'contact'],
+  note:     ['03', 'note'],
+  contact:  ['04', 'contact'],
 };
 
 const activeObserver = new IntersectionObserver(entries => {

@@ -158,8 +158,7 @@ ul { list-style: none; }
 .work-catchcopy,
 .work-desc,
 .note-card-desc,
-.contact-lead,
-.event-cap {
+.contact-lead {
   word-break: auto-phrase;
   text-wrap: pretty;
   line-break: strict;
@@ -170,8 +169,7 @@ ul { list-style: none; }
 .hero-desc,
 .about-text--sub,
 .work-desc,
-.note-card-desc,
-.event-cap {
+.note-card-desc {
   font-feature-settings: 'palt' 1;
   letter-spacing: 0.04em;
 }
@@ -847,56 +845,6 @@ ul { list-style: none; }
 .work-card:hover .work-view-arrow { transform: translateX(5px); }
 
 /* ============================
-   Events
-   ============================ */
-#events {
-  position: relative;
-  padding: var(--rhythm) var(--gutter);
-}
-
-.events-grid {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 48px;
-}
-
-.event-card { margin: 0; }
-
-.event-frame {
-  background: var(--paper-2);
-  border: 1px solid var(--line);
-  padding: 22px;
-  display: flex;
-  justify-content: center;
-}
-
-.event-frame .instagram-media {
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
-.event-cap {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 16px;
-  font-family: var(--font-ja);
-  font-size: 0.82rem;
-  font-weight: 300;
-  color: var(--text);
-}
-
-.event-cap-src {
-  font-family: var(--font-latin);
-  font-size: 0.6rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--muted);
-}
-
-/* ============================
    Note
    ============================ */
 #note {
@@ -1250,16 +1198,6 @@ footer {
 /* ============================
    Responsive
    ============================ */
-/* Events は Instagram 埋め込みの min-width(326px) と2カラムが競合し、
-   880px付近でフレーム内側が326pxを下回って約2pxはみ出すため、
-   Works(860px)より早く 900px で1カラム化する */
-@media (max-width: 900px) {
-  .events-grid {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-}
-
 @media (max-width: 860px) {
   :root { --rhythm: clamp(84px, 12vh, 120px); }
   #navbar { padding: 0 20px; gap: 12px; }
