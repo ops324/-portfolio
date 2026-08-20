@@ -26,10 +26,13 @@
       if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
     } catch (e) {}
   </script>
+  <!-- @generated:fonts start — tools/build-fonts.mjs が書き換える。手で編集しないこと -->
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/inter-400.30d49f56.woff2" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/inter-500.4689e406.woff2" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/noto-sans-jp-300.4d6eccc0.woff2" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/shippori-mincho-b1-400.dc5db1fd.woff2" />
+  <!-- @generated:fonts end -->
   <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Noto+Sans+JP:wght@300;400&family=Shippori+Mincho+B1:wght@400;500;600&display=swap" rel="stylesheet" />
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
