@@ -28,11 +28,9 @@ if (animReady) {
   gsap.registerPlugin(ScrollTrigger);
   if (splitReady) gsap.registerPlugin(SplitText);
 
-  const lenis = new Lenis({
-    duration: reduceMotion ? 0 : 1.2,
-    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    lerp: 0.1,
-  });
+  // duration と lerp は排他（両方渡すと lerp が優先され duration/easing は無視される）。
+  // 追従型の lerp に一本化する
+  const lenis = new Lenis({ lerp: reduceMotion ? 1 : 0.1 });
 
   // Lenis 1.1.14 は window.scrollY をネイティブ更新するため scrollerProxy 不要
   lenis.on('scroll', () => ScrollTrigger.update());
@@ -412,6 +410,22 @@ const activeObserver = new IntersectionObserver(entries => {
 sections.forEach(s => activeObserver.observe(s));
 
 // ============================
+// Work Card — 題字リンクへのクリック委譲（gsap 非依存・常時動作）
+// カード全体をクリック可能にしつつ、a 内 button の不正ネストを避けるための処置。
+// 本文のテキスト選択中・コントロール操作中は発火させない
+// ============================
+document.querySelectorAll('.work-card').forEach(card => {
+  const link = card.querySelector('.work-link');
+  if (!link) return;
+  card.addEventListener('click', e => {
+    if (e.target.closest('a, button')) return;
+    const sel = window.getSelection();
+    if (sel && sel.toString().length > 0) return;
+    link.click();
+  });
+});
+
+// ============================
 // Manual Slideshow（gsap 非依存・常時動作 / タッチスワイプ対応）
 // ============================
 document.querySelectorAll('.work-thumb[data-slide]').forEach(thumb => {
@@ -419,21 +433,32 @@ document.querySelectorAll('.work-thumb[data-slide]').forEach(thumb => {
   const dots    = thumb.querySelectorAll('.slide-dot');
   const prevBtn = thumb.querySelector('.slide-prev');
   const nextBtn = thumb.querySelector('.slide-next');
+  const status  = thumb.querySelector('[data-slide-status]');
   let current = 0;
 
   if (imgs.length <= 1) {
     prevBtn.style.display = 'none';
     nextBtn.style.display = 'none';
     thumb.querySelector('.slide-dots').style.display = 'none';
+    if (status) status.remove();
     return;
   }
+
+  // 各ドットに名前と現在位置を与える（従来は span でキーボード操作不可だった）
+  dots.forEach((dot, i) => {
+    dot.setAttribute('aria-label', (i + 1) + '枚目を表示');
+    dot.setAttribute('aria-current', i === 0 ? 'true' : 'false');
+  });
 
   function goTo(n) {
     imgs[current].classList.remove('active');
     dots[current].classList.remove('active');
+    dots[current].setAttribute('aria-current', 'false');
     current = (n + imgs.length) % imgs.length;
     imgs[current].classList.add('active');
     dots[current].classList.add('active');
+    dots[current].setAttribute('aria-current', 'true');
+    if (status) status.textContent = (current + 1) + ' / ' + imgs.length;
   }
 
   prevBtn.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); goTo(current - 1); });

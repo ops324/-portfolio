@@ -12,8 +12,8 @@
   --ink-2:       #3c3a36;
   --text:        #33312e;
   --muted:       #6f6a60;
-  --muted-2:     #8f887b;
-  --faint:       #c9c3b6;
+  --muted-2:     #78715d;   /* paper比 4.50:1（AA） */
+  --faint:       #c9c3b6;   /* 1.62:1 — 装飾専用（トンボ・欄外柱・白抜き索引）。本文には使わない */
   --line:        #e4e0d9;
   --line-strong: #d5cfc3;
   --accent:      #a3937a;
@@ -105,6 +105,17 @@ body::after {
 
 a { color: inherit; text-decoration: none; }
 ul { list-style: none; }
+
+/* 視覚的に隠し、支援技術には残す */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
 
 :focus-visible {
   outline: 2px solid var(--accent-ink);
@@ -524,7 +535,17 @@ ul { list-style: none; }
 .slide-next::before { transform: rotate(45deg) translate(-1px, 1px); }
 
 .work-thumb:hover .slide-prev,
-.work-thumb:hover .slide-next { opacity: 1; }
+.work-thumb:hover .slide-next,
+.slide-prev:focus-visible,
+.slide-next:focus-visible { opacity: 1; }
+
+/* サムネ上のコントロールは白の輪郭（下地が暗いためタウープでは沈む） */
+.slide-prev:focus-visible,
+.slide-next:focus-visible,
+.slide-dot:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
 
 /* タッチ端末（hover不可）では矢印を常時表示。
    1枚のみのサムネは JS が display:none にするため影響しない */
@@ -546,6 +567,10 @@ ul { list-style: none; }
 
 .slide-dot {
   position: relative;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  padding: 0;
   width: 5px;
   height: 5px;
   border-radius: 50%;
@@ -609,6 +634,12 @@ ul { list-style: none; }
 .work-thumb-dimension .work-thumb-img { object-position: center; }
 
 .work-info { padding: 0 2px; }
+
+/* 題字が実リンク。カード全面のクリックは JS が題字リンクへ委譲する
+   （a 内 button の不正ネストを避けつつ、本文のテキスト選択を殺さないため） */
+.work-card:has(.work-link) { cursor: pointer; }
+.work-link { display: inline-block; }
+.work-link:focus-visible { outline-offset: 4px; }
 
 /* ゴースト索引番号（白抜き大数字） */
 .work-index-ghost {

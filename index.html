@@ -15,6 +15,7 @@
   <meta name="twitter:title" content="滝本 哲也" />
   <meta name="twitter:description" content="Web開発・自動化フロー・ツール開発と、非日常体験イベントの企画主催。生活を豊かにするアイデアを形にしています。" />
   <meta name="twitter:image" content="https://takimototetsuya.vercel.app/images/ogp.jpg" />
+  <meta name="theme-color" content="#f7f6f3" />
   <link rel="canonical" href="https://takimototetsuya.vercel.app/" />
   <link rel="icon" href="images/favicon.png" type="image/png" />
   <link rel="stylesheet" href="style.css" />
@@ -66,7 +67,7 @@
   <div id="page-intro" aria-hidden="true"></div>
 
   <nav id="navbar">
-    <a href="#" class="nav-logo"><img src="images/favicon.png" class="nav-icon" alt="" width="22" height="22" /></a>
+    <a href="#hero" class="nav-logo"><img src="images/favicon.png" class="nav-icon" alt="" width="22" height="22" /><span class="sr-only">頁首へ</span></a>
     <ul class="nav-links">
       <li><a href="#about">about</a></li>
       <li><a href="#projects">works</a></li>
@@ -133,13 +134,14 @@
     </header>
 
     <div class="works-grid">
-      <a href="https://dimension-vert.vercel.app/" target="_blank" rel="noopener" class="work-card">
+      <article class="work-card">
         <div class="work-thumb work-thumb-dimension" data-slide="0">
           <img src="images/thumb-dimension.jpg" alt="DIMENSION — ステレオ投影されたホップ・ファイブレーションの光の輪" class="work-thumb-img active" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
+          <p class="sr-only" role="status" aria-live="polite" data-slide-status></p>
           <div class="slide-dots">
-            <span class="slide-dot active"></span>
+            <button type="button" class="slide-dot active"></button>
           </div>
         </div>
         <div class="work-info">
@@ -147,20 +149,21 @@
           <div class="work-meta">
             <span class="work-cat">Experimental / Data Art</span>
           </div>
-          <h3 class="work-title">DIMENSION</h3>
+          <h3 class="work-title"><a class="work-link" href="https://dimension-vert.vercel.app/" target="_blank" rel="noopener">DIMENSION</a></h3>
           <p class="work-catchcopy">見えない次元を、見る。</p>
           <p class="work-desc">人間には知覚できない4次元以上の世界を、科学的な正確さを保ったまま、一つの映像体験として立ち上げた実験的Webサイト。</p>
           <span class="work-view">View<span class="work-view-arrow" aria-hidden="true">→</span></span>
         </div>
-      </a>
+      </article>
 
-      <a href="https://hisuigan-macro-insight-engine.vercel.app/" target="_blank" rel="noopener" class="work-card">
+      <article class="work-card">
         <div class="work-thumb work-thumb-hisuigan" data-slide="0">
           <img src="images/thumb-hisuigan.jpg" alt="翡翠眼 — マーケットデータ" class="work-thumb-img active" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
+          <p class="sr-only" role="status" aria-live="polite" data-slide-status></p>
           <div class="slide-dots">
-            <span class="slide-dot active"></span>
+            <button type="button" class="slide-dot active"></button>
           </div>
         </div>
         <div class="work-info">
@@ -168,15 +171,15 @@
           <div class="work-meta">
             <span class="work-cat">Web Development</span>
           </div>
-          <h3 class="work-title">翡翠眼</h3>
+          <h3 class="work-title"><a class="work-link" href="https://hisuigan-macro-insight-engine.vercel.app/" target="_blank" rel="noopener">翡翠眼</a></h3>
           <p class="work-catchcopy">世界市場を、見通す目。</p>
           <p class="work-desc">翡翠眼 は、マクロ経済と金融市場の先行きを読み解くための情報サイトです。</p>
           <p class="work-desc">AIが自動で執筆・公開する分析レポートを配信。過去の見通しを検証・学習して精度を高める予測学習の仕組みと、情報源を複数組み合わせて環境の変化に強い設計が特徴です。</p>
           <span class="work-view">View<span class="work-view-arrow" aria-hidden="true">→</span></span>
         </div>
-      </a>
+      </article>
 
-      <a href="https://nagi-xi.vercel.app/" target="_blank" rel="noopener" class="work-card">
+      <article class="work-card">
         <div class="work-thumb work-thumb-nagi" data-slide="0">
           <img src="images/nagi-icon.jpg" alt="Nagi — アイコン" class="work-thumb-img active" loading="lazy" decoding="async" />
           <img src="images/nagi-record1.jpg" alt="Nagi — 記録1" class="work-thumb-img" loading="lazy" decoding="async" />
@@ -187,14 +190,15 @@
           <img src="images/nagi-calendar.jpg" alt="Nagi — カレンダー" class="work-thumb-img" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
+          <p class="sr-only" role="status" aria-live="polite" data-slide-status></p>
           <div class="slide-dots">
-            <span class="slide-dot active"></span>
-            <span class="slide-dot"></span>
-            <span class="slide-dot"></span>
-            <span class="slide-dot"></span>
-            <span class="slide-dot"></span>
-            <span class="slide-dot"></span>
-            <span class="slide-dot"></span>
+            <button type="button" class="slide-dot active"></button>
+            <button type="button" class="slide-dot"></button>
+            <button type="button" class="slide-dot"></button>
+            <button type="button" class="slide-dot"></button>
+            <button type="button" class="slide-dot"></button>
+            <button type="button" class="slide-dot"></button>
+            <button type="button" class="slide-dot"></button>
           </div>
         </div>
         <div class="work-info">
@@ -202,20 +206,21 @@
           <div class="work-meta">
             <span class="work-cat">Web Development</span>
           </div>
-          <h3 class="work-title">Nagi（凪）</h3>
+          <h3 class="work-title"><a class="work-link" href="https://nagi-xi.vercel.app/" target="_blank" rel="noopener">Nagi（凪）</a></h3>
           <p class="work-catchcopy">自己を観る。</p>
           <p class="work-desc">書くほどに、視界がひらく自己観察アプリ。<br><br>日々の想いを書き込むと、AI「凪 -Nagi-」が静かな問いを返します。褒めず、諭さず、ただ隣で問いかける。感情に飲まれていた出来事も、いくつもの角度から眺め直せる。ひとつの見方に閉じていた視界が、少しずつひらいていきます。</p>
           <span class="work-view">View<span class="work-view-arrow" aria-hidden="true">→</span></span>
         </div>
-      </a>
+      </article>
 
-      <a href="https://chushinmei.vercel.app" target="_blank" rel="noopener" class="work-card">
+      <article class="work-card">
         <div class="work-thumb work-thumb-chushinmei" data-slide="0">
           <img src="images/thumb-chushinmei.jpg" alt="中心銘 — メイン画面" class="work-thumb-img active" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
+          <p class="sr-only" role="status" aria-live="polite" data-slide-status></p>
           <div class="slide-dots">
-            <span class="slide-dot active"></span>
+            <button type="button" class="slide-dot active"></button>
           </div>
         </div>
         <div class="work-info">
@@ -223,22 +228,23 @@
           <div class="work-meta">
             <span class="work-cat">Web Development</span>
           </div>
-          <h3 class="work-title">中心銘</h3>
+          <h3 class="work-title"><a class="work-link" href="https://chushinmei.vercel.app" target="_blank" rel="noopener">中心銘</a></h3>
           <p class="work-catchcopy">大切な言葉を、手元に。</p>
           <p class="work-desc">心に響く言葉を記録し、出典やメモとともに保存できるパーソナル名言管理アプリ。「今日の言葉」機能で毎日ランダムに一つの言葉と再会でき、共有リンクで大切な言葉を他の人に贈ることも可能。和紙調の温かみあるUIで、言葉と静かに向き合う体験を提供。</p>
           <span class="work-view">View<span class="work-view-arrow" aria-hidden="true">→</span></span>
         </div>
-      </a>
+      </article>
 
-      <a href="https://frequency-analyzer.vercel.app" target="_blank" rel="noopener" class="work-card">
+      <article class="work-card">
         <div class="work-thumb work-thumb-freq" data-slide="0">
           <video src="images/freq-video-light.mp4" class="work-thumb-img active" autoplay muted loop playsinline preload="metadata"></video>
           <video src="images/freq-video-dark.mp4" class="work-thumb-img" autoplay muted loop playsinline preload="metadata"></video>
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
+          <p class="sr-only" role="status" aria-live="polite" data-slide-status></p>
           <div class="slide-dots">
-            <span class="slide-dot active"></span>
-            <span class="slide-dot"></span>
+            <button type="button" class="slide-dot active"></button>
+            <button type="button" class="slide-dot"></button>
           </div>
         </div>
         <div class="work-info">
@@ -246,20 +252,21 @@
           <div class="work-meta">
             <span class="work-cat">Web Development</span>
           </div>
-          <h3 class="work-title">Frequency Analyzer</h3>
+          <h3 class="work-title"><a class="work-link" href="https://frequency-analyzer.vercel.app" target="_blank" rel="noopener">Frequency Analyzer</a></h3>
           <p class="work-catchcopy">音を、視る。</p>
           <p class="work-desc">マイク入力から周波数・音量・音名をリアルタイム解析するオーディオツール。Three.js による3D周波数リング可視化とスペクトル表示を実装。ライト／ナイトモード切り替え対応。</p>
           <span class="work-view">View<span class="work-view-arrow" aria-hidden="true">→</span></span>
         </div>
-      </a>
+      </article>
 
-      <a href="https://lisa-mizuno.vercel.app/" target="_blank" rel="noopener" class="work-card">
+      <article class="work-card">
         <div class="work-thumb work-thumb-lisa" data-slide="0">
           <img src="images/thumb-lisa-mizuno.jpg" alt="Lisa Mizuno — アーティストサイト" class="work-thumb-img active" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
+          <p class="sr-only" role="status" aria-live="polite" data-slide-status></p>
           <div class="slide-dots">
-            <span class="slide-dot active"></span>
+            <button type="button" class="slide-dot active"></button>
           </div>
         </div>
         <div class="work-info">
@@ -267,20 +274,21 @@
           <div class="work-meta">
             <span class="work-cat">Web Design / Artist Site</span>
           </div>
-          <h3 class="work-title">Lisa Mizuno</h3>
+          <h3 class="work-title"><a class="work-link" href="https://lisa-mizuno.vercel.app/" target="_blank" rel="noopener">Lisa Mizuno</a></h3>
           <p class="work-catchcopy">響きを、編む。</p>
           <p class="work-desc">DJ・アーティスト Lisa Mizuno のポートフォリオサイト。「間・和・祈り」という日本文化の精神性を軸に、電子音楽と身体表現を融合させる活動世界を、モノクロームのミニマルな構成へ落とし込み、コラボレーション実績・ギャラリー・各種プラットフォームへの導線を静かに整理。<br><br>デザインから制作まで担当。</p>
           <span class="work-view">View<span class="work-view-arrow" aria-hidden="true">→</span></span>
         </div>
-      </a>
+      </article>
 
-      <a href="https://service.chinju.org/" target="_blank" rel="noopener" class="work-card">
+      <article class="work-card">
         <div class="work-thumb work-thumb-chinju" data-slide="0">
           <img src="images/thumb-chinju.jpg" alt="CHINJU CLI — 確証エンジン" class="work-thumb-img active" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
+          <p class="sr-only" role="status" aria-live="polite" data-slide-status></p>
           <div class="slide-dots">
-            <span class="slide-dot active"></span>
+            <button type="button" class="slide-dot active"></button>
           </div>
         </div>
         <div class="work-info">
@@ -288,20 +296,21 @@
           <div class="work-meta">
             <span class="work-cat">LP / Branding &amp; PR</span>
           </div>
-          <h3 class="work-title">CHINJU CLI</h3>
+          <h3 class="work-title"><a class="work-link" href="https://service.chinju.org/" target="_blank" rel="noopener">CHINJU CLI</a></h3>
           <p class="work-catchcopy">変更の、その先まで。</p>
           <p class="work-desc">コードの「変更箇所」だけでなく「影響範囲」まで横断的にレビューし、品質を担保する確証エンジン。デグレ・考慮漏れ・脆弱性を安定的に検出する。<br><br>本プロジェクトではLP制作・市場調査・方向性整理・PRを担当。</p>
           <span class="work-view">View<span class="work-view-arrow" aria-hidden="true">→</span></span>
         </div>
-      </a>
+      </article>
 
-      <div class="work-card">
+      <article class="work-card">
         <div class="work-thumb work-thumb-arisa" data-slide="0">
           <img src="images/thumb-arisa.jpg" alt="領収書仕分けAI — アプリアイコン" class="work-thumb-img active" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
+          <p class="sr-only" role="status" aria-live="polite" data-slide-status></p>
           <div class="slide-dots">
-            <span class="slide-dot active"></span>
+            <button type="button" class="slide-dot active"></button>
           </div>
         </div>
         <div class="work-info">
@@ -313,7 +322,7 @@
           <p class="work-catchcopy">領収書の山を、任せる。</p>
           <p class="work-desc">撮影業の個人事業主向けに、領収書の読み取りから集計までを自動化するWebアプリ。画像・PDFをドラッグ＆ドロップするだけで取引先・金額・日付をAIが抽出し、科目や支払方法を自動で仕分け。案件ごとの管理から会計ソフト向けエクスポートまでを一元化する。</p>
         </div>
-      </div>
+      </article>
     </div>
   </section>
 

@@ -155,6 +155,14 @@
     t0 = performance.now();
     started = true;
     resize();
+
+    // alpha:false のため、初描画までクリアカラー（既定は黒）が不透明の黒板として露出する。
+    // 描画バッファのリサイズ後に紙色で塗り、さらに1フレーム即描画してから運転判定へ渡す
+    // （バックグラウンドタブで初期化された場合、復帰時に黒が差すのを防ぐ）
+    gl.clearColor(0.969, 0.965, 0.953, 1.0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    render();
+
     updateRunState();
   }
 
