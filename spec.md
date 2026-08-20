@@ -2,9 +2,9 @@
 
 | 項目 | 内容 |
 |---|---|
-| バージョン | 3.2.0 |
+| バージョン | 4.1.0 |
 | 作成日 | 2026年3月7日 |
-| 最終更新 | 2026年8月16日 |
+| 最終更新 | 2026年8月20日 |
 | 作成者 | 滝本 哲也 |
 | リポジトリ | github.com/ops324/-portfolio |
 | 公開URL | https://takimototetsuya.vercel.app |
@@ -68,6 +68,8 @@
 | 3.0.7 | 2026-07-04 | 制作実績01「翡翠眼」の説明文を全面改訂。技術スタック中心の記述（Next.js・5つの外部API・障害耐性・Vitest/CI等）から、事業内容（マクロ経済・金融市場の先行きを読み解く情報サイト）とプロダクト特徴（AIが自動で執筆・公開／過去の見通しを検証・学習して精度を高める予測学習／複数情報源による環境変化への強さ）を平易に伝える内容に刷新。2段落構成は維持 |
 | 3.1.0 | 2026-07-10 | Works に「領収書仕分けAI」カード追加（07）。撮影業の個人事業主向けに領収書のOCR読み取り〜経費集計〜会計ソフト向けエクスポートを自動化するWebアプリ（アリサ／`ops324/receipt-sorter-ai`）。**Web版が未デプロイで公開URLが無いため、リンクなしの静的カード**として掲載（他カードの `<a href>` ではなく `<div class="work-card">`、`View →` アフォーダンスも省略）。サムネイル（`thumb-arisa.jpg`）は提供されたアプリアイコン（`icon_transparent.png`）を **16:10（1400×875）の生成りグラデ背景（`#f6f3ee`→`#eae5db`）中央に PIL で合成**（中心銘/CHINJU と同系のライトトーン）。`.work-thumb-arisa` を追加。作品一覧7件構成に |
 | 3.2.0 | 2026-08-16 | Works に「DIMENSION」カード追加。**唯一の先頭挿入（01）** で、既存7件を **02-08 へ繰り下げ**。0次元の点から6次元超立方体までをスクロールで連続変形させ、ホップ・ファイブレーション／クリフォード・トーラス／多胞体エクスプローラ／パースペクティブの4展示を持つ、高次元構造の可視化サイト（Vite + TypeScript + Three.js / `ops324/dimension`）。実験的ビジュアライゼーションであり他の自作プロダクト（02-05）と性格が異なるため、カテゴリを **"Experimental / Data Art"** として区別。サムネイル（`thumb-dimension.jpg`）は**先方サイトの OGP 画像（`og.jpg` 1200×630）を等倍のまま 1200×750（16:10）中央へレターボックス合成**。上下60pxの帯は単色ではなく**画像端をミラー反射→ぼかし→`#05060f` へフェード**させ継ぎ目を消している（og.jpg の上下端は四隅 `#060610` に対し辺中央 `#161223`/`#11172d` と光が滲むため単色帯では継ぎ目が出る）。等倍のためリサンプリング劣化ゼロで、サムネ実描画幅 約618px（DPR2 で 1236px）に対し 1200px はほぼ 1:1。`.work-thumb-dimension`（背景 `#05060f` ＝先方の `theme-color`）を追加。**先頭挿入により `.work-card:nth-child(odd/even)` の偶奇が全件反転し、誌面スプレッドの左右が既存7件すべてで入れ替わる**（奇偶とも 7カラム/5カラムで幅は同一のためリフローは発生しない。860px以下は偶奇が `auto` に打ち消されるため無影響。`script.js` のスライドイン方向 `i % 2` は同じ序数由来のため自動同期）。`.work-card:first-child`（上罫線なし・上余白 `--sp-2`）が DIMENSION へ移り、翡翠眼に区切り罫が付く。作品一覧8件構成に |
+| 4.0.0 | 2026-08-20 | **UI 精度リファイン（組版・演出・素材・実装品位の4段）。** ①**実装の瑕疵**: `.work-card` が `<a>` の中に `<button>`（スライド矢印）を含む仕様違反だったため、カードを `<article>` にし実リンクを題字へ移設。カード全面のクリックは JS で題字リンクへ委譲し、本文のテキスト選択を殺さない（stretched link は選択不能になるため不採用）。`.slide-dot` を `<span>`→`<button>` 化しキーボード操作可能に、`aria-current` と `role=status` のライブリージョンで位置を読み上げ。nav ロゴは `alt=""` の画像のみでリンク名が無かったため sr-only を付与。`--muted-2` を 3.25:1 → AA(4.5:1) へ。サムネ上のコントロールは暗所で沈むため白のフォーカス輪郭。`fx.js` の canvas は `alpha:false` で初描画までクリアカラー（既定=黒）が不透明の黒板として露出していたため、リサイズ後に紙色でクリアし1フレーム即描画。Lenis の `duration` と `lerp` の併記（片方が無効）を lerp へ一本化。②**和文組版**: 散文に `word-break:auto-phrase` / `text-wrap:pretty` / `line-break:strict`（「…イベントの企／画主催。」と語中で割れていた箇所が読点で折り返す）。Noto Sans JP は `palt` を備えるため詰め組み＋`letter-spacing:0.04em` で戻す。**Shippori Mincho B1 は `palt`/`chws`/`halt` を一切持たず `text-spacing-trim` も効かない**（実測で幅が1pxも動かない）ため、句読点のみ `script.js` の `kernPunctuation` が `margin-right:-0.40em` で視覚補正。トラッキングを光学サイズ別にトークン化（hero 0.10em→0.06em / 見出し 0.10em→0.07em / footer名 0.12em→0.08em）。索引・日付を `tabular-nums`。`.about-text` は手で改行を打った塊で、flex の収縮により最長行ぴったりの幅になり約物補正の端数で溢れるため親幅いっぱいに固定。③**演出の語彙を3つに絞る**（①文字のマスク上げ ②面のクリップ展開 ③罫線の伸長）: 見出しの blur→focus と eyebrow のトラッキング収束を撤去しヒーローと同じマスク上げへ統一。work サムネを `clip-path` で下から立ち上げ、4つ目の語彙になる交互スライドインは廃止。イージングを `EASE.enter`/`veil`/`line` の3種に統一し CSS 側にも対を置く。磁気ホバーはナビ・フッターナビから外す（文字が逃げるナビは読みにくい）。④**素材の質**: パレットを **OKLCH の単一色相軸**（紙・墨=85° / タウープ=80°）で組み直し、各 L は「地に対する目標コントラスト比」から解いて決定（旧 sRGB 版は色相が 78〜286° に散り、L の刻みも 2.3〜19.9 と不揃いで `muted`/`muted-2`/`accent-ink` が L 54.8〜54.9 に重なっていた）。**夜の紙**を `light-dark()` で実装し、1トークン1行のまま両モードを保持。トグルは `color-scheme` を固定するだけで全トークンが追従する。OS 追従を既定とし奥付に「紙／夜」を置き localStorage に記憶、初回描画前に `data-theme` を確定させちらつきを防ぐ。紙グレインは夜だと multiply で沈むため screen へ反転。`fx.js` の靄は色を `--paper`/`--accent` から canvas2d 経由で読む（oklch と light-dark をそのまま sRGB へ展開）。nav アイコンが白地の不透明 PNG で夜に白い四角として浮くため透過版 `nav-mark.png` を作成。**誌面の強弱**として先頭1点（DIMENSION）を見開き（全幅 21:9 ＋ 12カラムの情報行）に開く |
+| 4.1.0 | 2026-08-20 | **Events セクションを廃止。** Instagram 公式 blockquote 埋め込みは、白いIGカード・別書体・Instagram 自身のUIが紙面の世界観から浮き、`--paper-2` フレームで包んでも異物感が残っていた（v4.0.0 で導入した「夜の紙」では白いカードがさらに際立つ）。`embed.js`（数百KB・`async`）と、その遅延リサイズに追従するための `ResizeObserver`→`ScrollTrigger.refresh()` も不要になる。自前カードへの置き換えを検討したが催しの写真素材が揃わないため、**セクションごと削除**する判断。`#events` とナビ/フッターナビのリンク、`.events-grid` / `.event-card` / `.event-frame` / `.event-cap` の全CSS、900px の専用ブレークポイント、`script.js` の eventsGrid ResizeObserver を撤去。柱・ノンブルの `PAGE_INDEX` を **note 03 / contact 04** へ繰り上げ。セクション構成は Hero → About → Works → Note → Contact の5構成に。併せて**仕様書5章（機能仕様）を実装へ全面追随**させた（Lenis の lerp 一本化、見出し演出のマスク上げ化、works のクリップ展開、磁気ホバーの縮小、イージング3種、WebGL の色取得と初期クリア、スライドドットの button 化とライブリージョン、インタラクティブ要素のネスト解消、フォーカス輪郭、nav-mark.png、および **5.7 配色の切替** の新設）。**hero と meta/JSON-LD の「非日常体験イベントの企画主催」という活動紹介はそのまま残す**（活動自体は継続しており、催しの記録を掲載しないだけのため） |
 | 3.0.6 | 2026-07-03 | 制作実績06「CHINJU CLI」サムネイル（`thumb-chinju.jpg`）を差し替え。旧画像（v2.8.0）は全ページを 4:3（1400×1050）で撮影しており左右見切れは無いものの、**上部ナビ（ロゴ＋「βに申し込む」ボタン）や下部の別セクション見出しが写り込み**、素のスクショ感が強かった。v3.0.5 Lisa と同じ方針で、**ヒーロー主要部（大見出し「ベテランエンジニアの手厚いレビューを。」＋iMacのCLIレビュー画面＋枯山水/盆栽＋信頼バー）を 16:10（1500×937）で切り出して撮影**する方式に刷新。撮影時に上部ナビ（`nav.nav`）・右端ドットナビ（`nav.path-nav`）・ヒーロー以降の全セクション/フッターをCSSで非表示にし、`#demo` に軽い `margin-top` を付与してヒーローを淡い背景の中央に配置。cover の枠比率と一致しPC見切れゼロ、上下の余白は860px以下の `4/3` 枠での左右トリムの安全マージンにもなる。他5件と同じ細罫スクショ枠の一貫性を維持（HTML/CSS変更なし・画像差し替えのみ） |
 | 3.0.5 | 2026-07-03 | 制作実績05「Lisa Mizuno」サムネイル（`thumb-lisa-mizuno.jpg`）を差し替え。旧画像は全ページを **1400×800（比率1.75）** で撮影しており、サムネ枠 `aspect-ratio:16/10`（=1.6）＋`object-fit:cover` に対し横長すぎて**左右が見切れて**いた（左上ロゴ・右上ナビが欠ける。860px以下の `4/3` 枠ではさらに悪化）。対処として、v2.8.0 CHINJU と同じ「枠比率に合わせた撮影」の方針を発展させ、**サイト全体ではなくヒーローの主要ビジュアル（モノクロの人物＋大見出しタイポ＋DJ·ARTIST）を 16:10（1600×1000）で切り出して撮影**する方式に変更。撮影時に上部ナビと右下「scroll」指標（`#hero::after` 疑似要素）を非表示にして余白・ブラウザ的要素を排し作品性を強調。cover の枠比率と完全一致しPC表示で見切れゼロ、他5件と同じ細罫スクショ枠の一貫性も維持（HTML/CSS変更なし・画像差し替えのみ） |
 | 3.0.4 | 2026-07-03 | 制作実績02「Nagi（凪）」の説明文を改訂。キャッチ「自己を観る。」は維持し、本文を「書くほどに、視界がひらく自己観察アプリ。」のコンセプト1文＋機能説明1段落の簡潔な2段構成に刷新（AI「凪 -Nagi-」が静かな問いを返す・褒めず諭さず隣で問いかける・多角的に眺め直し視界がひらく、という体験価値を平易に表現）。従来の抽象的な「次元の上昇／多面的視点」表現を平明化 |
@@ -87,7 +89,7 @@
 5. [機能仕様](#5-機能仕様)
 6. [デプロイ・運用](#6-デプロイ運用)
 
-**セクション構成（3章）:** 3.1 Nav → 3.2 Hero → 3.3 About → 3.4 Works → 3.5 Events → 3.6 Note → 3.7 Contact → 3.8 Footer
+**セクション構成（3章）:** 3.1 Nav → 3.2 Hero → 3.3 About → 3.4 Works → 3.5 Note → 3.6 Contact → 3.7 Footer
 
 ---
 
@@ -176,7 +178,6 @@ v2.5 では、静かで文語的な世界観を保ったまま視覚レイヤー
 | Shippori Mincho B1（400 / 500 / 600） | Google Fonts | 見出し・名前・about本文・work題字（明朝） |
 | GSAP 3.13.0 / ScrollTrigger / SplitText | cdnjs | アニメーション・文字分割（`defer`） |
 | Lenis 1.1.14 | unpkg | スムーススクロール（`defer`） |
-| Instagram embed.js | instagram.com | Events 埋め込み（`async`） |
 
 外部スクリプトは全て `defer`/`async` で非同期化し初回描画をブロックしない。CDN（cdnjs/unpkg）が読み込めない場合でも、`script.js` 側のガードとインラインのタイムアウト処理によりコンテンツを表示する（[5.5 フェイルセーフ](#55-cdnフェイルセーフ) 参照）。
 
@@ -192,7 +193,7 @@ npx serve -l 3000 .
 
 ## 3. ページ構成・セクション仕様
 
-各セクションは共通のヘッダー体系を持つ：**Latin小ラベル（eyebrow）＋和文明朝見出し（`.sec-title`）を縦積み**（works=制作 / events=催し / note=言葉 / contact=連絡。about は eyebrow を中央配置し、本文の「軸」ステートメントを主役とする）。
+各セクションは共通のヘッダー体系を持つ：**Latin小ラベル（eyebrow）＋和文明朝見出し（`.sec-title`）を縦積み**（works=制作 / note=言葉 / contact=連絡。about は eyebrow を中央配置し、本文の「軸」ステートメントを主役とする）。
 
 ### 3.1 ナビゲーション
 
@@ -203,7 +204,7 @@ npx serve -l 3000 .
 | 背景 | `rgba(247,246,243,0.78)` + `backdrop-filter: blur(16px)` |
 | スクロール連動（外観） | スクロール量 > 8px で `.scrolled` 付与 → 下罫線出現・背景不透明度を強化 |
 | 左側 | アイコン（`favicon.png` 22px・opacity 0.8）のみ |
-| 右側 | リンク（about / works / events / note / contact）、大文字表示 |
+| 右側 | リンク（about / works / note / contact）、大文字表示 |
 | モバイル | 全タブを常時表示（横スクロールなし）。860px以下でgap 22px・padding 20px、540px以下でフォント0.62rem・letter-spacing 0.16em・gap 14px・padding 18px、380px以下でフォント0.58rem・letter-spacing 0.12em・gap 11px |
 | リンクスタイル | 通常: `var(--muted)` / ホバー・アクティブ: `var(--ink)`。アクティブはタウープ（`--accent-ink`）の下線（`scaleX`） |
 | スクロール連動（active） | Intersection Observer でアクティブセクションを検出し `.active` を付与 |
@@ -294,26 +295,7 @@ npx serve -l 3000 .
 ※ 08 領収書仕分けAI は Web版が未デプロイで公開URLが無いため、唯一 `<a href>` ではなく `<div class="work-card">` の**リンクなし静的カード**（`View →` も省略）。他カードのアンカー前提の挙動には依存しない（`.work-card` に cursor/hover のアンカー依存なし、reveal/GSAP は class セレクタで拾う）。
 ※ 作品の**掲載順＝DOM順**であり、`.work-card:nth-child(odd/even)` がサムネの左右を決める。**先頭や中間へのカード挿入は以降すべてのカードの左右を反転させる**（幅は奇偶とも同一のためリフローは起きず、860px以下では偶奇指定が `auto` に打ち消されるため無影響）。ゴースト索引は自動採番ではなく**各カードにハードコード**しているため、挿入時は全件の振り直しが必要。
 
-### 3.5 Events セクション
-
-| 要素 | 仕様 |
-|---|---|
-| 位置 | Works と Note の間 |
-| ヘッダー | 「events / 催し」 |
-| レイアウト | 2カラムグリッド（`events-grid`）、gap 48px、max-width 1100px |
-| 埋め込み方式 | Instagram 公式 blockquote embed（`embed.js` 非同期ロード） |
-| フレーム | 各埋め込みを `.event-frame`（背景 `--paper-2`・`1px solid var(--line)`・padding 22px）で包み、白いIGカードの浮きを解消 |
-| キャプション | `<figcaption>`：ソース表記「Instagram」 |
-| レスポンシブ | 900px 以下で1カラム（Instagram 埋め込みの `min-width: 326px` との競合回避のため works より早く折り返す） |
-
-#### 3.5.1 掲載イベント一覧
-
-| # | Instagram URL |
-|---|---|
-| 1 | https://www.instagram.com/p/C5VzL4orpJZ/ |
-| 2 | https://www.instagram.com/p/C71jN7USIc2/ |
-
-### 3.6 Note セクション
+### 3.5 Note セクション
 
 | 要素 | 仕様 |
 |---|---|
@@ -323,7 +305,7 @@ npx serve -l 3000 .
 | リンク | カード全体が `<a target="_blank">` でアカウントページへ |
 | ホバー | 背景が `--paper-2`、左右パディング拡張、矢印が `--ink` に変色・`translateX` |
 
-#### 3.6.1 掲載アカウント一覧
+#### 3.5.1 掲載アカウント一覧
 
 | # | ハンドル | 説明文 | URL |
 |---|---|---|---|
@@ -331,7 +313,7 @@ npx serve -l 3000 .
 | 2 | @life_ops | 頭が良いとは、どういうことか。構造で考え、本質を見抜き、判断の精度を上げる。地頭は才能ではなく、フォームだ。 | https://note.com/life_ops |
 | 3 | @minase_ritsu | 好奇心の多動。ジャンル不問で気になったことを調べて記事にしています。 | https://note.com/minase_ritsu |
 
-### 3.7 Contact セクション
+### 3.6 Contact セクション
 
 | 要素 | 仕様 |
 |---|---|
@@ -341,7 +323,7 @@ npx serve -l 3000 .
 | リンク | `contact@flowmate.jp`（Inter 0.95rem） |
 | リンクホバー | `--ink` に変色 + 下線アニメーション（`scaleX`） |
 
-### 3.8 Footer（奥付）
+### 3.7 Footer（奥付）
 
 3段構成の奥付スタイル。上罫線は `--line-strong`。
 
@@ -360,24 +342,30 @@ npx serve -l 3000 .
 
 genre=editorial / macrostructure=Long Document。生成りの紙面・明朝の見出し・ヘアラインの罫線言語・抑制されたモーションで、静かで文語的な世界観を雑誌的な版面へ昇華する。装飾を足すのではなく、タイプ階層と余白で「格」を立てる。
 
-### 4.2 カラーパレット
+### 4.2 カラーパレット（v4.0.0 — OKLCH 単一色相軸）
 
-| CSS 変数 | 値 | 用途 |
-|---|---|---|
-| `--paper` | `#f7f6f3` | ページ背景（生成り） |
-| `--paper-2` | `#efece6` | フレーム・微カード（Events 等） |
-| `--ink` | `#1a1a1c` | 見出し・一次本文（主役） |
-| `--ink-2` | `#3c3a36` | 見出し補助 |
-| `--text` | `#33312e` | 本文・説明文 |
-| `--muted` | `#6f6a60` | ラベル・メタ（WCAG AA: `--paper` 上で約5:1） |
-| `--muted-2` | `#8f887b` | キャプション・柱・奥付行（装飾情報） |
-| `--faint` | `#c9c3b6` | ゴースト索引・縦書き章題・トンボ（透かし） |
-| `--line` | `#e4e0d9` | ヘアライン・罫線 |
-| `--line-strong` | `#d5cfc3` | footer上罫・カーソル系の強罫 |
-| `--accent` | `#a3937a` | 罫線・装飾（タウープ） |
-| `--accent-ink` | `#7c6f59` | eyebrow・索引・ハンドル名（可読タウープ） |
+色相は **紙・墨 = 85° / タウープ = 80°** に統一し、各トークンの明度(L)は「地に対する目標コントラスト比」から逆算して決めている。`light-dark()` により1トークン1行で紙・夜の両値を持つ。
 
-紙の質感: `body::after` に SVG feTurbulence（`baseFrequency 0.9` / `numOctaves 2` / 240pxタイル）の静止グレインを全面固定（`opacity 0.035`・`mix-blend-mode: multiply`・`pointer-events: none`・z-index 9998）。540px以下は合成負荷対策で `normal`・`opacity 0.025` に緩和。
+| CSS 変数 | 紙（light） | 夜（dark） | 対地コントラスト（紙 / 夜） | 用途 |
+|---|---|---|---|---|
+| `--paper` | `oklch(97.3% 0.004 85)` | `oklch(18.0% 0.006 85)` | — | ページ背景（生成り／墨色の紙） |
+| `--paper-2` | `oklch(94.7% 0.008 85)` | `oklch(23.3% 0.008 85)` | 1.08 / 1.13 | フレーム・微カード |
+| `--line` | `oklch(91.2% 0.010 85)` | `oklch(28.2% 0.012 85)` | 1.20 / 1.30 | ヘアライン・罫線 |
+| `--line-strong` | `oklch(87.5% 0.016 85)` | `oklch(32.3% 0.018 85)` | 1.35 / 1.50 | footer上罫・強罫 |
+| `--faint` | `oklch(81.9% 0.019 85)` | `oklch(38.3% 0.022 85)` | 1.62 / 1.90 | **装飾専用**（ゴースト索引・縦書き章題・トンボ） |
+| `--accent` | `oklch(66.8% 0.042 80)` | `oklch(49.0% 0.045 80)` | 2.80 / 3.00 | 罫線・装飾（タウープ） |
+| `--accent-ink` | `oklch(54.5% 0.038 80)` | `oklch(60.0% 0.040 80)` | 4.60 / 4.80 | eyebrow・ハンドル名（可読タウープ） |
+| `--muted-2` | `oklch(54.9% 0.014 85)` | `oklch(58.7% 0.016 85)` | 4.51 / 4.53 | キャプション・柱・奥付（**AA下限**） |
+| `--muted` | `oklch(48.2% 0.012 85)` | `oklch(65.4% 0.014 85)` | 6.00 / 6.00 | ラベル・メタ |
+| `--ink-2` | `oklch(36.1% 0.010 85)` | `oklch(76.2% 0.012 85)` | 10.0 / 9.00 | 見出し補助 |
+| `--text` | `oklch(31.4% 0.008 85)` | `oklch(82.0% 0.010 85)` | 12.0 / 11.0 | 本文・説明文 |
+| `--ink` | `oklch(22.0% 0.005 264)` | `oklch(90.4% 0.006 86)` | 16.0 / 14.5 | 見出し・一次本文（**印刷インキの青み黒**。C が極小なので色味は出ない） |
+
+半透明の面は `--paper-veil` / `--paper-veil-2`（`color-mix(in oklab, var(--paper) 80%/92%, transparent)`）。ナビの磨りガラスに使用。
+
+**配色の切替:** `:root { color-scheme: light dark }` を既定とし OS に追従。奥付の「紙／夜」ボタンが `:root[data-theme]` を立て、`color-scheme: only light|dark` を固定することで `light-dark()` の全トークンが一括で切り替わる（値の二重定義なし）。選択は localStorage に記憶し、`<head>` のインラインスクリプトが**スタイル適用前に** `data-theme` を確定させて初回描画のちらつきを防ぐ。
+
+紙の質感: `body::after` に SVG feTurbulence（`baseFrequency 0.9` / `numOctaves 2` / 240pxタイル）の静止グレインを全面固定（`opacity 0.035`・`mix-blend-mode: multiply`・`pointer-events: none`・z-index 9998）。540px以下は合成負荷対策で `normal`・`opacity 0.025` に緩和。**夜は multiply だと粒が沈んで消えるため `screen` / `opacity 0.05` へ反転する。**
 
 ### 4.3 タイポグラフィ
 
@@ -393,6 +381,42 @@ genre=editorial / macrostructure=Long Document。生成りの紙面・明朝の�
 
 ベース文字サイズ 15px、和文 line-height 約1.8〜2.5。
 
+#### 和文組版の規則（v4.0.0）
+
+**トラッキング（光学サイズ補正）** — 大きい活字ほど字間を詰め、小さい活字ほど開ける。
+
+| トークン | 値 | 適用 |
+|---|---|---|
+| `--track-hero` | `0.06em` | Hero 名前（〜7.2rem） |
+| `--track-display` | `0.07em` | セクション見出し（〜2.7rem） |
+| `--track-title` | `0.045em` | work 題字（〜1.7rem） |
+| `--track-lead` | `0.03em` | about本文・contactリード（〜1.05rem） |
+| `--track-label` / `--track-micro` | `0.18em` / `0.26em` | 小ラベル・極小ラベル |
+
+**折り返し** — 散文ブロック（`.hero-desc` `.about-text` `.work-catchcopy` `.work-desc` `.note-card-desc` `.contact-lead` `.event-cap` ほか）に以下を適用。
+
+```css
+word-break: auto-phrase;   /* 文節で改行（Chromium） */
+text-wrap: pretty;         /* 行末の孤立を避ける */
+line-break: strict;        /* 禁則を厳格に */
+```
+
+`auto-phrase` と `pretty` は Chromium のみ有効で、他ブラウザは従来の折り返しへ穏当に退く。両者の併用が最良で、実測では次のとおり。
+
+| 設定 | 「Web開発・自動化フロー・ツール開発と、非日常体験イベントの企画主催。」の折り返し |
+|---|---|
+| 従来 | `…イベントの企` / `画主催。` ← **語中で分断** |
+| `auto-phrase` のみ | `…イベントの` / `企画主催。` |
+| `auto-phrase` + `pretty` | `Web開発…開発と、` / `非日常体験イベントの企画主催。` ← **読点で改行** |
+
+**詰め組み** — Noto Sans JP は `palt` を備えるため詰め組みにし、`letter-spacing: 0.04em` で字送りを戻す（ベタ組みの「穴あき」が消え、面としての濃度が均一になる）。
+
+**約物の視覚補正** — **Shippori Mincho B1 は `palt` / `chws` / `halt` を一切持たず、`text-spacing-trim`（font 側の `halt` に依存）も効かない**（実測: 64px の「「制作」、および（催し）。」が全設定で 832px から1pxも動かない）。そのため明朝で組む短文に限り、`script.js` の `kernPunctuation` が句読点（`、` `。`）を `<span class="kern-pull">` で包み `margin-right: -0.40em` を与えて空きを回収する。対象は `.work-catchcopy` / `.about-text-line` / `.contact-lead`。SplitText 対象の見出し・題字は約物を含まないため干渉しない。本文（Noto Sans JP）は `palt` が効くので対象外。
+
+**数字** — 索引・日付・奥付は `font-variant-numeric: tabular-nums lining-nums`。
+
+**注意** — `.about-text` は `.about-text-line` で手で改行を打った塊。flex の収縮で「最長行ぴったり」の幅になると約物補正の端数で1行が溢れるため、`width: 100%` で親幅いっぱいに固定している。
+
 ### 4.4 CSS 変数一覧（抜粋）
 
 | 変数 | 値 | 用途 |
@@ -406,19 +430,39 @@ genre=editorial / macrostructure=Long Document。生成りの紙面・明朝の�
 | `--font-ja` | `'Noto Sans JP', sans-serif` | 日本語サンセリフ |
 | `--font-serif-ja` | `'Shippori Mincho B1', serif` | 日本語明朝（見出し系） |
 | `--font-body` | `'Inter', 'Noto Sans JP', sans-serif` | body 既定（和文フォールバック保証） |
-| `--ease-out` | `cubic-bezier(0.16, 1, 0.3, 1)` | UI トランジション |
+| `--ease-out` / `--ease-enter` | `cubic-bezier(0.16, 1, 0.3, 1)` | UI トランジション・要素の出現（同値。`--ease-out` は旧名を温存） |
+| `--ease-veil` | `cubic-bezier(0.22, 1, 0.36, 1)` | 面の展開・退出（②の語彙） |
+| `--ease-line` | `cubic-bezier(0.19, 1, 0.22, 1)` | 罫線の伸長（③の語彙） |
+| `--track-hero` 〜 `--track-micro` | 4.3 参照 | 光学サイズ別トラッキング |
+| `--paper-veil` / `--paper-veil-2` | `color-mix(in oklab, var(--paper) 80%/92%, transparent)` | ナビの磨りガラス |
 
 ### 4.5 レスポンシブブレークポイント
 
 | ブレークポイント | 変更内容 |
 |---|---|
 | 1100px 未満 | トンボ風十字・縦書き章題（`.sec-margin`）を非表示 |
-| 900px 以下 | events グリッドを1カラム（Instagram 埋め込みの `min-width: 326px` と2カラムの競合で約2pxはみ出すのを防ぐため、works より早く折り返す）。柱・ノンブル（`.page-marker`）非表示 |
+| 900px 以下 | 柱・ノンブル（`.page-marker`）非表示 |
 | 860px 以下 | works を1カラム縦積み（サムネ4:3復帰・ゴースト索引縮小）、`--rhythm` 縮小、ナビ gap 22px・padding 20px。hero のスクロール指標非表示、WebGL靄停止（CSS滲みへ） |
 | 540px 以下 | ナビフォント縮小（0.62rem）・letter-spacing詰め（0.16em）・gap 14px・padding 18px。works gap・about メタ間隔・note アバター/間隔の微調整 |
 | 380px 以下 | ナビフォント0.58rem・letter-spacing 0.12em・gap 11px（極小幅の破綻防止） |
 
 横スクロール防止: `html, body { overflow-x: clip }`、画像グリッドは `minmax(0, 1fr)`、見出しは `overflow-wrap: anywhere`。
+
+---
+
+### 4.6 モーションの語彙（v4.0.0）
+
+演出は**3つの語彙だけ**で構成する。語彙を増やすことは既視感と散漫さに直結するため、新しい動きを足す前に既存の3つで表現できないかを必ず検討する。
+
+| # | 語彙 | 実装 | イージング |
+|---|---|---|---|
+| ① | 文字のマスク上げ | SplitText `mask: 'chars'` → `yPercent: 110 → 0` | `EASE.enter` = `power3.out` |
+| ② | 面のクリップ展開 | `clip-path: inset(100% 0 0 0) → inset(0)`（CSS transition） | `--ease-veil` = `cubic-bezier(0.22, 1, 0.36, 1)` |
+| ③ | 罫線の伸長 | `scaleX: 0 → 1` / `scaleY: 0 → 1` | `EASE.line` = `expo.out` |
+
+**撤去したもの:** 見出しの blur→focus（既視感が強い）、eyebrow のトラッキング収束、works の交互スライドイン（4つ目の語彙になる）、ナビ・フッターナビの磁気ホバー（文字が逃げると読みにくい）。磁気ホバーは大きな単独ターゲット（`.contact-link` / `.footer-top-link`）にのみ残す。
+
+**カスタムカーソルは 2度のゲート確認で不採用（v2.4.1 / v3.0.0）。今後提案しない。**
 
 ---
 
@@ -428,17 +472,18 @@ genre=editorial / macrostructure=Long Document。生成りの紙面・明朝の�
 
 | 項目 | 仕様 |
 |---|---|
-| スムーススクロール | Lenis（`duration: 1.2`）。アンカーリンクは `lenis.scrollTo` に委譲（offset -60） |
+| スムーススクロール | Lenis（`lerp: 0.1`）。**`duration` と `lerp` は排他**で、両方渡すと lerp が優先され `duration`/`easing` は無視されるため lerp に一本化している。reduced-motion 時は `lerp: 1`（追従なし＝即時）。アンカーリンクは `lenis.scrollTo` に委譲（offset -60） |
 | ページイントロ | `document.fonts.ready`（上限2.5s）待ち → `#page-intro` オーバーレイを `scaleY` で巻き上げ → ヒーロー入場へ連結 |
 | リビール | `.reveal` 要素を ScrollTrigger（`start: top 88%`, `once`）で `opacity/y` フェードイン（sec-head は下記の専用演出に委譲） |
-| セクション見出し | eyebrow の letter-spacing を 0.4em→0.24em に収束＋明朝題字を文字単位で blur(6px)→focus（SplitText chars、stagger 0.09） |
+| セクション見出し | eyebrow は素の淡出、明朝題字は**文字のマスク上げ**（SplitText `mask: 'chars'`、`yPercent: 110→0`、stagger 0.07）。v4.0.0 で blur→focus とトラッキング収束を撤去し、ヒーローの名前と同じ語彙へ統一 |
 | セクション罫線 | `.section-line` を `scaleX` で描画（`start: top 98%`） |
 | About | サブ要素を段階的に stagger 表示。「軸」本文は静的表示（アニメーションなし） |
-| Works | カードを左右交互に `x:±16` からスライドイン。題字は単一行時のみ文字出現（stagger 0.05） |
+| Works | サムネを **`clip-path` で下から立ち上げ**（`.is-veiled` を JS が付け、交差時に外す。CSS transition 1.1s `--ease-veil`）。情報側は `opacity/y` で追随（delay 0.15）。題字は単一行時のみマスク上げ（stagger 0.05、delay 0.3）。v4.0.0 で交互スライドインを廃止（4つ目の語彙になるため） |
 | Note | カードを `stagger` で表示後、ホバー用に inline style をクリア |
 | パララックス | デスクトップのみ Hero name/desc を `scrub` で連動 |
-| 磁気ホバー | `.nav-links a` / `.footer-nav a` / `.contact-link` / `.footer-top-link` がカーソルに吸着（係数0.3・`gsap.quickTo`・mouseleave で elastic 復帰）。fine pointer かつ非 reduced-motion のみ |
+| 磁気ホバー | `.contact-link` / `.footer-top-link` のみカーソルに吸着（係数0.3・`gsap.quickTo`・mouseleave で elastic 復帰）。fine pointer かつ非 reduced-motion のみ。**ナビ・フッターナビからは v4.0.0 で撤去**（文字が逃げるナビは読みにくく、ホバーで下線が静かに伸びるほうが上品なため） |
 | 柱・ノンブル | `.page-marker` を Intersection Observer（中央帯判定）で更新。hero では非表示 |
+| イージング | `EASE.enter`(power3.out) / `EASE.veil`(power2.inOut) / `EASE.line`(expo.out) の**3種のみ**。CSS 側の `--ease-enter` / `--ease-veil` / `--ease-line` と対になる（[4.6 モーションの語彙](#46-モーションの語彙v400) 参照） |
 | SplitText フェイルセーフ | `splitReady` を個別判定し、欠落時は各演出が従来の行送りへフォールバック。分割はすべて `document.fonts.ready` 後（FOUT対策） |
 
 ### 5.1.1 WebGL「墨の靄」（fx.js）
@@ -446,8 +491,10 @@ genre=editorial / macrostructure=Long Document。生成りの紙面・明朝の�
 | 項目 | 仕様 |
 |---|---|
 | 実装 | 素のWebGL1・フルスクリーンクワッド1枚・fbm 3オクターブ（依存ゼロ・約200行） |
-| 表現 | `--paper`→`--accent` の2色補間のみ、強度上限 0.07、右上中心のフェード、ポインタでノイズ座標が僅かに偏る（lerp 0.03） |
+| 表現 | `--paper`→`--accent` の2色補間のみ、右上中心のフェード、ポインタでノイズ座標が僅かに偏る（lerp 0.03）。強度は**紙 0.07 / 夜 0.13**（夜は地が暗く同じ強度では靄が沈むため） |
 | 負荷制御 | DPR上限1.5×内部解像度0.75倍、rAFは `gsap.ticker` に一本化、hero画面外・タブ非表示・幅860px未満で停止 |
+| 色の取得 | シェーダの2色はハードコードせず `--paper` / `--accent` から読む。カスタムプロパティは `getComputedStyle` で解決されないため、プローブ要素の実プロパティへ一度乗せ、canvas2d に sRGB へ展開させる（`oklch()` と `light-dark()` をそのまま扱える）。`themechange` イベントで再取得し即再描画 |
+| **初期クリア** | `alpha: false` のため、初描画までクリアカラー（既定=黒）が**不透明の黒板として露出する**。描画バッファのリサイズ後に紙色で `clearColor`+`clear` し、さらに1フレーム即 `render()` してから運転判定へ渡す（バックグラウンドタブで初期化された場合に復帰時へ黒が差すのを防ぐ） |
 | 起動 | `requestIdleCallback` / load 後（LCPに影響させない）。起動成功時のみ `#hero.has-webgl` を付与し CSS滲みをフェードアウト |
 | フォールバック | 非対応・失敗・停止時は `#hero::before` の静的 radial-gradient 滲みが残る（全環境で必ず淡い滲みがある） |
 
@@ -460,9 +507,10 @@ genre=editorial / macrostructure=Long Document。生成りの紙面・明朝の�
 | 操作 | 左右矢印ボタン・ドットナビのクリック、またはタッチスワイプ（横方向40px超かつ縦移動より大きい場合のみ反応し、縦スクロールと誤判定しない） |
 | 切り替え | `opacity: 0→1`（CSS transition 0.6s ease） |
 | 1枚のみの場合 | 矢印・ドットを非表示（JS制御） |
-| 矢印表示 | ホバー時表示。背景 `rgba(26,26,28,0.42)` + `blur(4px)` の丸（30px）、ホバーで `0.66`。タッチ端末（`@media (hover: none)`）では opacity 0.85 で常時表示 |
-| ドット | 5px 円、`box-shadow` 付き。現在: 白98%・1.15倍 / 非選択: 白50%。透明 `::after`（`inset: -10px -2px`）でタップ範囲を拡大（見た目不変） |
-| 実装 | JavaScript（`addEventListener`、`e.stopPropagation()` でカードリンクへの伝播を抑止）|
+| 矢印表示 | ホバー時**および `:focus-visible` 時**に表示。背景 `rgba(26,26,28,0.42)` + `blur(4px)` の丸（30px）、ホバーで `0.66`。タッチ端末（`@media (hover: none)`）では opacity 0.85 で常時表示 |
+| ドット | **`<button>`**（v4.0.0 で `<span>` から変更。旧実装はキーボードで操作できなかった）。5px 円、`box-shadow` 付き。現在: 白98%・1.15倍 / 非選択: 白50%。透明 `::after`（`inset: -10px -2px`）でタップ範囲を拡大（見た目不変）。`aria-label`（「N枚目を表示」）と `aria-current` を持つ |
+| 読み上げ | 各サムネに `role="status" aria-live="polite"` の sr-only 要素を持ち、切替時に「4 / 7」を通知。1枚のみのカードでは JS が要素ごと削除する |
+| 実装 | JavaScript（`addEventListener`、`e.stopPropagation()` でカード側のクリック委譲への伝播を抑止）|
 | Nagi 表示位置 | 全画像 `object-position: top center`、1枚目（アイコン）のみ `center` |
 
 ### 5.3 ナビゲーション アクティブ連動
@@ -479,11 +527,13 @@ genre=editorial / macrostructure=Long Document。生成りの紙面・明朝の�
 | 項目 | 仕様 |
 |---|---|
 | `prefers-reduced-motion: reduce` | JS分岐で入場・リビール・パララックスを無効化し最終状態を即時表示。CSS の `@media` で全 transition/animation を実質無効化。Lenis の `duration` も 0 に。autoplay 動画も `video.pause()` で停止 |
-| フォーカス可視化 | `:focus-visible` に `--accent-ink` の 2px リング（瞬時表示） |
-| コントラスト | 主役テキストを `--ink`、本文を `--text`、メタ/ラベルを `--muted`（`#6f6a60`・`--paper` 上で約5:1）とし、本文サイズで WCAG AA（4.5:1）を満たす |
-| 画像代替 | 全 `<img>` に `alt`、装飾要素に `aria-hidden`、スライド矢印に `aria-label` |
+| フォーカス可視化 | `:focus-visible` に `--accent-ink` の 2px リング（瞬時表示）。**サムネ上のコントロール**（矢印・ドット）は下地が暗くタウープでは沈むため、白の 2px 輪郭に切り替える |
+| コントラスト | 全インクトークンの明度を「地に対する目標コントラスト比」から逆算して決めている（[4.2](#42-カラーパレットv400--oklch-単一色相軸) 参照）。テキストに使う最も淡い `--muted-2` が **AA 下限 4.5:1**（紙 4.50 / 夜 4.53）。`--faint`（1.62 / 1.90）は**装飾専用**でテキストには使わない |
+| 画像代替 | 全 `<img>` に `alt`、装飾要素に `aria-hidden`、スライド矢印・ドットに `aria-label` |
+| リンク名 | nav ロゴは `alt=""` の画像のみでリンク名が存在しなかったため、sr-only の「頁首へ」を内包する（v4.0.0） |
+| **インタラクティブ要素のネスト** | `.work-card` は v4.0.0 以前 `<a>` で、その中にスライド矢印の `<button>` を含む**仕様違反**だった。カードを `<article>` にし実リンクを題字（`.work-link`）へ移設。カード全面のクリックは JS が題字リンクへ委譲する（`e.target.closest('a, button')` と選択テキストの有無で抑止）。**stretched link（`::after` の全面オーバーレイ）は本文のテキスト選択を殺すため採らない** |
 | ランドマーク | `<nav>` / `<main>`（hero〜contact を内包）/ `<footer>` を明示。スクリーンリーダーの領域ジャンプに対応 |
-| 見出し構造 | h1（氏名）→ 各セクション h2（about / 制作 / 催し / 言葉 / 連絡）→ 作品名 h3。飛び級なし。About はラベル "about" を `<h2>` 化して見出しアウトラインに含める |
+| 見出し構造 | h1（氏名）→ 各セクション h2（about / 制作 / 言葉 / 連絡）→ 作品名 h3。飛び級なし。About はラベル "about" を `<h2>` 化して見出しアウトラインに含める |
 | タップ標的 | スライドドットは透明 `::after` でタップ範囲を縦25px相当に拡大。タッチ端末では矢印（30px）を常時表示（WCAG 2.5.8 配慮） |
 
 ### 5.5 CDNフェイルセーフ
@@ -492,10 +542,10 @@ GSAP/ScrollTrigger/SplitText/Lenis を CDN から読み込むため、CDN障害�
 
 | 層 | 仕様 |
 |---|---|
-| `script.js` ガード | `gsap`/`Lenis` が `undefined` の場合は演出を一切初期化せず、`#page-intro` を非表示にし `.reveal`/`.work-card`/`.note-card`/hero新要素 等を最終表示状態へ。ナビ・スライドショー・アクティブ連動・柱ノンブルは gsap 非依存で常時動作 |
+| `script.js` ガード | `gsap`/`Lenis` が `undefined` の場合は演出を一切初期化せず、`#page-intro` を非表示にし `.reveal`/`.work-card`/`.work-info`/`.note-card`/hero新要素 等を最終表示状態へ（`.work-thumb.is-veiled` も外す）。ナビ・スライドショー・アクティブ連動・柱ノンブルは gsap 非依存で常時動作 |
 | `SplitText` 個別ガード | gsap は居るが SplitText のみ欠落した場合、`splitReady=false` で文字分割演出だけを従来の行送りにフォールバック |
 | `fx.js` ガード | gsap 不在・WebGL 取得失敗・シェーダコンパイル失敗のいずれでも起動せず、CSSの静的滲みが残る |
-| インライン保険 | `<head>` 内の小スクリプトが `load` 後 2.5秒で `gsap` 未定義を検知した場合、同様にオーバーレイ除去とコンテンツ表示を行う |
+| インライン保険 | `<head>` 内の小スクリプトが `load` 後 2.5秒で `gsap` 未定義を検知した場合、同様にオーバーレイ除去とコンテンツ表示を行う（`.work-info` と `.is-veiled` にも追随） |
 
 gsap/Lenis 不在時はアンカーリンクもネイティブスクロールにフォールバックする（v3.0.0 で CDN 全断時の全文表示・スライドショー動作を実測検証済み）。
 
@@ -505,9 +555,22 @@ gsap/Lenis 不在時はアンカーリンクもネイティブスクロールに
 |---|---|
 | 遅延読み込み | 全 `<img>` に `loading="lazy"` + `decoding="async"`、動画に `preload="metadata"` |
 | レイアウトシフト対策 | `.work-thumb` は `aspect-ratio`（16/10・860px以下4/3）で領域確保、`favicon`/`note-avatar` に `width`/`height` 明示 |
-| 画像変換 | スクリーンショットは長辺1200px・JPG（quality 80-82）。OGPは1200幅JPG。faviconは128px PNG |
+| 画像変換 | スクリーンショットは長辺1200px・JPG（quality 80-82）。OGPは1200幅JPG。faviconは128px PNG。**nav アイコンは別ファイル `nav-mark.png`**（256px・透過）— favicon は白地の不透明PNGで、夜の紙では白い四角として浮くため、白地からの距離をアルファ化（ノイズ床28・径方向の窓）した透過版を用意している |
 | 動画 | `freq-video-dark.mp4` は720幅・無音・H.264（CRF30）で再エンコード（3.0MB→112KB） |
 | 合計 | `images/` 約1.0MB（最適化前 約13MB） |
+
+### 5.7 配色の切替（紙／夜）
+
+| 項目 | 仕様 |
+|---|---|
+| 既定 | `:root { color-scheme: light dark }` で **OS 設定に追従** |
+| 切替 | 奥付（`.footer-colophon`）の「紙 ／ 夜」ボタン。`:root[data-theme]` を立て、`color-scheme: only light` / `only dark` を固定する |
+| 追従の仕組み | 全カラートークンが `light-dark(紙の値, 夜の値)` で定義されているため、`color-scheme` を固定するだけで**一括で切り替わる**。トークン値の二重定義もクラス総当たりの上書きも不要 |
+| 記憶 | `localStorage.theme`（`'light'` / `'dark'`） |
+| ちらつき防止 | `<head>` の**スタイルシート読み込みより前**のインラインスクリプトが `localStorage` を読み `data-theme` を確定させる。初回描画で紙→夜のフラッシュが起きない |
+| 状態表示 | 各ボタンの `aria-pressed`。OS 側の変更（`prefers-color-scheme` の `change`）にも追従して更新する |
+| 連動 | 切替時に `themechange` カスタムイベントを発火。`fx.js` がこれを受けてシェーダの色を取り直し即再描画する |
+| 併せて切り替わるもの | 紙グレインの合成モード（紙 `multiply` 0.035 / 夜 `screen` 0.05）、`theme-color` メタ（`media` 属性で出し分け）、WebGL 靄の強度（0.07 / 0.13） |
 
 ---
 

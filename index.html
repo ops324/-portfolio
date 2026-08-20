@@ -15,8 +15,17 @@
   <meta name="twitter:title" content="滝本 哲也" />
   <meta name="twitter:description" content="Web開発・自動化フロー・ツール開発と、非日常体験イベントの企画主催。生活を豊かにするアイデアを形にしています。" />
   <meta name="twitter:image" content="https://takimototetsuya.vercel.app/images/ogp.jpg" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f6f3" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#16150f" />
   <link rel="canonical" href="https://takimototetsuya.vercel.app/" />
   <link rel="icon" href="images/favicon.png" type="image/png" />
+  <script>
+    // 記憶した配色をスタイル適用前に確定させる（初回描画のちらつきを防ぐ）
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -52,9 +61,12 @@
         if (typeof window.gsap === 'undefined') {
           var intro = document.getElementById('page-intro');
           if (intro) intro.style.display = 'none';
-          document.querySelectorAll('.reveal, .work-card, .note-card, .section-line, .hero-sub-inner, .hero-name, .hero-desc-inner, .hero-scroll').forEach(function (el) {
+          document.querySelectorAll('.reveal, .work-card, .work-info, .note-card, .section-line, .hero-sub-inner, .hero-name, .hero-desc-inner, .hero-scroll').forEach(function (el) {
             el.style.opacity = '1';
             el.style.transform = 'none';
+          });
+          document.querySelectorAll('.work-thumb.is-veiled').forEach(function (el) {
+            el.classList.remove('is-veiled');
           });
         }
       }, 2500);
@@ -66,11 +78,10 @@
   <div id="page-intro" aria-hidden="true"></div>
 
   <nav id="navbar">
-    <a href="#" class="nav-logo"><img src="images/favicon.png" class="nav-icon" alt="" width="22" height="22" /></a>
+    <a href="#hero" class="nav-logo"><img src="images/nav-mark.png" class="nav-icon" alt="" width="22" height="22" /><span class="sr-only">頁首へ</span></a>
     <ul class="nav-links">
       <li><a href="#about">about</a></li>
       <li><a href="#projects">works</a></li>
-      <li><a href="#events">events</a></li>
       <li><a href="#note">note</a></li>
       <li><a href="#contact">contact</a></li>
     </ul>
@@ -133,13 +144,14 @@
     </header>
 
     <div class="works-grid">
-      <a href="https://dimension-vert.vercel.app/" target="_blank" rel="noopener" class="work-card">
+      <article class="work-card work-card--feature">
         <div class="work-thumb work-thumb-dimension" data-slide="0">
           <img src="images/thumb-dimension.jpg" alt="DIMENSION — ステレオ投影されたホップ・ファイブレーションの光の輪" class="work-thumb-img active" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
+          <p class="sr-only" role="status" aria-live="polite" data-slide-status></p>
           <div class="slide-dots">
-            <span class="slide-dot active"></span>
+            <button type="button" class="slide-dot active"></button>
           </div>
         </div>
         <div class="work-info">
@@ -147,20 +159,21 @@
           <div class="work-meta">
             <span class="work-cat">Experimental / Data Art</span>
           </div>
-          <h3 class="work-title">DIMENSION</h3>
+          <h3 class="work-title"><a class="work-link" href="https://dimension-vert.vercel.app/" target="_blank" rel="noopener">DIMENSION</a></h3>
           <p class="work-catchcopy">見えない次元を、見る。</p>
           <p class="work-desc">人間には知覚できない4次元以上の世界を、科学的な正確さを保ったまま、一つの映像体験として立ち上げた実験的Webサイト。</p>
           <span class="work-view">View<span class="work-view-arrow" aria-hidden="true">→</span></span>
         </div>
-      </a>
+      </article>
 
-      <a href="https://hisuigan-macro-insight-engine.vercel.app/" target="_blank" rel="noopener" class="work-card">
+      <article class="work-card">
         <div class="work-thumb work-thumb-hisuigan" data-slide="0">
           <img src="images/thumb-hisuigan.jpg" alt="翡翠眼 — マーケットデータ" class="work-thumb-img active" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
+          <p class="sr-only" role="status" aria-live="polite" data-slide-status></p>
           <div class="slide-dots">
-            <span class="slide-dot active"></span>
+            <button type="button" class="slide-dot active"></button>
           </div>
         </div>
         <div class="work-info">
@@ -168,15 +181,15 @@
           <div class="work-meta">
             <span class="work-cat">Web Development</span>
           </div>
-          <h3 class="work-title">翡翠眼</h3>
+          <h3 class="work-title"><a class="work-link" href="https://hisuigan-macro-insight-engine.vercel.app/" target="_blank" rel="noopener">翡翠眼</a></h3>
           <p class="work-catchcopy">世界市場を、見通す目。</p>
           <p class="work-desc">翡翠眼 は、マクロ経済と金融市場の先行きを読み解くための情報サイトです。</p>
           <p class="work-desc">AIが自動で執筆・公開する分析レポートを配信。過去の見通しを検証・学習して精度を高める予測学習の仕組みと、情報源を複数組み合わせて環境の変化に強い設計が特徴です。</p>
           <span class="work-view">View<span class="work-view-arrow" aria-hidden="true">→</span></span>
         </div>
-      </a>
+      </article>
 
-      <a href="https://nagi-xi.vercel.app/" target="_blank" rel="noopener" class="work-card">
+      <article class="work-card">
         <div class="work-thumb work-thumb-nagi" data-slide="0">
           <img src="images/nagi-icon.jpg" alt="Nagi — アイコン" class="work-thumb-img active" loading="lazy" decoding="async" />
           <img src="images/nagi-record1.jpg" alt="Nagi — 記録1" class="work-thumb-img" loading="lazy" decoding="async" />
@@ -187,14 +200,15 @@
           <img src="images/nagi-calendar.jpg" alt="Nagi — カレンダー" class="work-thumb-img" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
+          <p class="sr-only" role="status" aria-live="polite" data-slide-status></p>
           <div class="slide-dots">
-            <span class="slide-dot active"></span>
-            <span class="slide-dot"></span>
-            <span class="slide-dot"></span>
-            <span class="slide-dot"></span>
-            <span class="slide-dot"></span>
-            <span class="slide-dot"></span>
-            <span class="slide-dot"></span>
+            <button type="button" class="slide-dot active"></button>
+            <button type="button" class="slide-dot"></button>
+            <button type="button" class="slide-dot"></button>
+            <button type="button" class="slide-dot"></button>
+            <button type="button" class="slide-dot"></button>
+            <button type="button" class="slide-dot"></button>
+            <button type="button" class="slide-dot"></button>
           </div>
         </div>
         <div class="work-info">
@@ -202,20 +216,21 @@
           <div class="work-meta">
             <span class="work-cat">Web Development</span>
           </div>
-          <h3 class="work-title">Nagi（凪）</h3>
+          <h3 class="work-title"><a class="work-link" href="https://nagi-xi.vercel.app/" target="_blank" rel="noopener">Nagi（凪）</a></h3>
           <p class="work-catchcopy">自己を観る。</p>
           <p class="work-desc">書くほどに、視界がひらく自己観察アプリ。<br><br>日々の想いを書き込むと、AI「凪 -Nagi-」が静かな問いを返します。褒めず、諭さず、ただ隣で問いかける。感情に飲まれていた出来事も、いくつもの角度から眺め直せる。ひとつの見方に閉じていた視界が、少しずつひらいていきます。</p>
           <span class="work-view">View<span class="work-view-arrow" aria-hidden="true">→</span></span>
         </div>
-      </a>
+      </article>
 
-      <a href="https://chushinmei.vercel.app" target="_blank" rel="noopener" class="work-card">
+      <article class="work-card">
         <div class="work-thumb work-thumb-chushinmei" data-slide="0">
           <img src="images/thumb-chushinmei.jpg" alt="中心銘 — メイン画面" class="work-thumb-img active" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
+          <p class="sr-only" role="status" aria-live="polite" data-slide-status></p>
           <div class="slide-dots">
-            <span class="slide-dot active"></span>
+            <button type="button" class="slide-dot active"></button>
           </div>
         </div>
         <div class="work-info">
@@ -223,22 +238,23 @@
           <div class="work-meta">
             <span class="work-cat">Web Development</span>
           </div>
-          <h3 class="work-title">中心銘</h3>
+          <h3 class="work-title"><a class="work-link" href="https://chushinmei.vercel.app" target="_blank" rel="noopener">中心銘</a></h3>
           <p class="work-catchcopy">大切な言葉を、手元に。</p>
           <p class="work-desc">心に響く言葉を記録し、出典やメモとともに保存できるパーソナル名言管理アプリ。「今日の言葉」機能で毎日ランダムに一つの言葉と再会でき、共有リンクで大切な言葉を他の人に贈ることも可能。和紙調の温かみあるUIで、言葉と静かに向き合う体験を提供。</p>
           <span class="work-view">View<span class="work-view-arrow" aria-hidden="true">→</span></span>
         </div>
-      </a>
+      </article>
 
-      <a href="https://frequency-analyzer.vercel.app" target="_blank" rel="noopener" class="work-card">
+      <article class="work-card">
         <div class="work-thumb work-thumb-freq" data-slide="0">
           <video src="images/freq-video-light.mp4" class="work-thumb-img active" autoplay muted loop playsinline preload="metadata"></video>
           <video src="images/freq-video-dark.mp4" class="work-thumb-img" autoplay muted loop playsinline preload="metadata"></video>
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
+          <p class="sr-only" role="status" aria-live="polite" data-slide-status></p>
           <div class="slide-dots">
-            <span class="slide-dot active"></span>
-            <span class="slide-dot"></span>
+            <button type="button" class="slide-dot active"></button>
+            <button type="button" class="slide-dot"></button>
           </div>
         </div>
         <div class="work-info">
@@ -246,20 +262,21 @@
           <div class="work-meta">
             <span class="work-cat">Web Development</span>
           </div>
-          <h3 class="work-title">Frequency Analyzer</h3>
+          <h3 class="work-title"><a class="work-link" href="https://frequency-analyzer.vercel.app" target="_blank" rel="noopener">Frequency Analyzer</a></h3>
           <p class="work-catchcopy">音を、視る。</p>
           <p class="work-desc">マイク入力から周波数・音量・音名をリアルタイム解析するオーディオツール。Three.js による3D周波数リング可視化とスペクトル表示を実装。ライト／ナイトモード切り替え対応。</p>
           <span class="work-view">View<span class="work-view-arrow" aria-hidden="true">→</span></span>
         </div>
-      </a>
+      </article>
 
-      <a href="https://lisa-mizuno.vercel.app/" target="_blank" rel="noopener" class="work-card">
+      <article class="work-card">
         <div class="work-thumb work-thumb-lisa" data-slide="0">
           <img src="images/thumb-lisa-mizuno.jpg" alt="Lisa Mizuno — アーティストサイト" class="work-thumb-img active" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
+          <p class="sr-only" role="status" aria-live="polite" data-slide-status></p>
           <div class="slide-dots">
-            <span class="slide-dot active"></span>
+            <button type="button" class="slide-dot active"></button>
           </div>
         </div>
         <div class="work-info">
@@ -267,20 +284,21 @@
           <div class="work-meta">
             <span class="work-cat">Web Design / Artist Site</span>
           </div>
-          <h3 class="work-title">Lisa Mizuno</h3>
+          <h3 class="work-title"><a class="work-link" href="https://lisa-mizuno.vercel.app/" target="_blank" rel="noopener">Lisa Mizuno</a></h3>
           <p class="work-catchcopy">響きを、編む。</p>
           <p class="work-desc">DJ・アーティスト Lisa Mizuno のポートフォリオサイト。「間・和・祈り」という日本文化の精神性を軸に、電子音楽と身体表現を融合させる活動世界を、モノクロームのミニマルな構成へ落とし込み、コラボレーション実績・ギャラリー・各種プラットフォームへの導線を静かに整理。<br><br>デザインから制作まで担当。</p>
           <span class="work-view">View<span class="work-view-arrow" aria-hidden="true">→</span></span>
         </div>
-      </a>
+      </article>
 
-      <a href="https://service.chinju.org/" target="_blank" rel="noopener" class="work-card">
+      <article class="work-card">
         <div class="work-thumb work-thumb-chinju" data-slide="0">
           <img src="images/thumb-chinju.jpg" alt="CHINJU CLI — 確証エンジン" class="work-thumb-img active" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
+          <p class="sr-only" role="status" aria-live="polite" data-slide-status></p>
           <div class="slide-dots">
-            <span class="slide-dot active"></span>
+            <button type="button" class="slide-dot active"></button>
           </div>
         </div>
         <div class="work-info">
@@ -288,20 +306,21 @@
           <div class="work-meta">
             <span class="work-cat">LP / Branding &amp; PR</span>
           </div>
-          <h3 class="work-title">CHINJU CLI</h3>
+          <h3 class="work-title"><a class="work-link" href="https://service.chinju.org/" target="_blank" rel="noopener">CHINJU CLI</a></h3>
           <p class="work-catchcopy">変更の、その先まで。</p>
           <p class="work-desc">コードの「変更箇所」だけでなく「影響範囲」まで横断的にレビューし、品質を担保する確証エンジン。デグレ・考慮漏れ・脆弱性を安定的に検出する。<br><br>本プロジェクトではLP制作・市場調査・方向性整理・PRを担当。</p>
           <span class="work-view">View<span class="work-view-arrow" aria-hidden="true">→</span></span>
         </div>
-      </a>
+      </article>
 
-      <div class="work-card">
+      <article class="work-card">
         <div class="work-thumb work-thumb-arisa" data-slide="0">
           <img src="images/thumb-arisa.jpg" alt="領収書仕分けAI — アプリアイコン" class="work-thumb-img active" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
           <button class="slide-next" aria-label="次へ"></button>
+          <p class="sr-only" role="status" aria-live="polite" data-slide-status></p>
           <div class="slide-dots">
-            <span class="slide-dot active"></span>
+            <button type="button" class="slide-dot active"></button>
           </div>
         </div>
         <div class="work-info">
@@ -313,45 +332,8 @@
           <p class="work-catchcopy">領収書の山を、任せる。</p>
           <p class="work-desc">撮影業の個人事業主向けに、領収書の読み取りから集計までを自動化するWebアプリ。画像・PDFをドラッグ＆ドロップするだけで取引先・金額・日付をAIが抽出し、科目や支払方法を自動で仕分け。案件ごとの管理から会計ソフト向けエクスポートまでを一元化する。</p>
         </div>
-      </div>
+      </article>
     </div>
-  </section>
-
-  <!-- Events -->
-  <section id="events">
-    <div class="section-line" aria-hidden="true"></div>
-    <span class="sec-margin" aria-hidden="true">催し</span>
-    <header class="sec-head reveal">
-      <span class="sec-eyebrow">events</span>
-      <h2 class="sec-title">催し</h2>
-    </header>
-    <div class="events-grid">
-      <figure class="event-card reveal">
-        <div class="event-frame">
-          <blockquote
-            class="instagram-media"
-            data-instgrm-permalink="https://www.instagram.com/p/C5VzL4orpJZ/"
-            data-instgrm-version="14"
-            style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;min-width:326px;padding:0;width:calc(100% - 2px);">
-            <a href="https://www.instagram.com/p/C5VzL4orpJZ/">View on Instagram</a>
-          </blockquote>
-        </div>
-        <figcaption class="event-cap"><span class="event-cap-src">Instagram</span></figcaption>
-      </figure>
-      <figure class="event-card reveal">
-        <div class="event-frame">
-          <blockquote
-            class="instagram-media"
-            data-instgrm-permalink="https://www.instagram.com/p/C71jN7USIc2/"
-            data-instgrm-version="14"
-            style="background:#FFF;border:0;border-radius:3px;box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15);margin:0;max-width:540px;min-width:326px;padding:0;width:calc(100% - 2px);">
-            <a href="https://www.instagram.com/p/C71jN7USIc2/">View on Instagram</a>
-          </blockquote>
-        </div>
-        <figcaption class="event-cap"><span class="event-cap-src">Instagram</span></figcaption>
-      </figure>
-    </div>
-
   </section>
 
   <!-- Note -->
@@ -420,7 +402,6 @@
         <nav class="footer-nav" aria-label="フッターナビゲーション">
           <a href="#about">about</a>
           <a href="#projects">works</a>
-          <a href="#events">events</a>
           <a href="#note">note</a>
           <a href="#contact">contact</a>
         </nav>
@@ -428,12 +409,16 @@
       <div class="footer-bottom">
         <div class="footer-colophon">
           <span>&copy; 2026 Tetsuya Takimoto</span>
+          <span class="theme-switch" role="group" aria-label="配色">
+            <button type="button" class="theme-switch-btn" data-theme-set="light">紙</button>
+            <span class="theme-switch-sep" aria-hidden="true">／</span>
+            <button type="button" class="theme-switch-btn" data-theme-set="dark">夜</button>
+          </span>
         </div>
         <a href="#hero" class="footer-top-link">頁首へ<span aria-hidden="true"> ↑</span></a>
       </div>
     </div>
   </footer>
 
-  <script async src="//www.instagram.com/embed.js"></script>
 </body>
 </html>
