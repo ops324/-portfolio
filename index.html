@@ -53,9 +53,12 @@
         if (typeof window.gsap === 'undefined') {
           var intro = document.getElementById('page-intro');
           if (intro) intro.style.display = 'none';
-          document.querySelectorAll('.reveal, .work-card, .note-card, .section-line, .hero-sub-inner, .hero-name, .hero-desc-inner, .hero-scroll').forEach(function (el) {
+          document.querySelectorAll('.reveal, .work-card, .work-info, .note-card, .section-line, .hero-sub-inner, .hero-name, .hero-desc-inner, .hero-scroll').forEach(function (el) {
             el.style.opacity = '1';
             el.style.transform = 'none';
+          });
+          document.querySelectorAll('.work-thumb.is-veiled').forEach(function (el) {
+            el.classList.remove('is-veiled');
           });
         }
       }, 2500);
