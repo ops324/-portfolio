@@ -28,7 +28,7 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url('fonts/noto-sans-jp-300.7952003f.woff2') format('woff2');
+  src: url('fonts/noto-sans-jp-300.ee2d73a0.woff2') format('woff2');
 }
 
 @font-face {
@@ -44,7 +44,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('fonts/shippori-mincho-b1-400.de9fe509.woff2') format('woff2');
+  src: url('fonts/shippori-mincho-b1-400.68230165.woff2') format('woff2');
 }
 
 @font-face {
@@ -52,7 +52,7 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url('fonts/shippori-mincho-b1-500.000e900a.woff2') format('woff2');
+  src: url('fonts/shippori-mincho-b1-500.ef7c03c6.woff2') format('woff2');
 }
 /* @generated:fonts end */
 /* ============================
@@ -749,15 +749,6 @@ ul { list-style: none; }
     radial-gradient(ellipse 28% 28% at 74% 28%, rgba(18, 120, 68, 0.18) 0%, transparent 60%),
     radial-gradient(ellipse 20% 22% at 22% 72%, rgba(10, 90, 50, 0.12) 0%, transparent 55%);
 }
-
-.work-thumb-chushinmei {
-  background: #f5f0e8;
-  background-image:
-    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(210, 195, 168, 0.35) 0%, transparent 70%),
-    linear-gradient(170deg, #f7f3ec 0%, #ebe5d8 100%);
-}
-
-.work-thumb-chushinmei .work-thumb-img { object-position: top center; }
 
 .work-thumb-nagi { background: #0f1a14; }
 .work-thumb-nagi .work-thumb-img { object-position: top center; }
