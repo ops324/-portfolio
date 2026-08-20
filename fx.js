@@ -24,6 +24,9 @@
     'uniform vec2 u_res;',
     'uniform float u_time;',
     'uniform vec2 u_mouse;',
+    'uniform vec3 u_paper;',
+    'uniform vec3 u_accent;',
+    'uniform float u_strength;',
     'float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }',
     'float noise(vec2 p) {',
     '  vec2 i = floor(p); vec2 f = fract(p);',
@@ -44,22 +47,68 @@
     '  float n = fbm(p + vec2(u_time * 0.02, u_time * 0.013) + warp * 0.35);',
     // 靄の中心を右上に置き、hero-inner（左中央）付近は特に淡く
     '  float fade = 1.0 - smoothstep(0.0, 0.85, distance(uv, vec2(0.72, 0.62)));',
-    '  float intensity = n * 0.07 * fade;',
-    '  vec3 paper  = vec3(0.969, 0.965, 0.953);',
-    '  vec3 accent = vec3(0.639, 0.576, 0.478);',
-    '  gl_FragColor = vec4(mix(paper, accent, intensity), 1.0);',
+    '  float intensity = n * u_strength * fade;',
+    '  gl_FragColor = vec4(mix(u_paper, u_accent, intensity), 1.0);',
     '}',
   ].join('\n');
 
   var gl = null;
   var program = null;
-  var uRes, uTime, uMouse;
+  var uRes, uTime, uMouse, uPaper, uAccent, uStrength;
+  var paperRGB  = [0.969, 0.965, 0.953];
+  var accentRGB = [0.639, 0.576, 0.478];
+  var strength  = 0.07;
   var running = false;
   var started = false;
   var heroVisible = true;
   var mouse = [0.5, 0.5];
   var mouseTarget = [0.5, 0.5];
   var t0 = 0;
+
+  // 靄の色は CSS トークン（--paper / --accent）から取る。
+  // カスタムプロパティは getComputedStyle で解決されないため、実プロパティへ
+  // 一度乗せてから canvas2d に sRGB へ展開させる（oklch / light-dark をそのまま扱える）
+  function readPalette() {
+    var probe = document.createElement('span');
+    probe.style.cssText = 'position:absolute;width:0;height:0;opacity:0;pointer-events:none;';
+    document.body.appendChild(probe);
+    var cv = document.createElement('canvas');
+    cv.width = cv.height = 1;
+    var ctx = cv.getContext('2d', { willReadFrequently: true });
+
+    function toRGB(token, fallback) {
+      probe.style.color = '';
+      probe.style.color = 'var(' + token + ')';
+      var css = getComputedStyle(probe).color;
+      if (!css) return fallback;
+      ctx.fillStyle = '#000';
+      ctx.fillStyle = css;
+      if (ctx.fillStyle === '#000000' && css.indexOf('0, 0, 0') === -1) return fallback;
+      ctx.clearRect(0, 0, 1, 1);
+      ctx.fillRect(0, 0, 1, 1);
+      var d = ctx.getImageData(0, 0, 1, 1).data;
+      return [d[0] / 255, d[1] / 255, d[2] / 255];
+    }
+
+    paperRGB  = toRGB('--paper',  paperRGB);
+    accentRGB = toRGB('--accent', accentRGB);
+    probe.remove();
+
+    // 夜の紙は地が暗く、同じ強度だと靄が浮きすぎる
+    var dark = paperRGB[0] + paperRGB[1] + paperRGB[2] < 1.2;
+    strength = dark ? 0.13 : 0.07;
+
+    if (gl) {
+      gl.clearColor(paperRGB[0], paperRGB[1], paperRGB[2], 1.0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+    }
+  }
+
+  document.addEventListener('themechange', function () {
+    if (!gl) return;
+    readPalette();
+    render();
+  });
 
   function compile(type, src) {
     var s = gl.createShader(type);
@@ -87,6 +136,9 @@
     gl.uniform2f(uRes, canvas.width, canvas.height);
     gl.uniform1f(uTime, (performance.now() - t0) / 1000);
     gl.uniform2f(uMouse, mouse[0], mouse[1]);
+    gl.uniform3f(uPaper, paperRGB[0], paperRGB[1], paperRGB[2]);
+    gl.uniform3f(uAccent, accentRGB[0], accentRGB[1], accentRGB[2]);
+    gl.uniform1f(uStrength, strength);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   }
 
@@ -143,9 +195,13 @@
     gl.enableVertexAttribArray(aPos);
     gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
 
-    uRes   = gl.getUniformLocation(program, 'u_res');
-    uTime  = gl.getUniformLocation(program, 'u_time');
-    uMouse = gl.getUniformLocation(program, 'u_mouse');
+    uRes      = gl.getUniformLocation(program, 'u_res');
+    uTime     = gl.getUniformLocation(program, 'u_time');
+    uMouse    = gl.getUniformLocation(program, 'u_mouse');
+    uPaper    = gl.getUniformLocation(program, 'u_paper');
+    uAccent   = gl.getUniformLocation(program, 'u_accent');
+    uStrength = gl.getUniformLocation(program, 'u_strength');
+    readPalette();
 
     canvas.addEventListener('webglcontextlost', function (e) {
       e.preventDefault();
@@ -159,7 +215,7 @@
     // alpha:false のため、初描画までクリアカラー（既定は黒）が不透明の黒板として露出する。
     // 描画バッファのリサイズ後に紙色で塗り、さらに1フレーム即描画してから運転判定へ渡す
     // （バックグラウンドタブで初期化された場合、復帰時に黒が差すのを防ぐ）
-    gl.clearColor(0.969, 0.965, 0.953, 1.0);
+    gl.clearColor(paperRGB[0], paperRGB[1], paperRGB[2], 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
     render();
 

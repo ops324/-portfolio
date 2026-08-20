@@ -15,9 +15,17 @@
   <meta name="twitter:title" content="滝本 哲也" />
   <meta name="twitter:description" content="Web開発・自動化フロー・ツール開発と、非日常体験イベントの企画主催。生活を豊かにするアイデアを形にしています。" />
   <meta name="twitter:image" content="https://takimototetsuya.vercel.app/images/ogp.jpg" />
-  <meta name="theme-color" content="#f7f6f3" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7f6f3" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#16150f" />
   <link rel="canonical" href="https://takimototetsuya.vercel.app/" />
   <link rel="icon" href="images/favicon.png" type="image/png" />
+  <script>
+    // 記憶した配色をスタイル適用前に確定させる（初回描画のちらつきを防ぐ）
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  </script>
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -70,7 +78,7 @@
   <div id="page-intro" aria-hidden="true"></div>
 
   <nav id="navbar">
-    <a href="#hero" class="nav-logo"><img src="images/favicon.png" class="nav-icon" alt="" width="22" height="22" /><span class="sr-only">頁首へ</span></a>
+    <a href="#hero" class="nav-logo"><img src="images/nav-mark.png" class="nav-icon" alt="" width="22" height="22" /><span class="sr-only">頁首へ</span></a>
     <ul class="nav-links">
       <li><a href="#about">about</a></li>
       <li><a href="#projects">works</a></li>
@@ -137,7 +145,7 @@
     </header>
 
     <div class="works-grid">
-      <article class="work-card">
+      <article class="work-card work-card--feature">
         <div class="work-thumb work-thumb-dimension" data-slide="0">
           <img src="images/thumb-dimension.jpg" alt="DIMENSION — ステレオ投影されたホップ・ファイブレーションの光の輪" class="work-thumb-img active" loading="lazy" decoding="async" />
           <button class="slide-prev" aria-label="前へ"></button>
@@ -440,6 +448,11 @@
       <div class="footer-bottom">
         <div class="footer-colophon">
           <span>&copy; 2026 Tetsuya Takimoto</span>
+          <span class="theme-switch" role="group" aria-label="配色">
+            <button type="button" class="theme-switch-btn" data-theme-set="light">紙</button>
+            <span class="theme-switch-sep" aria-hidden="true">／</span>
+            <button type="button" class="theme-switch-btn" data-theme-set="dark">夜</button>
+          </span>
         </div>
         <a href="#hero" class="footer-top-link">頁首へ<span aria-hidden="true"> ↑</span></a>
       </div>

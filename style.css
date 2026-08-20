@@ -5,19 +5,31 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  /* paper & ink（6階調のインク体系） */
-  --paper:       #f7f6f3;
-  --paper-2:     #efece6;
-  --ink:         #1a1a1c;
-  --ink-2:       #3c3a36;
-  --text:        #33312e;
-  --muted:       #6f6a60;
-  --muted-2:     #78715d;   /* paper比 4.50:1（AA） */
-  --faint:       #c9c3b6;   /* 1.62:1 — 装飾専用（トンボ・欄外柱・白抜き索引）。本文には使わない */
-  --line:        #e4e0d9;
-  --line-strong: #d5cfc3;
-  --accent:      #a3937a;
-  --accent-ink:  #7c6f59;
+  /* 明暗はブラウザの color-scheme に従う。トグルは :root[data-theme] で上書きする */
+  color-scheme: light dark;
+
+  /* ------------------------------------------------------------------
+     paper & ink — OKLCH の単一色相軸（紙・墨=85°／タウープ=80°）で組む。
+     明度は「地に対する目標コントラスト比」から解いた値。括弧内が達成値。
+     旧 sRGB 版は色相が 78〜286° に散り、L の刻みも 2.3〜19.9 と不揃いで、
+     中間調が濁っていた。
+     ------------------------------------------------------------------ */
+  --paper:       light-dark(oklch(97.3% 0.004  85), oklch(18.0% 0.006  85));
+  --paper-2:     light-dark(oklch(94.7% 0.008  85), oklch(23.3% 0.008  85)); /* 1.08 / 1.13 */
+  --line:        light-dark(oklch(91.2% 0.010  85), oklch(28.2% 0.012  85)); /* 1.20 / 1.30 */
+  --line-strong: light-dark(oklch(87.5% 0.016  85), oklch(32.3% 0.018  85)); /* 1.35 / 1.50 */
+  --faint:       light-dark(oklch(81.9% 0.019  85), oklch(38.3% 0.022  85)); /* 1.62 / 1.90 — 装飾専用 */
+  --accent:      light-dark(oklch(66.8% 0.042  80), oklch(49.0% 0.045  80)); /* 2.80 / 3.00 — 罫線・装飾 */
+  --accent-ink:  light-dark(oklch(54.5% 0.038  80), oklch(60.0% 0.040  80)); /* 4.60 / 4.80 — 可読タウープ */
+  --muted-2:     light-dark(oklch(54.9% 0.014  85), oklch(58.7% 0.016  85)); /* 4.51 / 4.53 — AA下限 */
+  --muted:       light-dark(oklch(48.2% 0.012  85), oklch(65.4% 0.014  85)); /* 6.00 / 6.00 */
+  --ink-2:       light-dark(oklch(36.1% 0.010  85), oklch(76.2% 0.012  85)); /* 10.0 / 9.00 */
+  --text:        light-dark(oklch(31.4% 0.008  85), oklch(82.0% 0.010  85)); /* 12.0 / 11.0 */
+  --ink:         light-dark(oklch(22.0% 0.005 264), oklch(90.4% 0.006  86)); /* 16.0 / 14.5 — 印刷インキの青み黒 */
+
+  /* 面（半透明の重ね）— ナビの磨りガラス等 */
+  --paper-veil:   color-mix(in oklab, var(--paper) 80%, transparent);
+  --paper-veil-2: color-mix(in oklab, var(--paper) 92%, transparent);
 
   /* type */
   --font-latin:    'Inter', sans-serif;
@@ -58,6 +70,10 @@
   --ease-line:  cubic-bezier(0.19, 1, 0.22, 1);
 }
 
+/* 奥付のトグル。color-scheme を固定するだけで light-dark() が全て追従する */
+:root[data-theme='light'] { color-scheme: only light; }
+:root[data-theme='dark']  { color-scheme: only dark; }
+
 body {
   background: var(--paper);
   color: var(--text);
@@ -82,6 +98,19 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   opacity: 0.035;
   mix-blend-mode: multiply;
+}
+
+/* 夜の紙では multiply が沈んで粒が消えるため、乗せる方向へ反転する */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) body::after {
+    opacity: 0.05;
+    mix-blend-mode: screen;
+  }
+}
+
+:root[data-theme='dark'] body::after {
+  opacity: 0.05;
+  mix-blend-mode: screen;
 }
 
 /* ============================
@@ -216,7 +245,7 @@ ul { list-style: none; }
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--gutter);
-  background: rgba(247, 246, 243, 0.78);
+  background: var(--paper-veil);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid transparent;
@@ -225,7 +254,7 @@ ul { list-style: none; }
 
 #navbar.scrolled {
   border-bottom-color: var(--line);
-  background: rgba(247, 246, 243, 0.9);
+  background: var(--paper-veil-2);
 }
 
 .nav-logo {
@@ -517,12 +546,38 @@ ul { list-style: none; }
 }
 
 .work-card:first-child { border-top: 0; padding-top: var(--sp-2); }
+
+/* 誌面の強弱: 先頭の1点だけを見開きに開く。
+   全点が同じ 16:10・同じ余白だと紙面が単調になるため、扉として1点だけ大きく置く */
+@media (min-width: 861px) {
+  .work-card--feature { gap: 0; align-items: start; }
+  .work-card--feature .work-thumb {
+    grid-column: 1 / 13;
+    aspect-ratio: 21 / 9;
+    margin-bottom: var(--sp-4);
+  }
+  .work-card--feature .work-info {
+    grid-column: 1 / 13;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 0 clamp(24px, 4vw, 56px);
+    align-items: start;
+  }
+  .work-card--feature .work-index-ghost { grid-column: 1 / 3; grid-row: 1 / 4; margin-bottom: 0; }
+  .work-card--feature .work-meta        { grid-column: 3 / 8;  grid-row: 1; }
+  .work-card--feature .work-title       { grid-column: 3 / 8;  grid-row: 2; }
+  .work-card--feature .work-catchcopy   { grid-column: 3 / 8;  grid-row: 3; margin-bottom: 0; }
+  .work-card--feature .work-desc        { grid-column: 8 / 13; grid-row: 1 / 4; max-width: none; }
+  .work-card--feature .work-view        { grid-column: 8 / 13; grid-row: 4; margin-top: 24px; }
+  .work-card--feature .work-index-ghost { font-size: clamp(4.6rem, 8vw, 7rem); }
+}
 .work-card:last-child { padding-bottom: var(--sp-2); }
 
-.work-card:nth-child(odd)  .work-thumb { grid-column: 1 / 8; }
-.work-card:nth-child(odd)  .work-info  { grid-column: 8 / 13; }
-.work-card:nth-child(even) .work-thumb { grid-column: 6 / 13; grid-row: 1; }
-.work-card:nth-child(even) .work-info  { grid-column: 1 / 6;  grid-row: 1; }
+/* 見開きの1点は交互構成から外す（除外しないと詳細度でこちらが勝ってしまう） */
+.work-card:nth-child(odd):not(.work-card--feature)  .work-thumb { grid-column: 1 / 8; }
+.work-card:nth-child(odd):not(.work-card--feature)  .work-info  { grid-column: 8 / 13; }
+.work-card:nth-child(even):not(.work-card--feature) .work-thumb { grid-column: 6 / 13; grid-row: 1; }
+.work-card:nth-child(even):not(.work-card--feature) .work-info  { grid-column: 1 / 6;  grid-row: 1; }
 
 .work-thumb {
   width: 100%;
@@ -1068,6 +1123,32 @@ footer {
   letter-spacing: 0.12em;
   color: var(--muted-2);
 }
+
+/* 配色の切替（奥付の一行として組む） */
+.theme-switch {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.theme-switch-btn {
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-serif-ja);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.12em;
+  color: var(--muted-2);
+  transition: color 0.25s ease;
+}
+
+.theme-switch-btn:hover { color: var(--ink); }
+.theme-switch-btn[aria-pressed='true'] { color: var(--ink); }
+
+.theme-switch-sep { color: var(--faint); }
 
 .footer-top-link {
   font-family: var(--font-serif-ja);

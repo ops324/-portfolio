@@ -430,6 +430,40 @@ const activeObserver = new IntersectionObserver(entries => {
 sections.forEach(s => activeObserver.observe(s));
 
 // ============================
+// 配色の切替（OS 追従＋記憶）
+// color-scheme を固定するだけで、light-dark() で組んだ全トークンが追従する
+// ============================
+(function themeSwitch() {
+  const root = document.documentElement;
+  const btns = document.querySelectorAll('[data-theme-set]');
+  if (!btns.length) return;
+
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+
+  function current() {
+    return root.getAttribute('data-theme') || (mq.matches ? 'dark' : 'light');
+  }
+
+  function sync() {
+    const now = current();
+    btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.themeSet === now)));
+    document.dispatchEvent(new CustomEvent('themechange', { detail: { theme: now } }));
+  }
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const next = btn.dataset.themeSet;
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      sync();
+    });
+  });
+
+  mq.addEventListener('change', sync);
+  sync();
+})();
+
+// ============================
 // 約物の視覚補正（詰め組みの代替）
 // Shippori Mincho B1 は palt / chws / halt を一切持たないため、
 // フォント機能でも text-spacing-trim でも約物の空きを詰められない。
