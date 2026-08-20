@@ -69,7 +69,7 @@
 | 3.1.0 | 2026-07-10 | Works に「領収書仕分けAI」カード追加（07）。撮影業の個人事業主向けに領収書のOCR読み取り〜経費集計〜会計ソフト向けエクスポートを自動化するWebアプリ（アリサ／`ops324/receipt-sorter-ai`）。**Web版が未デプロイで公開URLが無いため、リンクなしの静的カード**として掲載（他カードの `<a href>` ではなく `<div class="work-card">`、`View →` アフォーダンスも省略）。サムネイル（`thumb-arisa.jpg`）は提供されたアプリアイコン（`icon_transparent.png`）を **16:10（1400×875）の生成りグラデ背景（`#f6f3ee`→`#eae5db`）中央に PIL で合成**（中心銘/CHINJU と同系のライトトーン）。`.work-thumb-arisa` を追加。作品一覧7件構成に |
 | 3.2.0 | 2026-08-16 | Works に「DIMENSION」カード追加。**唯一の先頭挿入（01）** で、既存7件を **02-08 へ繰り下げ**。0次元の点から6次元超立方体までをスクロールで連続変形させ、ホップ・ファイブレーション／クリフォード・トーラス／多胞体エクスプローラ／パースペクティブの4展示を持つ、高次元構造の可視化サイト（Vite + TypeScript + Three.js / `ops324/dimension`）。実験的ビジュアライゼーションであり他の自作プロダクト（02-05）と性格が異なるため、カテゴリを **"Experimental / Data Art"** として区別。サムネイル（`thumb-dimension.jpg`）は**先方サイトの OGP 画像（`og.jpg` 1200×630）を等倍のまま 1200×750（16:10）中央へレターボックス合成**。上下60pxの帯は単色ではなく**画像端をミラー反射→ぼかし→`#05060f` へフェード**させ継ぎ目を消している（og.jpg の上下端は四隅 `#060610` に対し辺中央 `#161223`/`#11172d` と光が滲むため単色帯では継ぎ目が出る）。等倍のためリサンプリング劣化ゼロで、サムネ実描画幅 約618px（DPR2 で 1236px）に対し 1200px はほぼ 1:1。`.work-thumb-dimension`（背景 `#05060f` ＝先方の `theme-color`）を追加。**先頭挿入により `.work-card:nth-child(odd/even)` の偶奇が全件反転し、誌面スプレッドの左右が既存7件すべてで入れ替わる**（奇偶とも 7カラム/5カラムで幅は同一のためリフローは発生しない。860px以下は偶奇が `auto` に打ち消されるため無影響。`script.js` のスライドイン方向 `i % 2` は同じ序数由来のため自動同期）。`.work-card:first-child`（上罫線なし・上余白 `--sp-2`）が DIMENSION へ移り、翡翠眼に区切り罫が付く。作品一覧8件構成に |
 | 4.0.0 | 2026-08-20 | **UI 精度リファイン（組版・演出・素材・実装品位の4段）。** ①**実装の瑕疵**: `.work-card` が `<a>` の中に `<button>`（スライド矢印）を含む仕様違反だったため、カードを `<article>` にし実リンクを題字へ移設。カード全面のクリックは JS で題字リンクへ委譲し、本文のテキスト選択を殺さない（stretched link は選択不能になるため不採用）。`.slide-dot` を `<span>`→`<button>` 化しキーボード操作可能に、`aria-current` と `role=status` のライブリージョンで位置を読み上げ。nav ロゴは `alt=""` の画像のみでリンク名が無かったため sr-only を付与。`--muted-2` を 3.25:1 → AA(4.5:1) へ。サムネ上のコントロールは暗所で沈むため白のフォーカス輪郭。`fx.js` の canvas は `alpha:false` で初描画までクリアカラー（既定=黒）が不透明の黒板として露出していたため、リサイズ後に紙色でクリアし1フレーム即描画。Lenis の `duration` と `lerp` の併記（片方が無効）を lerp へ一本化。②**和文組版**: 散文に `word-break:auto-phrase` / `text-wrap:pretty` / `line-break:strict`（「…イベントの企／画主催。」と語中で割れていた箇所が読点で折り返す）。Noto Sans JP は `palt` を備えるため詰め組み＋`letter-spacing:0.04em` で戻す。**Shippori Mincho B1 は `palt`/`chws`/`halt` を一切持たず `text-spacing-trim` も効かない**（実測で幅が1pxも動かない）ため、句読点のみ `script.js` の `kernPunctuation` が `margin-right:-0.40em` で視覚補正。トラッキングを光学サイズ別にトークン化（hero 0.10em→0.06em / 見出し 0.10em→0.07em / footer名 0.12em→0.08em）。索引・日付を `tabular-nums`。`.about-text` は手で改行を打った塊で、flex の収縮により最長行ぴったりの幅になり約物補正の端数で溢れるため親幅いっぱいに固定。③**演出の語彙を3つに絞る**（①文字のマスク上げ ②面のクリップ展開 ③罫線の伸長）: 見出しの blur→focus と eyebrow のトラッキング収束を撤去しヒーローと同じマスク上げへ統一。work サムネを `clip-path` で下から立ち上げ、4つ目の語彙になる交互スライドインは廃止。イージングを `EASE.enter`/`veil`/`line` の3種に統一し CSS 側にも対を置く。磁気ホバーはナビ・フッターナビから外す（文字が逃げるナビは読みにくい）。④**素材の質**: パレットを **OKLCH の単一色相軸**（紙・墨=85° / タウープ=80°）で組み直し、各 L は「地に対する目標コントラスト比」から解いて決定（旧 sRGB 版は色相が 78〜286° に散り、L の刻みも 2.3〜19.9 と不揃いで `muted`/`muted-2`/`accent-ink` が L 54.8〜54.9 に重なっていた）。**夜の紙**を `light-dark()` で実装し、1トークン1行のまま両モードを保持。トグルは `color-scheme` を固定するだけで全トークンが追従する。OS 追従を既定とし奥付に「紙／夜」を置き localStorage に記憶、初回描画前に `data-theme` を確定させちらつきを防ぐ。紙グレインは夜だと multiply で沈むため screen へ反転。`fx.js` の靄は色を `--paper`/`--accent` から canvas2d 経由で読む（oklch と light-dark をそのまま sRGB へ展開）。nav アイコンが白地の不透明 PNG で夜に白い四角として浮くため透過版 `nav-mark.png` を作成。**誌面の強弱**として先頭1点（DIMENSION）を見開き（全幅 21:9 ＋ 12カラムの情報行）に開く |
-| 4.1.0 | 2026-08-20 | **Events セクションを廃止。** Instagram 公式 blockquote 埋め込みは、白いIGカード・別書体・Instagram 自身のUIが紙面の世界観から浮き、`--paper-2` フレームで包んでも異物感が残っていた（v4.0.0 で導入した「夜の紙」では白いカードがさらに際立つ）。`embed.js`（数百KB・`async`）と、その遅延リサイズに追従するための `ResizeObserver`→`ScrollTrigger.refresh()` も不要になる。自前カードへの置き換えを検討したが催しの写真素材が揃わないため、**セクションごと削除**する判断。`#events` とナビ/フッターナビのリンク、`.events-grid` / `.event-card` / `.event-frame` / `.event-cap` の全CSS、900px の専用ブレークポイント、`script.js` の eventsGrid ResizeObserver を撤去。柱・ノンブルの `PAGE_INDEX` を **note 03 / contact 04** へ繰り上げ。セクション構成は Hero → About → Works → Note → Contact の5構成に。**hero と meta/JSON-LD の「非日常体験イベントの企画主催」という活動紹介はそのまま残す**（活動自体は継続しており、催しの記録を掲載しないだけのため） |
+| 4.1.0 | 2026-08-20 | **Events セクションを廃止。** Instagram 公式 blockquote 埋め込みは、白いIGカード・別書体・Instagram 自身のUIが紙面の世界観から浮き、`--paper-2` フレームで包んでも異物感が残っていた（v4.0.0 で導入した「夜の紙」では白いカードがさらに際立つ）。`embed.js`（数百KB・`async`）と、その遅延リサイズに追従するための `ResizeObserver`→`ScrollTrigger.refresh()` も不要になる。自前カードへの置き換えを検討したが催しの写真素材が揃わないため、**セクションごと削除**する判断。`#events` とナビ/フッターナビのリンク、`.events-grid` / `.event-card` / `.event-frame` / `.event-cap` の全CSS、900px の専用ブレークポイント、`script.js` の eventsGrid ResizeObserver を撤去。柱・ノンブルの `PAGE_INDEX` を **note 03 / contact 04** へ繰り上げ。セクション構成は Hero → About → Works → Note → Contact の5構成に。併せて**仕様書5章（機能仕様）を実装へ全面追随**させた（Lenis の lerp 一本化、見出し演出のマスク上げ化、works のクリップ展開、磁気ホバーの縮小、イージング3種、WebGL の色取得と初期クリア、スライドドットの button 化とライブリージョン、インタラクティブ要素のネスト解消、フォーカス輪郭、nav-mark.png、および **5.7 配色の切替** の新設）。**hero と meta/JSON-LD の「非日常体験イベントの企画主催」という活動紹介はそのまま残す**（活動自体は継続しており、催しの記録を掲載しないだけのため） |
 | 3.0.6 | 2026-07-03 | 制作実績06「CHINJU CLI」サムネイル（`thumb-chinju.jpg`）を差し替え。旧画像（v2.8.0）は全ページを 4:3（1400×1050）で撮影しており左右見切れは無いものの、**上部ナビ（ロゴ＋「βに申し込む」ボタン）や下部の別セクション見出しが写り込み**、素のスクショ感が強かった。v3.0.5 Lisa と同じ方針で、**ヒーロー主要部（大見出し「ベテランエンジニアの手厚いレビューを。」＋iMacのCLIレビュー画面＋枯山水/盆栽＋信頼バー）を 16:10（1500×937）で切り出して撮影**する方式に刷新。撮影時に上部ナビ（`nav.nav`）・右端ドットナビ（`nav.path-nav`）・ヒーロー以降の全セクション/フッターをCSSで非表示にし、`#demo` に軽い `margin-top` を付与してヒーローを淡い背景の中央に配置。cover の枠比率と一致しPC見切れゼロ、上下の余白は860px以下の `4/3` 枠での左右トリムの安全マージンにもなる。他5件と同じ細罫スクショ枠の一貫性を維持（HTML/CSS変更なし・画像差し替えのみ） |
 | 3.0.5 | 2026-07-03 | 制作実績05「Lisa Mizuno」サムネイル（`thumb-lisa-mizuno.jpg`）を差し替え。旧画像は全ページを **1400×800（比率1.75）** で撮影しており、サムネ枠 `aspect-ratio:16/10`（=1.6）＋`object-fit:cover` に対し横長すぎて**左右が見切れて**いた（左上ロゴ・右上ナビが欠ける。860px以下の `4/3` 枠ではさらに悪化）。対処として、v2.8.0 CHINJU と同じ「枠比率に合わせた撮影」の方針を発展させ、**サイト全体ではなくヒーローの主要ビジュアル（モノクロの人物＋大見出しタイポ＋DJ·ARTIST）を 16:10（1600×1000）で切り出して撮影**する方式に変更。撮影時に上部ナビと右下「scroll」指標（`#hero::after` 疑似要素）を非表示にして余白・ブラウザ的要素を排し作品性を強調。cover の枠比率と完全一致しPC表示で見切れゼロ、他5件と同じ細罫スクショ枠の一貫性も維持（HTML/CSS変更なし・画像差し替えのみ） |
 | 3.0.4 | 2026-07-03 | 制作実績02「Nagi（凪）」の説明文を改訂。キャッチ「自己を観る。」は維持し、本文を「書くほどに、視界がひらく自己観察アプリ。」のコンセプト1文＋機能説明1段落の簡潔な2段構成に刷新（AI「凪 -Nagi-」が静かな問いを返す・褒めず諭さず隣で問いかける・多角的に眺め直し視界がひらく、という体験価値を平易に表現）。従来の抽象的な「次元の上昇／多面的視点」表現を平明化 |
@@ -472,17 +472,18 @@ line-break: strict;        /* 禁則を厳格に */
 
 | 項目 | 仕様 |
 |---|---|
-| スムーススクロール | Lenis（`duration: 1.2`）。アンカーリンクは `lenis.scrollTo` に委譲（offset -60） |
+| スムーススクロール | Lenis（`lerp: 0.1`）。**`duration` と `lerp` は排他**で、両方渡すと lerp が優先され `duration`/`easing` は無視されるため lerp に一本化している。reduced-motion 時は `lerp: 1`（追従なし＝即時）。アンカーリンクは `lenis.scrollTo` に委譲（offset -60） |
 | ページイントロ | `document.fonts.ready`（上限2.5s）待ち → `#page-intro` オーバーレイを `scaleY` で巻き上げ → ヒーロー入場へ連結 |
 | リビール | `.reveal` 要素を ScrollTrigger（`start: top 88%`, `once`）で `opacity/y` フェードイン（sec-head は下記の専用演出に委譲） |
-| セクション見出し | eyebrow の letter-spacing を 0.4em→0.24em に収束＋明朝題字を文字単位で blur(6px)→focus（SplitText chars、stagger 0.09） |
+| セクション見出し | eyebrow は素の淡出、明朝題字は**文字のマスク上げ**（SplitText `mask: 'chars'`、`yPercent: 110→0`、stagger 0.07）。v4.0.0 で blur→focus とトラッキング収束を撤去し、ヒーローの名前と同じ語彙へ統一 |
 | セクション罫線 | `.section-line` を `scaleX` で描画（`start: top 98%`） |
 | About | サブ要素を段階的に stagger 表示。「軸」本文は静的表示（アニメーションなし） |
-| Works | カードを左右交互に `x:±16` からスライドイン。題字は単一行時のみ文字出現（stagger 0.05） |
+| Works | サムネを **`clip-path` で下から立ち上げ**（`.is-veiled` を JS が付け、交差時に外す。CSS transition 1.1s `--ease-veil`）。情報側は `opacity/y` で追随（delay 0.15）。題字は単一行時のみマスク上げ（stagger 0.05、delay 0.3）。v4.0.0 で交互スライドインを廃止（4つ目の語彙になるため） |
 | Note | カードを `stagger` で表示後、ホバー用に inline style をクリア |
 | パララックス | デスクトップのみ Hero name/desc を `scrub` で連動 |
-| 磁気ホバー | `.nav-links a` / `.footer-nav a` / `.contact-link` / `.footer-top-link` がカーソルに吸着（係数0.3・`gsap.quickTo`・mouseleave で elastic 復帰）。fine pointer かつ非 reduced-motion のみ |
+| 磁気ホバー | `.contact-link` / `.footer-top-link` のみカーソルに吸着（係数0.3・`gsap.quickTo`・mouseleave で elastic 復帰）。fine pointer かつ非 reduced-motion のみ。**ナビ・フッターナビからは v4.0.0 で撤去**（文字が逃げるナビは読みにくく、ホバーで下線が静かに伸びるほうが上品なため） |
 | 柱・ノンブル | `.page-marker` を Intersection Observer（中央帯判定）で更新。hero では非表示 |
+| イージング | `EASE.enter`(power3.out) / `EASE.veil`(power2.inOut) / `EASE.line`(expo.out) の**3種のみ**。CSS 側の `--ease-enter` / `--ease-veil` / `--ease-line` と対になる（[4.6 モーションの語彙](#46-モーションの語彙v400) 参照） |
 | SplitText フェイルセーフ | `splitReady` を個別判定し、欠落時は各演出が従来の行送りへフォールバック。分割はすべて `document.fonts.ready` 後（FOUT対策） |
 
 ### 5.1.1 WebGL「墨の靄」（fx.js）
@@ -490,8 +491,10 @@ line-break: strict;        /* 禁則を厳格に */
 | 項目 | 仕様 |
 |---|---|
 | 実装 | 素のWebGL1・フルスクリーンクワッド1枚・fbm 3オクターブ（依存ゼロ・約200行） |
-| 表現 | `--paper`→`--accent` の2色補間のみ、強度上限 0.07、右上中心のフェード、ポインタでノイズ座標が僅かに偏る（lerp 0.03） |
+| 表現 | `--paper`→`--accent` の2色補間のみ、右上中心のフェード、ポインタでノイズ座標が僅かに偏る（lerp 0.03）。強度は**紙 0.07 / 夜 0.13**（夜は地が暗く同じ強度では靄が沈むため） |
 | 負荷制御 | DPR上限1.5×内部解像度0.75倍、rAFは `gsap.ticker` に一本化、hero画面外・タブ非表示・幅860px未満で停止 |
+| 色の取得 | シェーダの2色はハードコードせず `--paper` / `--accent` から読む。カスタムプロパティは `getComputedStyle` で解決されないため、プローブ要素の実プロパティへ一度乗せ、canvas2d に sRGB へ展開させる（`oklch()` と `light-dark()` をそのまま扱える）。`themechange` イベントで再取得し即再描画 |
+| **初期クリア** | `alpha: false` のため、初描画までクリアカラー（既定=黒）が**不透明の黒板として露出する**。描画バッファのリサイズ後に紙色で `clearColor`+`clear` し、さらに1フレーム即 `render()` してから運転判定へ渡す（バックグラウンドタブで初期化された場合に復帰時へ黒が差すのを防ぐ） |
 | 起動 | `requestIdleCallback` / load 後（LCPに影響させない）。起動成功時のみ `#hero.has-webgl` を付与し CSS滲みをフェードアウト |
 | フォールバック | 非対応・失敗・停止時は `#hero::before` の静的 radial-gradient 滲みが残る（全環境で必ず淡い滲みがある） |
 
@@ -504,9 +507,10 @@ line-break: strict;        /* 禁則を厳格に */
 | 操作 | 左右矢印ボタン・ドットナビのクリック、またはタッチスワイプ（横方向40px超かつ縦移動より大きい場合のみ反応し、縦スクロールと誤判定しない） |
 | 切り替え | `opacity: 0→1`（CSS transition 0.6s ease） |
 | 1枚のみの場合 | 矢印・ドットを非表示（JS制御） |
-| 矢印表示 | ホバー時表示。背景 `rgba(26,26,28,0.42)` + `blur(4px)` の丸（30px）、ホバーで `0.66`。タッチ端末（`@media (hover: none)`）では opacity 0.85 で常時表示 |
-| ドット | 5px 円、`box-shadow` 付き。現在: 白98%・1.15倍 / 非選択: 白50%。透明 `::after`（`inset: -10px -2px`）でタップ範囲を拡大（見た目不変） |
-| 実装 | JavaScript（`addEventListener`、`e.stopPropagation()` でカードリンクへの伝播を抑止）|
+| 矢印表示 | ホバー時**および `:focus-visible` 時**に表示。背景 `rgba(26,26,28,0.42)` + `blur(4px)` の丸（30px）、ホバーで `0.66`。タッチ端末（`@media (hover: none)`）では opacity 0.85 で常時表示 |
+| ドット | **`<button>`**（v4.0.0 で `<span>` から変更。旧実装はキーボードで操作できなかった）。5px 円、`box-shadow` 付き。現在: 白98%・1.15倍 / 非選択: 白50%。透明 `::after`（`inset: -10px -2px`）でタップ範囲を拡大（見た目不変）。`aria-label`（「N枚目を表示」）と `aria-current` を持つ |
+| 読み上げ | 各サムネに `role="status" aria-live="polite"` の sr-only 要素を持ち、切替時に「4 / 7」を通知。1枚のみのカードでは JS が要素ごと削除する |
+| 実装 | JavaScript（`addEventListener`、`e.stopPropagation()` でカード側のクリック委譲への伝播を抑止）|
 | Nagi 表示位置 | 全画像 `object-position: top center`、1枚目（アイコン）のみ `center` |
 
 ### 5.3 ナビゲーション アクティブ連動
@@ -523,9 +527,11 @@ line-break: strict;        /* 禁則を厳格に */
 | 項目 | 仕様 |
 |---|---|
 | `prefers-reduced-motion: reduce` | JS分岐で入場・リビール・パララックスを無効化し最終状態を即時表示。CSS の `@media` で全 transition/animation を実質無効化。Lenis の `duration` も 0 に。autoplay 動画も `video.pause()` で停止 |
-| フォーカス可視化 | `:focus-visible` に `--accent-ink` の 2px リング（瞬時表示） |
-| コントラスト | 主役テキストを `--ink`、本文を `--text`、メタ/ラベルを `--muted`（`#6f6a60`・`--paper` 上で約5:1）とし、本文サイズで WCAG AA（4.5:1）を満たす |
-| 画像代替 | 全 `<img>` に `alt`、装飾要素に `aria-hidden`、スライド矢印に `aria-label` |
+| フォーカス可視化 | `:focus-visible` に `--accent-ink` の 2px リング（瞬時表示）。**サムネ上のコントロール**（矢印・ドット）は下地が暗くタウープでは沈むため、白の 2px 輪郭に切り替える |
+| コントラスト | 全インクトークンの明度を「地に対する目標コントラスト比」から逆算して決めている（[4.2](#42-カラーパレットv400--oklch-単一色相軸) 参照）。テキストに使う最も淡い `--muted-2` が **AA 下限 4.5:1**（紙 4.50 / 夜 4.53）。`--faint`（1.62 / 1.90）は**装飾専用**でテキストには使わない |
+| 画像代替 | 全 `<img>` に `alt`、装飾要素に `aria-hidden`、スライド矢印・ドットに `aria-label` |
+| リンク名 | nav ロゴは `alt=""` の画像のみでリンク名が存在しなかったため、sr-only の「頁首へ」を内包する（v4.0.0） |
+| **インタラクティブ要素のネスト** | `.work-card` は v4.0.0 以前 `<a>` で、その中にスライド矢印の `<button>` を含む**仕様違反**だった。カードを `<article>` にし実リンクを題字（`.work-link`）へ移設。カード全面のクリックは JS が題字リンクへ委譲する（`e.target.closest('a, button')` と選択テキストの有無で抑止）。**stretched link（`::after` の全面オーバーレイ）は本文のテキスト選択を殺すため採らない** |
 | ランドマーク | `<nav>` / `<main>`（hero〜contact を内包）/ `<footer>` を明示。スクリーンリーダーの領域ジャンプに対応 |
 | 見出し構造 | h1（氏名）→ 各セクション h2（about / 制作 / 言葉 / 連絡）→ 作品名 h3。飛び級なし。About はラベル "about" を `<h2>` 化して見出しアウトラインに含める |
 | タップ標的 | スライドドットは透明 `::after` でタップ範囲を縦25px相当に拡大。タッチ端末では矢印（30px）を常時表示（WCAG 2.5.8 配慮） |
@@ -536,10 +542,10 @@ GSAP/ScrollTrigger/SplitText/Lenis を CDN から読み込むため、CDN障害�
 
 | 層 | 仕様 |
 |---|---|
-| `script.js` ガード | `gsap`/`Lenis` が `undefined` の場合は演出を一切初期化せず、`#page-intro` を非表示にし `.reveal`/`.work-card`/`.note-card`/hero新要素 等を最終表示状態へ。ナビ・スライドショー・アクティブ連動・柱ノンブルは gsap 非依存で常時動作 |
+| `script.js` ガード | `gsap`/`Lenis` が `undefined` の場合は演出を一切初期化せず、`#page-intro` を非表示にし `.reveal`/`.work-card`/`.work-info`/`.note-card`/hero新要素 等を最終表示状態へ（`.work-thumb.is-veiled` も外す）。ナビ・スライドショー・アクティブ連動・柱ノンブルは gsap 非依存で常時動作 |
 | `SplitText` 個別ガード | gsap は居るが SplitText のみ欠落した場合、`splitReady=false` で文字分割演出だけを従来の行送りにフォールバック |
 | `fx.js` ガード | gsap 不在・WebGL 取得失敗・シェーダコンパイル失敗のいずれでも起動せず、CSSの静的滲みが残る |
-| インライン保険 | `<head>` 内の小スクリプトが `load` 後 2.5秒で `gsap` 未定義を検知した場合、同様にオーバーレイ除去とコンテンツ表示を行う |
+| インライン保険 | `<head>` 内の小スクリプトが `load` 後 2.5秒で `gsap` 未定義を検知した場合、同様にオーバーレイ除去とコンテンツ表示を行う（`.work-info` と `.is-veiled` にも追随） |
 
 gsap/Lenis 不在時はアンカーリンクもネイティブスクロールにフォールバックする（v3.0.0 で CDN 全断時の全文表示・スライドショー動作を実測検証済み）。
 
@@ -549,9 +555,22 @@ gsap/Lenis 不在時はアンカーリンクもネイティブスクロールに
 |---|---|
 | 遅延読み込み | 全 `<img>` に `loading="lazy"` + `decoding="async"`、動画に `preload="metadata"` |
 | レイアウトシフト対策 | `.work-thumb` は `aspect-ratio`（16/10・860px以下4/3）で領域確保、`favicon`/`note-avatar` に `width`/`height` 明示 |
-| 画像変換 | スクリーンショットは長辺1200px・JPG（quality 80-82）。OGPは1200幅JPG。faviconは128px PNG |
+| 画像変換 | スクリーンショットは長辺1200px・JPG（quality 80-82）。OGPは1200幅JPG。faviconは128px PNG。**nav アイコンは別ファイル `nav-mark.png`**（256px・透過）— favicon は白地の不透明PNGで、夜の紙では白い四角として浮くため、白地からの距離をアルファ化（ノイズ床28・径方向の窓）した透過版を用意している |
 | 動画 | `freq-video-dark.mp4` は720幅・無音・H.264（CRF30）で再エンコード（3.0MB→112KB） |
 | 合計 | `images/` 約1.0MB（最適化前 約13MB） |
+
+### 5.7 配色の切替（紙／夜）
+
+| 項目 | 仕様 |
+|---|---|
+| 既定 | `:root { color-scheme: light dark }` で **OS 設定に追従** |
+| 切替 | 奥付（`.footer-colophon`）の「紙 ／ 夜」ボタン。`:root[data-theme]` を立て、`color-scheme: only light` / `only dark` を固定する |
+| 追従の仕組み | 全カラートークンが `light-dark(紙の値, 夜の値)` で定義されているため、`color-scheme` を固定するだけで**一括で切り替わる**。トークン値の二重定義もクラス総当たりの上書きも不要 |
+| 記憶 | `localStorage.theme`（`'light'` / `'dark'`） |
+| ちらつき防止 | `<head>` の**スタイルシート読み込みより前**のインラインスクリプトが `localStorage` を読み `data-theme` を確定させる。初回描画で紙→夜のフラッシュが起きない |
+| 状態表示 | 各ボタンの `aria-pressed`。OS 側の変更（`prefers-color-scheme` の `change`）にも追従して更新する |
+| 連動 | 切替時に `themechange` カスタムイベントを発火。`fx.js` がこれを受けてシェーダの色を取り直し即再描画する |
+| 併せて切り替わるもの | 紙グレインの合成モード（紙 `multiply` 0.035 / 夜 `screen` 0.05）、`theme-color` メタ（`media` 属性で出し分け）、WebGL 靄の強度（0.07 / 0.13） |
 
 ---
 
