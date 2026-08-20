@@ -417,37 +417,33 @@ const activeObserver = new IntersectionObserver(entries => {
 sections.forEach(s => activeObserver.observe(s));
 
 // ============================
-// 配色の切替（OS 追従＋記憶）
-// color-scheme を固定するだけで、light-dark() で組んだ全トークンが追従する
+// 配色の同期（夜明け＝紙／日没＝夜）
+// 太陽の位置は <head> のインライン（@solar）が持つ。初回描画前に確定させる必要が
+// あるためで、ここが担うのは「境界をまたいだら差し替える」ことだけ
 // ============================
-(function themeSwitch() {
-  const root = document.documentElement;
-  const btns = document.querySelectorAll('[data-theme-set]');
-  if (!btns.length) return;
+(function solarTheme() {
+  const solar = window.__solarTheme;
+  if (!solar) return;
 
-  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  // 旧「紙／夜」トグルの記憶。もう読まないので残骸を掃除する
+  try { localStorage.removeItem('theme'); } catch (e) {}
 
-  function current() {
-    return root.getAttribute('data-theme') || (mq.matches ? 'dark' : 'light');
+  let timer = 0;
+
+  function refresh() {
+    const at = solar.place();
+    const state = solar.solve(Date.now(), at.lat, at.lng);
+    if (solar.apply(state.theme)) {
+      document.dispatchEvent(new CustomEvent('themechange', { detail: { theme: state.theme } }));
+    }
+    // 端末のスリープでタイマーは飛ぶ。上限6時間で切り、復帰時のイベントでも取り直す
+    clearTimeout(timer);
+    timer = setTimeout(refresh, Math.min(Math.max(state.next - Date.now(), 1000), 6 * 3600 * 1000));
   }
 
-  function sync() {
-    const now = current();
-    btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.themeSet === now)));
-    document.dispatchEvent(new CustomEvent('themechange', { detail: { theme: now } }));
-  }
-
-  btns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const next = btn.dataset.themeSet;
-      root.setAttribute('data-theme', next);
-      try { localStorage.setItem('theme', next); } catch (e) {}
-      sync();
-    });
-  });
-
-  mq.addEventListener('change', sync);
-  sync();
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
+  window.addEventListener('pageshow', refresh);
+  refresh();
 })();
 
 // ============================

@@ -128,7 +128,9 @@
   --ease-line:  cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-/* 奥付のトグル。color-scheme を固定するだけで light-dark() が全て追従する */
+/* 夜明け・日没で切り替わる配色。JS が <html data-theme> を立て、
+   color-scheme を固定するだけで light-dark() の全トークンが追従する。
+   JS 無効時は属性が付かず、既定の `color-scheme: light dark` で OS 設定に従う */
 :root[data-theme='light'] { color-scheme: only light; }
 :root[data-theme='dark']  { color-scheme: only dark; }
 
@@ -1120,41 +1122,12 @@ footer {
 }
 
 .footer-colophon {
-  display: flex;
-  gap: 28px;
-  flex-wrap: wrap;
   font-family: var(--font-ja);
   font-size: var(--fs-micro);
   font-weight: 300;
   letter-spacing: 0.12em;
   color: var(--muted-2);
 }
-
-/* 配色の切替（奥付の一行として組む） */
-.theme-switch {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 6px;
-}
-
-.theme-switch-btn {
-  appearance: none;
-  -webkit-appearance: none;
-  background: none;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
-  font-family: var(--font-serif-ja);
-  font-size: var(--fs-micro);
-  letter-spacing: 0.12em;
-  color: var(--muted-2);
-  transition: color 0.25s ease;
-}
-
-.theme-switch-btn:hover { color: var(--ink); }
-.theme-switch-btn[aria-pressed='true'] { color: var(--ink); }
-
-.theme-switch-sep { color: var(--faint); }
 
 .footer-top-link {
   font-family: var(--font-serif-ja);
