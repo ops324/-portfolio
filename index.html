@@ -20,11 +20,99 @@
   <link rel="canonical" href="https://takimototetsuya.vercel.app/" />
   <link rel="icon" href="images/favicon.png" type="image/png" />
   <script>
-    // 記憶した配色をスタイル適用前に確定させる（初回描画のちらつきを防ぐ）
-    try {
-      var t = localStorage.getItem('theme');
-      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
-    } catch (e) {}
+    /* @solar start — 配色を夜明け・日没に同期させる。
+       スタイルシートの読み込みより前に data-theme を確定させ、初回描画のフラッシュを防ぐ。
+       tools/verify-solar.mjs がこのマーカー間を取り出して検算するので、印は消さないこと。 */
+    (function () {
+      var RAD = Math.PI / 180;
+      var DAY = 86400000;
+      var H0 = -0.833;   // 日出没とみなす太陽高度（大気差＋太陽の視半径）
+      var LAT = 35;      // 緯度は端末から得られないため中緯度（日本）を既定に置く
+      var PAINT = { light: '#f7f6f3', dark: '#16150f' };   // ブラウザUIの地色
+
+      function toJulian(ms) { return ms / DAY + 2440587.5; }
+      function fromJulian(j) { return (j - 2440587.5) * DAY; }
+
+      /* NOAA の日出没式。lng は東経を正とし、返す時刻は UTC ミリ秒。
+         白夜・極夜では rise / set が null になり、up がその別を持つ。 */
+      function events(ms, lat, lng) {
+        var lw = -lng;
+        var cycle = Math.round(toJulian(ms) - 2451545.0009 - lw / 360);
+        var noon = 2451545.0009 + lw / 360 + cycle;
+        var M = (357.5291 + 0.98560028 * (noon - 2451545)) * RAD;
+        var C = (1.9148 * Math.sin(M) + 0.02 * Math.sin(2 * M) + 0.0003 * Math.sin(3 * M)) * RAD;
+        var L = M + C + Math.PI + 102.9372 * RAD;
+        var transit = noon + 0.0053 * Math.sin(M) - 0.0069 * Math.sin(2 * L);
+        var dec = Math.asin(Math.sin(L) * Math.sin(23.4397 * RAD));
+        var cosH = (Math.sin(H0 * RAD) - Math.sin(lat * RAD) * Math.sin(dec)) /
+                   (Math.cos(lat * RAD) * Math.cos(dec));
+        if (cosH >= 1)  return { transit: fromJulian(transit), rise: null, set: null, up: false };
+        if (cosH <= -1) return { transit: fromJulian(transit), rise: null, set: null, up: true };
+        var half = Math.acos(cosH) / (2 * Math.PI);
+        return {
+          transit: fromJulian(transit),
+          rise: fromJulian(transit - half),
+          set: fromJulian(transit + half),
+          up: null
+        };
+      }
+
+      /* 直前の日出没から今の配色を、直後の日出没から次に変わる時刻を決める。
+         前後の周期まで並べて見るので、日付跨ぎでも白夜・極夜でも破綻しない。 */
+      function solve(now, lat, lng) {
+        var here = events(now, lat, lng);
+        var marks = [];
+        for (var d = -1; d <= 1; d++) {
+          var e = d === 0 ? here : events(now + d * DAY, lat, lng);
+          if (e.rise !== null) marks.push({ at: e.rise, theme: 'light' }, { at: e.set, theme: 'dark' });
+        }
+        marks.sort(function (a, b) { return a.at - b.at; });
+
+        var theme = null;
+        var next = now + 6 * 3600000;   // 境界が無い（白夜・極夜）ときは6時間後に再判定
+        for (var i = 0; i < marks.length; i++) {
+          if (marks[i].at <= now) theme = marks[i].theme;
+          else { next = marks[i].at; break; }
+        }
+        if (theme === null) theme = here.up === false ? 'dark' : 'light';
+        return { theme: theme, next: next };
+      }
+
+      /* 経度はタイムゾーンの時差から起こす（15° = 1時間）。
+         夏時間の1時間ぶんも東へ寄るため、時計どおりの日出没になる。位置情報は求めない。 */
+      function place() {
+        return { lat: LAT, lng: -new Date().getTimezoneOffset() / 4 };
+      }
+
+      /* JS が動く環境では data-theme が OS 設定を上書きするので、
+         media で出し分けた静的な theme-color（JS 無効時の受け皿）を単一の meta に畳む。 */
+      function paint(theme) {
+        var meta = document.getElementById('theme-color');
+        if (!meta) {
+          var olds = document.head.querySelectorAll('meta[name="theme-color"]');
+          for (var i = 0; i < olds.length; i++) olds[i].parentNode.removeChild(olds[i]);
+          meta = document.createElement('meta');
+          meta.id = 'theme-color';
+          meta.setAttribute('name', 'theme-color');
+          document.head.appendChild(meta);
+        }
+        meta.setAttribute('content', PAINT[theme]);
+      }
+
+      function apply(theme) {
+        var root = document.documentElement;
+        if (root.getAttribute('data-theme') === theme) return false;
+        root.setAttribute('data-theme', theme);
+        paint(theme);
+        return true;
+      }
+
+      window.__solarTheme = { events: events, solve: solve, place: place, apply: apply };
+
+      var p = place();
+      apply(solve(Date.now(), p.lat, p.lng).theme);
+    })();
+    /* @solar end */
   </script>
   <!-- @generated:fonts start — tools/build-fonts.mjs が書き換える。手で編集しないこと -->
   <link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/inter-400.30d49f56.woff2" />
@@ -401,14 +489,7 @@
         </nav>
       </div>
       <div class="footer-bottom">
-        <div class="footer-colophon">
-          <span>&copy; 2026 Tetsuya Takimoto</span>
-          <span class="theme-switch" role="group" aria-label="配色">
-            <button type="button" class="theme-switch-btn" data-theme-set="light">紙</button>
-            <span class="theme-switch-sep" aria-hidden="true">／</span>
-            <button type="button" class="theme-switch-btn" data-theme-set="dark">夜</button>
-          </span>
-        </div>
+        <p class="footer-colophon">&copy; 2026 Tetsuya Takimoto</p>
         <a href="#hero" class="footer-top-link">頁首へ<span aria-hidden="true"> ↑</span></a>
       </div>
     </div>
