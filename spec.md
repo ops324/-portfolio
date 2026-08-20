@@ -2,7 +2,7 @@
 
 | 項目 | 内容 |
 |---|---|
-| バージョン | 4.4.0 |
+| バージョン | 4.5.0 |
 | 作成日 | 2026年3月7日 |
 | 最終更新 | 2026年8月20日 |
 | 作成者 | 滝本 哲也 |
@@ -75,6 +75,7 @@
 | 4.3.0 | 2026-08-20 | **配色を夜明け・日没に同期。奥付の「紙／夜」トグルを廃止。** 紙と夜のどちらで読むかを**選ばせる**のではなく、訪問した時刻の空に合わせる。`<head>` のインライン（`@solar` マーカー間）が NOAA の日出没式を素の JS で解き、スタイルシート読み込みより前に `data-theme` を確定させる（初回描画のフラッシュ防止は従来どおり）。**外部 API も位置情報の許可も使わない**。緯度は中緯度（35°）固定、経度は端末のタイムゾーンの時差から起こす（15°=1時間。夏時間の1時間ぶんも東へ寄るため時計どおりの日出没になる）。国立天文台の暦（東京）とは ±3分、標準時子午線で近似するぶん東京では日没の約19分後——市民薄明の内側——で夜へ移る。`script.js` は次の日出没へ `setTimeout` を張るが、端末のスリープでタイマーは飛ぶため**上限6時間**で切り、`visibilitychange` と `pageshow`（bfcache 復帰）でも取り直す。白夜・極夜は境界が無いのでその周期の太陽が地平線の上か下かで決めて6時間後に再判定。`localStorage.theme` は読まなくなり、残骸は起動時に掃除する。`theme-color` は `media` で出し分けた静的な2枚を**単一の meta に畳んで**同期させる（JS が効く環境では `data-theme` が OS 設定を上書きするため、media 版では実際の配色とずれる）。JS 無効時は `data-theme` が付かず、既定の `color-scheme: light dark` で従来どおり OS 設定に追従する。**日出没のずれは目で見て気付けない**（数分ずれても季節で狂っても、見た瞬間の配色はそれらしく出て、間違いは半日後にしか現れない）ため、ブラウザ不要・依存なしの `tools/verify-solar.mjs` を新設し、`index.html` の `@solar` ブロックを取り出して暦との突き合わせ・南中対称性・経度→時刻の換算・白夜/極夜・境界の前後・1年ぶん（6時間刻み1460点）の整合を検算する |
 | 4.3.1 | 2026-08-20 | **四隅のトンボ風十字（レジストレーションマーク）を撤去。** v3.0.0 で「印刷物ディテール」として入れた `html::before`（1100px 以上・`--faint` の 11px 十字を四隅へ、8枚の背景グラデーションで描画）を削除。**トンボは断裁と版合わせのための作業用の印であり、刷り上がった紙面には残らない**。画面上では紙の手触りではなく「印刷物らしさの記号」として乗っていたため、紙グレイン・縦書き章題（`.sec-margin`）・柱/ノンブル（`.page-marker`）が担う質感へ一本化する。ビューポート全面に `position: fixed` で敷かれていた固定レイヤー（`z-index: 9997`）も1つ解消。1100px のブレークポイントは縦書き章題の出し分けとして残る |
 | 4.4.0 | 2026-08-20 | **イベントに関する文言を撤去。** v4.1.0 で Events セクションを廃止した際、hero と meta/JSON-LD の「非日常体験イベントの企画主催」は**活動自体は継続している**ため残す判断をしたが、催しの記録を載せない以上、**紙面のどこにも裏付けの無い活動紹介だけが残る**状態になっていた。hero 説明文・`meta[name=description]`・`og:description`・`twitter:description`・JSON-LD `Person.description` の5か所から当該句を落とし、「Web開発・自動化フロー・ツール開発。生活を豊かにするアイデアを形にしています。」に統一。contact のリード文も「制作のご相談、催しへのお誘い——」から**「制作のご相談・ご依頼——」**へ改め、催しの語を紙面から一掃した。テキストを変えたため 5.8 の手順どおり `build-fonts` → `verify-fonts` を実行。「非日常体験イベント」「催し」由来の字が抜けて `noto-sans-jp-300` 389→**381字**、`shippori-mincho-b1-400` も再生成され（内容ハッシュが変わるためファイル名も更新）、`fonts/` 合計 142KB→**140KB**。`verify-fonts` は313要素すべて自前の3書体で描画されることを確認。併せて 4.3 の折り返し対象一覧に残っていた `.event-cap`（v4.1.0 で削除済みのクラス）を掃除し、折り返しの実測表には**計測当時の hero 文である**旨を注記した |
+| 4.5.0 | 2026-08-20 | **Works から「中心銘」を削除（8件→7件）。** カード本体・`images/thumb-chushinmei.jpg`・`.work-thumb-chushinmei`（和紙調ベージュ背景と `object-position: top center`）を撤去。**中間削除のため以降4件の索引を 05-08 → 04-07 へ振り直し**（ゴースト索引はハードコードのため手で採番）、`.work-card:nth-child(odd/even)` の偶奇が反転して Frequency Analyzer 以降のサムネ左右が入れ替わる（幅は奇偶とも同一のためリフローは起きず、860px以下は偶奇指定が `auto` に打ち消されるため無影響。実描画で 02 右／03 左／04 右／05 左／06 右／07 左を確認）。テキストを変えたため 5.8 の手順どおり `build-fonts` → `verify-fonts` を実行し、`noto-sans-jp-300` 381→**357字**・`shippori-mincho-b1-400` 105→101字・同 500 55→52字。ただし **Google Fonts の `text=` 応答は字数と容量が単調ではなく**、字数を減らしたのに `noto-sans-jp-300` は 63.6→67.8KB と増え、`fonts/` 合計は 140.0→**142.6KB** になった（連続実行で同一ハッシュになることは確認済みで、生成側の非決定性ではない）。`verify-fonts` は297要素すべて自前の3書体で描画されることを確認 |
 | 3.0.6 | 2026-07-03 | 制作実績06「CHINJU CLI」サムネイル（`thumb-chinju.jpg`）を差し替え。旧画像（v2.8.0）は全ページを 4:3（1400×1050）で撮影しており左右見切れは無いものの、**上部ナビ（ロゴ＋「βに申し込む」ボタン）や下部の別セクション見出しが写り込み**、素のスクショ感が強かった。v3.0.5 Lisa と同じ方針で、**ヒーロー主要部（大見出し「ベテランエンジニアの手厚いレビューを。」＋iMacのCLIレビュー画面＋枯山水/盆栽＋信頼バー）を 16:10（1500×937）で切り出して撮影**する方式に刷新。撮影時に上部ナビ（`nav.nav`）・右端ドットナビ（`nav.path-nav`）・ヒーロー以降の全セクション/フッターをCSSで非表示にし、`#demo` に軽い `margin-top` を付与してヒーローを淡い背景の中央に配置。cover の枠比率と一致しPC見切れゼロ、上下の余白は860px以下の `4/3` 枠での左右トリムの安全マージンにもなる。他5件と同じ細罫スクショ枠の一貫性を維持（HTML/CSS変更なし・画像差し替えのみ） |
 | 3.0.5 | 2026-07-03 | 制作実績05「Lisa Mizuno」サムネイル（`thumb-lisa-mizuno.jpg`）を差し替え。旧画像は全ページを **1400×800（比率1.75）** で撮影しており、サムネ枠 `aspect-ratio:16/10`（=1.6）＋`object-fit:cover` に対し横長すぎて**左右が見切れて**いた（左上ロゴ・右上ナビが欠ける。860px以下の `4/3` 枠ではさらに悪化）。対処として、v2.8.0 CHINJU と同じ「枠比率に合わせた撮影」の方針を発展させ、**サイト全体ではなくヒーローの主要ビジュアル（モノクロの人物＋大見出しタイポ＋DJ·ARTIST）を 16:10（1600×1000）で切り出して撮影**する方式に変更。撮影時に上部ナビと右下「scroll」指標（`#hero::after` 疑似要素）を非表示にして余白・ブラウザ的要素を排し作品性を強調。cover の枠比率と完全一致しPC表示で見切れゼロ、他5件と同じ細罫スクショ枠の一貫性も維持（HTML/CSS変更なし・画像差し替えのみ） |
 | 3.0.4 | 2026-07-03 | 制作実績02「Nagi（凪）」の説明文を改訂。キャッチ「自己を観る。」は維持し、本文を「書くほどに、視界がひらく自己観察アプリ。」のコンセプト1文＋機能説明1段落の簡潔な2段構成に刷新（AI「凪 -Nagi-」が静かな問いを返す・褒めず諭さず隣で問いかける・多角的に眺め直し視界がひらく、という体験価値を平易に表現）。従来の抽象的な「次元の上昇／多面的視点」表現を平明化 |
@@ -151,10 +152,10 @@ v2.5 では、静かで文語的な世界観を保ったまま視覚レイヤー
 ├── fx.js               # ヒーロー背景「墨の靄」WebGLシェーダ（自己完結・フォールバック内蔵）
 ├── spec.md             # 本仕様書
 ├── vercel.json         # 配信ヘッダ（/fonts/* を immutable キャッシュ）
-├── fonts/                          # サブセット済み WebFont（合計140KB・内容ハッシュ付き）
+├── fonts/                          # サブセット済み WebFont（合計143KB・内容ハッシュ付き）
 │   ├── inter-400.<hash>.woff2              # 欧文 UI・ラベル（ASCII 印字可能文字を全て含む）
 │   ├── inter-500.<hash>.woff2
-│   ├── noto-sans-jp-300.<hash>.woff2       # 和文本文（最大・381字）
+│   ├── noto-sans-jp-300.<hash>.woff2       # 和文本文（最大・357字）
 │   ├── noto-sans-jp-400.<hash>.woff2       # ラベル内の和文（蠍座・酉年 等）
 │   ├── shippori-mincho-b1-400.<hash>.woff2 # 明朝・名前/本文/キャッチ
 │   └── shippori-mincho-b1-500.<hash>.woff2 # 明朝・見出し/題字
@@ -172,7 +173,6 @@ v2.5 では、静かで文語的な世界観を保ったまま視覚レイヤー
 │   ├── nagi-record4.jpg          # Nagi スライド5（記録画面4・ライトモード）
 │   ├── nagi-record5.jpg          # Nagi スライド6（記録画面5・ライトモード）
 │   ├── nagi-calendar.jpg         # Nagi スライド7（カレンダー画面・ライトモード）
-│   ├── thumb-chushinmei.jpg      # 中心銘 メイン画面
 │   ├── thumb-lisa-mizuno.jpg     # Lisa Mizuno ヒーロー主要ビジュアル切り出し（1枚・16:10・1600×1000・モノクローム）
 │   ├── thumb-chinju.jpg          # CHINJU CLI ヒーロー主要部切り出し（1枚・16:10・1500×937・ライト背景）
 │   ├── thumb-arisa.jpg           # 領収書仕分けAI アプリアイコン合成（1枚・16:10・1400×875・生成りグラデ背景）
@@ -300,18 +300,17 @@ npx serve -l 3000 .
 | 01 | Experimental / Data Art | DIMENSION | https://dimension-vert.vercel.app/ | `thumb-dimension.jpg`（1枚・OGP画像のレターボックス合成・暗背景 `#05060f`） |
 | 02 | Web Development | 翡翠眼 | https://hisuigan-macro-insight-engine.vercel.app/ | `thumb-hisuigan.jpg`（1枚） |
 | 03 | Web Development | Nagi（凪） | https://nagi-xi.vercel.app/ | `nagi-icon.jpg` / `nagi-record1〜5.jpg` / `nagi-calendar.jpg`（7枚手動スライド） |
-| 04 | Web Development | 中心銘 | https://chushinmei.vercel.app | `thumb-chushinmei.jpg`（1枚・和紙調ベージュ背景） |
-| 05 | Web Development | Frequency Analyzer | https://frequency-analyzer.vercel.app | `freq-video-light.mp4` / `freq-video-dark.mp4`（2枚手動スライド・`<video autoplay muted loop>`） |
-| 06 | Web Design / Artist Site | Lisa Mizuno | https://lisa-mizuno.vercel.app/ | `thumb-lisa-mizuno.jpg`（1枚・モノクローム背景 `#0d0d0d`） |
-| 07 | LP / Branding & PR | CHINJU CLI | https://service.chinju.org/ | `thumb-chinju.jpg`（1枚・4:3撮影・ライト背景 `#f2efe9`） |
-| 08 | Web Development | 領収書仕分けAI | なし（未デプロイ・静的カード） | `thumb-arisa.jpg`（1枚・アプリアイコン合成・生成りグラデ背景 `#f2efe9`） |
+| 04 | Web Development | Frequency Analyzer | https://frequency-analyzer.vercel.app | `freq-video-light.mp4` / `freq-video-dark.mp4`（2枚手動スライド・`<video autoplay muted loop>`） |
+| 05 | Web Design / Artist Site | Lisa Mizuno | https://lisa-mizuno.vercel.app/ | `thumb-lisa-mizuno.jpg`（1枚・モノクローム背景 `#0d0d0d`） |
+| 06 | LP / Branding & PR | CHINJU CLI | https://service.chinju.org/ | `thumb-chinju.jpg`（1枚・4:3撮影・ライト背景 `#f2efe9`） |
+| 07 | Web Development | 領収書仕分けAI | なし（未デプロイ・静的カード） | `thumb-arisa.jpg`（1枚・アプリアイコン合成・生成りグラデ背景 `#f2efe9`） |
 
-※ タイトルの読み仮名（翡翠眼＝ひすいがん／中心銘＝ちゅうしんめい）は v2.5.0 で省略。
-※ 01 DIMENSION は自作だが「使うためのプロダクト」ではなく高次元構造の可視化そのものを目的とした実験作のため、実務向けの自作プロダクト（02-05）とはカテゴリを分け "Experimental / Data Art" としている。
-※ 06 Lisa Mizuno は他者（DJ・アーティスト）向けの制作実績であり、カテゴリを "Web Design / Artist Site" として自作プロダクト（01-05）と区別している。
-※ 07 CHINJU CLI は自作プロダクトではなく、LP制作・市場調査・方向性整理・PR を担当した案件。カテゴリを "LP / Branding & PR" とし、説明文でも担当役割を明記して制作物（01-06）と区別している。
-※ 08 領収書仕分けAI は Web版が未デプロイで公開URLが無いため、唯一 `<a href>` ではなく `<div class="work-card">` の**リンクなし静的カード**（`View →` も省略）。他カードのアンカー前提の挙動には依存しない（`.work-card` に cursor/hover のアンカー依存なし、reveal/GSAP は class セレクタで拾う）。
-※ 作品の**掲載順＝DOM順**であり、`.work-card:nth-child(odd/even)` がサムネの左右を決める。**先頭や中間へのカード挿入は以降すべてのカードの左右を反転させる**（幅は奇偶とも同一のためリフローは起きず、860px以下では偶奇指定が `auto` に打ち消されるため無影響）。ゴースト索引は自動採番ではなく**各カードにハードコード**しているため、挿入時は全件の振り直しが必要。
+※ タイトルの読み仮名（翡翠眼＝ひすいがん）は v2.5.0 で省略。
+※ 01 DIMENSION は自作だが「使うためのプロダクト」ではなく高次元構造の可視化そのものを目的とした実験作のため、実務向けの自作プロダクト（02-04）とはカテゴリを分け "Experimental / Data Art" としている。
+※ 05 Lisa Mizuno は他者（DJ・アーティスト）向けの制作実績であり、カテゴリを "Web Design / Artist Site" として自作プロダクト（01-04）と区別している。
+※ 06 CHINJU CLI は自作プロダクトではなく、LP制作・市場調査・方向性整理・PR を担当した案件。カテゴリを "LP / Branding & PR" とし、説明文でも担当役割を明記して制作物（01-05）と区別している。
+※ 07 領収書仕分けAI は Web版が未デプロイで公開URLが無いため、唯一 `<a href>` ではなく `<div class="work-card">` の**リンクなし静的カード**（`View →` も省略）。他カードのアンカー前提の挙動には依存しない（`.work-card` に cursor/hover のアンカー依存なし、reveal/GSAP は class セレクタで拾う）。
+※ 作品の**掲載順＝DOM順**であり、`.work-card:nth-child(odd/even)` がサムネの左右を決める。**先頭や中間へのカードの挿入・削除は以降すべてのカードの左右を反転させる**（幅は奇偶とも同一のためリフローは起きず、860px以下では偶奇指定が `auto` に打ち消されるため無影響）。ゴースト索引は自動採番ではなく**各カードにハードコード**しているため、挿入・削除時は以降の全件を手で振り直す必要がある。
 
 ### 3.5 Note セクション
 
@@ -520,7 +519,7 @@ line-break: strict;        /* 禁則を厳格に */
 
 | 項目 | 仕様 |
 |---|---|
-| 対象要素 | `.work-thumb[data-slide]` 内 `.work-thumb-img`（DIMENSION: 1枚 / 翡翠眼: 1枚 / Nagi: 7枚 / 中心銘: 1枚 / Frequency Analyzer: 2枚 / Lisa Mizuno: 1枚 / CHINJU CLI: 1枚 / 領収書仕分けAI: 1枚） |
+| 対象要素 | `.work-thumb[data-slide]` 内 `.work-thumb-img`（DIMENSION: 1枚 / 翡翠眼: 1枚 / Nagi: 7枚 / Frequency Analyzer: 2枚 / Lisa Mizuno: 1枚 / CHINJU CLI: 1枚 / 領収書仕分けAI: 1枚） |
 | **必須マークアップ** | 画像が1枚のカードでも `data-slide` / `.slide-prev` / `.slide-next` / `.slide-dots` の4点をすべて記述すること。初期化は `imgs.length <= 1` の分岐でこれらへ無条件アクセスするため、欠けると `TypeError` が `forEach` の外へ抜けて**ループが中断し、以降のカードのスライドショーがすべて初期化されない**（`<head>` のCDNフェイルセーフは `gsap === undefined` にしか反応せず救済できない） |
 | 操作 | 左右矢印ボタン・ドットナビのクリック、またはタッチスワイプ（横方向40px超かつ縦移動より大きい場合のみ反応し、縦スクロールと誤判定しない） |
 | 切り替え | `opacity: 0→1`（CSS transition 0.6s ease） |
@@ -575,7 +574,7 @@ gsap/Lenis 不在時はアンカーリンクもネイティブスクロールに
 | レイアウトシフト対策 | `.work-thumb` は `aspect-ratio`（16/10・860px以下4/3）で領域確保、`favicon`/`note-avatar` に `width`/`height` 明示 |
 | 画像変換 | スクリーンショットは長辺1200px・JPG（quality 80-82）。OGPは1200幅JPG。faviconは128px PNG。**nav アイコンは別ファイル `nav-mark.png`**（256px・透過）— favicon は白地の不透明PNGで、夜の紙では白い四角として浮くため、白地からの距離をアルファ化（ノイズ床28・径方向の窓）した透過版を用意している |
 | 動画 | `freq-video-dark.mp4` は720幅・無音・H.264（CRF30）で再エンコード（3.0MB→112KB） |
-| WebFont | `fonts/` 合計 140KB（サブセット済み woff2 × 6。5.8 参照） |
+| WebFont | `fonts/` 合計 143KB（サブセット済み woff2 × 6。5.8 参照） |
 | 合計 | `images/` 約1.0MB（最適化前 約13MB） |
 
 ### 5.7 配色の同期（夜明け／日没）
