@@ -410,6 +410,44 @@ const activeObserver = new IntersectionObserver(entries => {
 sections.forEach(s => activeObserver.observe(s));
 
 // ============================
+// 約物の視覚補正（詰め組みの代替）
+// Shippori Mincho B1 は palt / chws / halt を一切持たないため、
+// フォント機能でも text-spacing-trim でも約物の空きを詰められない。
+// 明朝で組む短文に限り、句読点の後ろの半角相当の空きを margin で回収する。
+// 本文（Noto Sans JP）は palt が効くので対象外。SplitText 対象の見出し・題字は
+// 約物を含まないため干渉しない。
+// ============================
+(function kernPunctuation() {
+  const PULL = '、。';
+  const targets = document.querySelectorAll('.work-catchcopy, .about-text-line, .contact-lead');
+
+  targets.forEach(el => {
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    const texts = [];
+    while (walker.nextNode()) texts.push(walker.currentNode);
+
+    texts.forEach(node => {
+      if (!/[、。]/.test(node.nodeValue)) return;
+      const frag = document.createDocumentFragment();
+      let buf = '';
+      for (const ch of node.nodeValue) {
+        if (PULL.includes(ch)) {
+          if (buf) { frag.appendChild(document.createTextNode(buf)); buf = ''; }
+          const span = document.createElement('span');
+          span.className = 'kern-pull';
+          span.textContent = ch;
+          frag.appendChild(span);
+        } else {
+          buf += ch;
+        }
+      }
+      if (buf) frag.appendChild(document.createTextNode(buf));
+      node.parentNode.replaceChild(frag, node);
+    });
+  });
+})();
+
+// ============================
 // Work Card — 題字リンクへのクリック委譲（gsap 非依存・常時動作）
 // カード全体をクリック可能にしつつ、a 内 button の不正ネストを避けるための処置。
 // 本文のテキスト選択中・コントロール操作中は発火させない
