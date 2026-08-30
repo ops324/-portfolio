@@ -1,5 +1,5 @@
 // ============================
-// fx.js — ヒーロー背景「墨の靄」
+// fx.js — ヒーロー背景「墨流し」
 // 素のWebGL1・依存ライブラリなし・自己完結。
 // 失敗時・非対応時は何もせず、CSSの静的な滲み（#hero::before）が残る。
 // 有効条件: gsap可用 / reduced-motion でない / 幅860px以上 / WebGL取得成功
@@ -18,7 +18,8 @@
     'void main() { gl_Position = vec4(a_pos, 0.0, 1.0); }',
   ].join('\n');
 
-  // fbm 3オクターブの低速ドリフト。paper→accent の2色補間のみ、強度上限0.07
+  // 墨流し。fbm 5オクターブをドメインワープさせ、等高線状の細い筋だけを取り出す。
+  // paper→accent の2色補間のみ。名前の組版まわりは guard() で必ず素の紙へ戻す
   var FRAG = [
     'precision mediump float;',
     'uniform vec2 u_res;',
@@ -36,18 +37,26 @@
     '}',
     'float fbm(vec2 p) {',
     '  float v = 0.0; float a = 0.5;',
-    '  for (int i = 0; i < 3; i++) { v += a * noise(p); p *= 2.03; a *= 0.5; }',
+    '  for (int i = 0; i < 5; i++) { v += a * noise(p); p *= 2.03; a *= 0.5; }',
     '  return v;',
+    '}',
+    // hero-inner を囲う矩形からの符号付き距離。中は 0 で、外へ 0.27 かけて戻る
+    'float guard(vec2 uv) {',
+    '  vec2 d = abs(uv - vec2(0.30, 0.50)) - vec2(0.20, 0.14);',
+    '  float sd = length(max(d, 0.0)) + min(max(d.x, d.y), 0.0);',
+    '  return smoothstep(0.0, 0.27, sd);',
     '}',
     'void main() {',
     '  vec2 uv = gl_FragCoord.xy / u_res;',
-    '  vec2 p = uv * vec2(u_res.x / u_res.y, 1.0) * 1.4;',
-    '  p += (u_mouse - 0.5) * 0.1;',
-    '  float warp = fbm(p * 0.8 - u_time * 0.01);',
-    '  float n = fbm(p + vec2(u_time * 0.02, u_time * 0.013) + warp * 0.35);',
-    // 靄の中心を右上に置き、hero-inner（左中央）付近は特に淡く
-    '  float fade = 1.0 - smoothstep(0.0, 0.85, distance(uv, vec2(0.72, 0.62)));',
-    '  float intensity = n * u_strength * fade;',
+    '  vec2 p = uv * vec2(u_res.x / u_res.y, 1.0) * 1.25;',
+    '  p += (u_mouse - 0.5) * 0.06;',
+    '  float w = fbm(p * 0.60 - u_time * 0.006);',
+    '  float n = fbm(p * 1.05 + w * 1.5 + vec2(u_time * 0.010, u_time * 0.006));',
+    // 等高線: n を7段に折り返し、各段の稜線だけを細い筋として残す
+    '  float t = fract(n * 7.0);',
+    '  float line = 1.0 - smoothstep(0.0, 0.13, abs(t - 0.5));',
+    '  float fade = 1.0 - smoothstep(0.08, 0.85, distance(uv, vec2(0.76, 0.62)));',
+    '  float intensity = line * u_strength * fade * guard(uv);',
     '  gl_FragColor = vec4(mix(u_paper, u_accent, intensity), 1.0);',
     '}',
   ].join('\n');
@@ -57,7 +66,7 @@
   var uRes, uTime, uMouse, uPaper, uAccent, uStrength;
   var paperRGB  = [0.969, 0.965, 0.953];
   var accentRGB = [0.639, 0.576, 0.478];
-  var strength  = 0.07;
+  var strength  = 0.13;
   var running = false;
   var started = false;
   var heroVisible = true;
@@ -96,7 +105,7 @@
 
     // 夜の紙は地が暗く、同じ強度だと靄が浮きすぎる
     var dark = paperRGB[0] + paperRGB[1] + paperRGB[2] < 1.2;
-    strength = dark ? 0.13 : 0.07;
+    strength = dark ? 0.195 : 0.13;
 
     if (gl) {
       gl.clearColor(paperRGB[0], paperRGB[1], paperRGB[2], 1.0);

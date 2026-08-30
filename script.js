@@ -456,7 +456,7 @@ sections.forEach(s => activeObserver.observe(s));
 // ============================
 (function kernPunctuation() {
   const PULL = '、。';
-  const targets = document.querySelectorAll('.work-catchcopy, .about-text-line, .contact-lead');
+  const targets = document.querySelectorAll('.hero-desc-inner, .work-catchcopy, .about-text-line, .contact-lead');
 
   targets.forEach(el => {
     const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);

@@ -28,7 +28,7 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url('fonts/noto-sans-jp-300.ee2d73a0.woff2') format('woff2');
+  src: url('fonts/noto-sans-jp-300.a1e793ba.woff2') format('woff2');
 }
 
 @font-face {
@@ -36,7 +36,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('fonts/noto-sans-jp-400.dc57da7d.woff2') format('woff2');
+  src: url('fonts/noto-sans-jp-400.f7ea6033.woff2') format('woff2');
 }
 
 @font-face {
@@ -44,7 +44,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('fonts/shippori-mincho-b1-400.68230165.woff2') format('woff2');
+  src: url('fonts/shippori-mincho-b1-400.956112c9.woff2') format('woff2');
 }
 
 @font-face {
@@ -98,6 +98,7 @@
   --fs-hero:    clamp(3.6rem, 9vw, 7.2rem);
   --fs-h2:      clamp(1.8rem, 3.6vw, 2.7rem);
   --fs-lead:    1.05rem;
+  --fs-motto:   clamp(1.12rem, 1.5vw, 1.32rem);  /* hero の標語。本文より一段大きい */
   --fs-work:    clamp(1.3rem, 2vw, 1.7rem);
   --fs-body:    0.9rem;
   --fs-caption: 0.78rem;
@@ -109,6 +110,7 @@
   --track-display: 0.07em;  /* 〜2.7rem */
   --track-title:   0.045em; /* 〜1.7rem */
   --track-lead:    0.03em;  /* 〜1.05rem */
+  --track-motto:   0.09em;  /* 標語のみ光学補正の例外。字間そのもので間を作る */
   --track-label:   0.18em;  /* 小ラベル */
   --track-micro:   0.26em;  /* 極小ラベル */
 
@@ -376,12 +378,14 @@ ul { list-style: none; }
   overflow-wrap: anywhere;
 }
 
+/* 職能の説明文ではなく一行の標語。about の「軸」と同じ明朝・常体で声を揃える */
 .hero-desc {
-  font-family: var(--font-ja);
-  font-size: var(--fs-body);
-  color: var(--text);
-  line-height: 2.15;
-  font-weight: 300;
+  font-family: var(--font-serif-ja);
+  font-size: var(--fs-motto);
+  color: var(--ink-2);
+  line-height: 1.9;
+  font-weight: 400;
+  letter-spacing: var(--track-motto);
   max-width: 30em;
 }
 
