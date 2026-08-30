@@ -2,9 +2,9 @@
 
 | 項目 | 内容 |
 |---|---|
-| バージョン | 4.5.0 |
+| バージョン | 4.6.0 |
 | 作成日 | 2026年3月7日 |
-| 最終更新 | 2026年8月20日 |
+| 最終更新 | 2026年8月31日 |
 | 作成者 | 滝本 哲也 |
 | リポジトリ | github.com/ops324/-portfolio |
 | 公開URL | https://takimototetsuya.vercel.app |
@@ -76,6 +76,7 @@
 | 4.3.1 | 2026-08-20 | **四隅のトンボ風十字（レジストレーションマーク）を撤去。** v3.0.0 で「印刷物ディテール」として入れた `html::before`（1100px 以上・`--faint` の 11px 十字を四隅へ、8枚の背景グラデーションで描画）を削除。**トンボは断裁と版合わせのための作業用の印であり、刷り上がった紙面には残らない**。画面上では紙の手触りではなく「印刷物らしさの記号」として乗っていたため、紙グレイン・縦書き章題（`.sec-margin`）・柱/ノンブル（`.page-marker`）が担う質感へ一本化する。ビューポート全面に `position: fixed` で敷かれていた固定レイヤー（`z-index: 9997`）も1つ解消。1100px のブレークポイントは縦書き章題の出し分けとして残る |
 | 4.4.0 | 2026-08-20 | **イベントに関する文言を撤去。** v4.1.0 で Events セクションを廃止した際、hero と meta/JSON-LD の「非日常体験イベントの企画主催」は**活動自体は継続している**ため残す判断をしたが、催しの記録を載せない以上、**紙面のどこにも裏付けの無い活動紹介だけが残る**状態になっていた。hero 説明文・`meta[name=description]`・`og:description`・`twitter:description`・JSON-LD `Person.description` の5か所から当該句を落とし、「Web開発・自動化フロー・ツール開発。生活を豊かにするアイデアを形にしています。」に統一。contact のリード文も「制作のご相談、催しへのお誘い——」から**「制作のご相談・ご依頼——」**へ改め、催しの語を紙面から一掃した。テキストを変えたため 5.8 の手順どおり `build-fonts` → `verify-fonts` を実行。「非日常体験イベント」「催し」由来の字が抜けて `noto-sans-jp-300` 389→**381字**、`shippori-mincho-b1-400` も再生成され（内容ハッシュが変わるためファイル名も更新）、`fonts/` 合計 142KB→**140KB**。`verify-fonts` は313要素すべて自前の3書体で描画されることを確認。併せて 4.3 の折り返し対象一覧に残っていた `.event-cap`（v4.1.0 で削除済みのクラス）を掃除し、折り返しの実測表には**計測当時の hero 文である**旨を注記した |
 | 4.5.0 | 2026-08-20 | **Works から「中心銘」を削除（8件→7件）。** カード本体・`images/thumb-chushinmei.jpg`・`.work-thumb-chushinmei`（和紙調ベージュ背景と `object-position: top center`）を撤去。**中間削除のため以降4件の索引を 05-08 → 04-07 へ振り直し**（ゴースト索引はハードコードのため手で採番）、`.work-card:nth-child(odd/even)` の偶奇が反転して Frequency Analyzer 以降のサムネ左右が入れ替わる（幅は奇偶とも同一のためリフローは起きず、860px以下は偶奇指定が `auto` に打ち消されるため無影響。実描画で 02 右／03 左／04 右／05 左／06 右／07 左を確認）。テキストを変えたため 5.8 の手順どおり `build-fonts` → `verify-fonts` を実行し、`noto-sans-jp-300` 381→**357字**・`shippori-mincho-b1-400` 105→101字・同 500 55→52字。ただし **Google Fonts の `text=` 応答は字数と容量が単調ではなく**、字数を減らしたのに `noto-sans-jp-300` は 63.6→67.8KB と増え、`fonts/` 合計は 140.0→**142.6KB** になった（連続実行で同一ハッシュになることは確認済みで、生成側の非決定性ではない）。`verify-fonts` は297要素すべて自前の3書体で描画されることを確認 |
+| 4.6.0 | 2026-08-31 | **hero の名乗りを職能の列挙から一行の標語へ。あわせて背景シェーダを「墨流し」に作り替え、フォント生成をローカル・サブセットへ移行。** ①**文言**: 肩書きを `Builder` → **`AI / Web / DX`**、説明文2行（「Web開発・自動化フロー・ツール開発。／生活を豊かにするアイデアを形にしています。」）を**「見えぬものに、輪郭を。」の一行**に置換。職能の申告は誰でも書けるうえ、`about` が「〜である」の文語なのに hero だけ「〜しています」の敬体で**紙面に声が二つあった**。works 7件（DIMENSION=次元／翡翠眼=市場／Nagi=感情／Frequency Analyzer=周波数）はいずれも「見えないものに輪郭を与える」道具であり、通底する主題を名乗りに置いた。`.hero-desc` は説明文ではなく標語になったため **Shippori Mincho B1・`--fs-motto`（clamp 1.12〜1.32rem）・`--ink-2`** で組み、`kernPunctuation` の対象に `.hero-desc-inner` を追加。トラッキングは `--track-motto: 0.09em` を新設——光学サイズ補正（大きい活字ほど詰める）の**唯一の例外**で、標語は字間そのもので間を作る。`meta`/`og`/`twitter`/JSON-LD の description と `jobTitle` も同文に揃えた。②**WebGL「墨の靄」→「墨流し」**: fbm 3→5オクターブ、`n` を7段に折り返して**等高線の稜線だけを細い筋として残す**（`1.0 - smoothstep(0, 0.13, abs(fract(n*7)-0.5))`）。強度は紙 0.07→**0.130** / 夜 0.13→**0.195**。強めると背景が主役に寄るため、hero-inner を囲う**矩形SDFの guard()** を入れて名前まわりは必ず素の紙へ戻す（中は 0、外へ 0.27 かけて復帰）。フェード中心も右へ寄せた（0.72,0.62 → 0.76,0.62）。負荷制御・フォールバック・色取得の仕組みは 5.1.1 のまま不変で、860px未満と reduced-motion では従来どおり起動しない。③**フォント生成の作り直し（重要）**: **Google Fonts の `css2?text=` が Noto Sans JP に対して機能しなくなっていた**。3文字を渡しても `unicode-range` は正しく3字を宣言しながら、実体は**全字形 2.2MB** が返る（`css` v1・`css2`・ウェイト無指定のいずれでも同じ。Shippori Mincho B1 と Inter は従来どおり最適サブセットが返るため、書体固有の事象）。気付かず通せば `fonts/` が 130KB → **4.5MB** になっていた。`tools/build-fonts.mjs` に閾値（200KB）を設け、超えた応答は**それ自体をフル書体の素材として扱い `python3 -m fontTools.subset` で手元でサブセットし直す**フォールバックを追加（依存: python3 + fonttools + brotli）。結果はむしろ小さく、`noto-sans-jp-300` は 67.8 → **54.6KB**、`fonts/` 合計 142.6 → **130.2KB**。`verify-fonts` は298要素すべて自前の書体で描画されることを確認 |
 | 3.0.6 | 2026-07-03 | 制作実績06「CHINJU CLI」サムネイル（`thumb-chinju.jpg`）を差し替え。旧画像（v2.8.0）は全ページを 4:3（1400×1050）で撮影しており左右見切れは無いものの、**上部ナビ（ロゴ＋「βに申し込む」ボタン）や下部の別セクション見出しが写り込み**、素のスクショ感が強かった。v3.0.5 Lisa と同じ方針で、**ヒーロー主要部（大見出し「ベテランエンジニアの手厚いレビューを。」＋iMacのCLIレビュー画面＋枯山水/盆栽＋信頼バー）を 16:10（1500×937）で切り出して撮影**する方式に刷新。撮影時に上部ナビ（`nav.nav`）・右端ドットナビ（`nav.path-nav`）・ヒーロー以降の全セクション/フッターをCSSで非表示にし、`#demo` に軽い `margin-top` を付与してヒーローを淡い背景の中央に配置。cover の枠比率と一致しPC見切れゼロ、上下の余白は860px以下の `4/3` 枠での左右トリムの安全マージンにもなる。他5件と同じ細罫スクショ枠の一貫性を維持（HTML/CSS変更なし・画像差し替えのみ） |
 | 3.0.5 | 2026-07-03 | 制作実績05「Lisa Mizuno」サムネイル（`thumb-lisa-mizuno.jpg`）を差し替え。旧画像は全ページを **1400×800（比率1.75）** で撮影しており、サムネ枠 `aspect-ratio:16/10`（=1.6）＋`object-fit:cover` に対し横長すぎて**左右が見切れて**いた（左上ロゴ・右上ナビが欠ける。860px以下の `4/3` 枠ではさらに悪化）。対処として、v2.8.0 CHINJU と同じ「枠比率に合わせた撮影」の方針を発展させ、**サイト全体ではなくヒーローの主要ビジュアル（モノクロの人物＋大見出しタイポ＋DJ·ARTIST）を 16:10（1600×1000）で切り出して撮影**する方式に変更。撮影時に上部ナビと右下「scroll」指標（`#hero::after` 疑似要素）を非表示にして余白・ブラウザ的要素を排し作品性を強調。cover の枠比率と完全一致しPC表示で見切れゼロ、他5件と同じ細罫スクショ枠の一貫性も維持（HTML/CSS変更なし・画像差し替えのみ） |
 | 3.0.4 | 2026-07-03 | 制作実績02「Nagi（凪）」の説明文を改訂。キャッチ「自己を観る。」は維持し、本文を「書くほどに、視界がひらく自己観察アプリ。」のコンセプト1文＋機能説明1段落の簡潔な2段構成に刷新（AI「凪 -Nagi-」が静かな問いを返す・褒めず諭さず隣で問いかける・多角的に眺め直し視界がひらく、という体験価値を平易に表現）。従来の抽象的な「次元の上昇／多面的視点」表現を平明化 |
@@ -103,7 +104,7 @@
 
 ### 1.1 プロジェクト概要
 
-Builder・滝本哲也のポートフォリオサイト。制作したプロダクト・自己紹介・連絡先を掲載する。採用担当者・クライアント・協業パートナーを主な閲覧対象とし、静かで誠実、文語的で格調ある印象を与えることを目的とする。
+滝本哲也のポートフォリオサイト。制作したプロダクト・自己紹介・連絡先を掲載する。採用担当者・クライアント・協業パートナーを主な閲覧対象とし、静かで誠実、文語的で格調ある印象を与えることを目的とする。
 
 v2.5 では、静かで文語的な世界観を保ったまま視覚レイヤーをプロ水準のエディトリアル（雑誌的な版面）へ昇華。設計規律として genre=editorial / macrostructure=Long Document を採用（`style.css` 冒頭に Hallmark スタンプを記載）。
 
@@ -112,8 +113,8 @@ v2.5 では、静かで文語的な世界観を保ったまま視覚レイヤー
 | 項目 | 内容 |
 |---|---|
 | 氏名 | 滝本 哲也 |
-| 職業ラベル | Builder |
-| 活動内容 | Web開発・エンジニアリング・自動化フロー開発・ツール開発。生活を豊かにするアイデアの具現化 |
+| 職業ラベル | AI / Web / DX（`text-transform: uppercase` で AI / WEB / DX と表示） |
+| 活動内容 | AI活用・Web開発・DX。見えないものに輪郭を与える道具づくり |
 | 楽しみ | 探索・エンタメ鑑賞・新技術のキャッチアップ |
 
 ### 1.3 ターゲット
@@ -137,7 +138,7 @@ v2.5 では、静かで文語的な世界観を保ったまま視覚レイヤー
 | JavaScript (ES2020) | インタラクション・スライドショー・アクティブナビ |
 | GSAP 3.13.0 + ScrollTrigger + SplitText | 入場演出・スクロールリビール・パララックス・文字単位テキスト演出 |
 | Lenis 1.1.14 | スムーススクロール |
-| WebGL 1（素実装・`fx.js`） | ヒーロー背景「墨の靄」fbmシェーダ |
+| WebGL 1（素実装・`fx.js`） | ヒーロー背景「墨流し」fbmシェーダ |
 | Google Fonts | Web フォント配信 |
 
 フレームワーク・ビルドツールは使用しない（静的サイト）。GSAP / ScrollTrigger / SplitText / Lenis は CDN から読み込み（GSAP 3.13 で全プラグインが無償化）。WebGL シェーダは `fx.js` に自己完結で分離。依存パッケージなし、ビルド手順不要。
@@ -149,10 +150,10 @@ v2.5 では、静かで文語的な世界観を保ったまま視覚レイヤー
 ├── index.html          # メインページ（全セクション）
 ├── style.css           # 全スタイル定義（冒頭に Hallmark スタンプ）
 ├── script.js           # GSAP/Lenis 演出・SplitTextテキスト演出・磁気ホバー・スライドショー・アクティブナビ
-├── fx.js               # ヒーロー背景「墨の靄」WebGLシェーダ（自己完結・フォールバック内蔵）
+├── fx.js               # ヒーロー背景「墨流し」WebGLシェーダ（自己完結・フォールバック内蔵）
 ├── spec.md             # 本仕様書
 ├── vercel.json         # 配信ヘッダ（/fonts/* を immutable キャッシュ）
-├── fonts/                          # サブセット済み WebFont（合計143KB・内容ハッシュ付き）
+├── fonts/                          # サブセット済み WebFont（合計130KB・内容ハッシュ付き）
 │   ├── inter-400.<hash>.woff2              # 欧文 UI・ラベル（ASCII 印字可能文字を全て含む）
 │   ├── inter-500.<hash>.woff2
 │   ├── noto-sans-jp-300.<hash>.woff2       # 和文本文（最大・357字）
@@ -233,11 +234,11 @@ npx serve -l 3000 .
 |---|---|
 | 高さ | `min-height: 100vh` |
 | コンテンツ位置 | 縦中央寄せ（`align-items: center`） |
-| ラベル | "Builder"（Inter 0.70rem、letter-spacing 0.26em、uppercase、`--accent-ink`） |
+| ラベル | "AI / Web / DX"（Inter 0.70rem、letter-spacing 0.26em、uppercase、`--accent-ink`） |
 | 名前 | 「滝本 哲也」（**Shippori Mincho B1**、`clamp(3.6rem, 9vw, 7.2rem)`、weight 400、`--ink`） |
-| 説明文 | Noto Sans JP、`--fs-body`、`var(--text)`、line-height 2.15 |
+| 標語 | 「見えぬものに、輪郭を。」**Shippori Mincho B1**、`--fs-motto`（`clamp(1.12rem, 1.5vw, 1.32rem)`）、`--ink-2`、`--track-motto`(0.09em)、line-height 1.9。説明文ではなく名乗りの一行なので、`about` の「軸」と同じ明朝・常体で声を揃える。句読点は `kernPunctuation` が視覚補正する（v4.6.0） |
 | スクロール指標 | 左下に "Scroll"（縦書きLatin）＋1px線のscaleYループ（860px未満非表示、reduced-motion時静止） |
-| 背景 | `#hero-canvas`（WebGL「墨の靄」、5.5参照）。非対応環境は `#hero::before` の静的radial滲みが残る |
+| 背景 | `#hero-canvas`（WebGL「墨流し」、5.1.1参照）。非対応環境は `#hero::before` の静的radial滲みが残る |
 | 底部ライン | `.hero-line`（ScrollTrigger 連動なし／入場時に `scaleX` 描画） |
 | 入場演出 | `document.fonts.ready`（上限2.5s）待ち → `#page-intro` を `scaleY` 巻き上げ → sub→**名前を文字単位マスク出現（SplitText `type:'chars'` `mask:'chars'` stagger 0.06）**→desc→スクロール指標→ライン（GSAP timeline）。SplitText欠落時は名前を行送りにフォールバック |
 | パララックス | デスクトップのみ：スクロールに応じ name `yPercent:-12` / desc 減衰（`scrub`） |
@@ -390,6 +391,7 @@ genre=editorial / macrostructure=Long Document。生成りの紙面・明朝の�
 |---|---|---|---|
 | Hero 名前 | Shippori Mincho B1 | 400 | `--fs-hero` `clamp(3.6rem, 9vw, 7.2rem)` |
 | セクション見出し | Shippori Mincho B1 | 500 | `--fs-h2` `clamp(1.8rem, 3.6vw, 2.7rem)` |
+| Hero 標語 | Shippori Mincho B1 | 400 | `--fs-motto` `clamp(1.12rem, 1.5vw, 1.32rem)` |
 | about本文 / contactリード | Shippori Mincho B1 | 400 | `--fs-lead` `1.05rem` |
 | work題字 | Shippori Mincho B1 | 500 | `--fs-work` `clamp(1.3rem, 2vw, 1.7rem)` |
 | キャプション / 柱・奥付 | Noto Sans JP / Inter | 300–500 | `--fs-caption` `0.78rem` / `--fs-micro` `0.6rem` |
@@ -409,8 +411,9 @@ genre=editorial / macrostructure=Long Document。生成りの紙面・明朝の�
 | `--track-title` | `0.045em` | work 題字（〜1.7rem） |
 | `--track-lead` | `0.03em` | about本文・contactリード（〜1.05rem） |
 | `--track-label` / `--track-micro` | `0.18em` / `0.26em` | 小ラベル・極小ラベル |
+| `--track-motto` | `0.09em` | **この規則の唯一の例外。** Hero 標語（〜1.32rem）は光学補正なら 0.04em 前後だが、一行しかない名乗りは字間そのもので間を作るため意図的に開ける（v4.6.0） |
 
-**折り返し** — 散文ブロック（`.hero-desc` `.about-text` `.work-catchcopy` `.work-desc` `.note-card-desc` `.contact-lead` ほか）に以下を適用。
+**折り返し** — 散文ブロック（`.about-text` `.work-catchcopy` `.work-desc` `.note-card-desc` `.contact-lead` ほか）に以下を適用。
 
 ```css
 word-break: auto-phrase;   /* 文節で改行（Chromium） */
@@ -418,7 +421,7 @@ text-wrap: pretty;         /* 行末の孤立を避ける */
 line-break: strict;        /* 禁則を厳格に */
 ```
 
-`auto-phrase` と `pretty` は Chromium のみ有効で、他ブラウザは従来の折り返しへ穏当に退く。両者の併用が最良で、実測では次のとおり。
+`auto-phrase` と `pretty` は Chromium のみ有効で、他ブラウザは従来の折り返しへ穏当に退く。両者の併用が最良で、実測では次のとおり（`.hero-desc` は v4.6.0 で折り返しの起きない一行の標語になったため対象から外した）。
 
 | 設定 | 計測当時の hero 文「Web開発・自動化フロー・ツール開発と、非日常体験イベントの企画主催。」の折り返し |
 |---|---|
@@ -503,12 +506,13 @@ line-break: strict;        /* 禁則を厳格に */
 | イージング | `EASE.enter`(power3.out) / `EASE.veil`(power2.inOut) / `EASE.line`(expo.out) の**3種のみ**。CSS 側の `--ease-enter` / `--ease-veil` / `--ease-line` と対になる（[4.6 モーションの語彙](#46-モーションの語彙v400) 参照） |
 | SplitText フェイルセーフ | `splitReady` を個別判定し、欠落時は各演出が従来の行送りへフォールバック。分割はすべて `document.fonts.ready` 後（FOUT対策） |
 
-### 5.1.1 WebGL「墨の靄」（fx.js）
+### 5.1.1 WebGL「墨流し」（fx.js）
 
 | 項目 | 仕様 |
 |---|---|
-| 実装 | 素のWebGL1・フルスクリーンクワッド1枚・fbm 3オクターブ（依存ゼロ・約200行） |
-| 表現 | `--paper`→`--accent` の2色補間のみ、右上中心のフェード、ポインタでノイズ座標が僅かに偏る（lerp 0.03）。強度は**紙 0.07 / 夜 0.13**（夜は地が暗く同じ強度では靄が沈むため） |
+| 実装 | 素のWebGL1・フルスクリーンクワッド1枚・fbm 5オクターブ（依存ゼロ・約230行） |
+| 表現 | ドメインワープさせた fbm を7段に折り返し、**等高線の稜線だけを細い筋として残す**（`1.0 - smoothstep(0, 0.13, abs(fract(n*7)-0.5))`）。色は `--paper`→`--accent` の2色補間のみ、右寄りのフェード、ポインタでノイズ座標が僅かに偏る（lerp 0.03）。強度は**紙 0.130 / 夜 0.195**（夜は地が暗く同じ強度では沈むため）。v3.0.0〜v4.5.0 は fbm 3オクターブ・強度 0.07/0.13 の「墨の靄」で、実質視認できなかった |
+| **guard()** | hero-inner を囲う矩形からの符号付き距離で強度を殺し、**名前まわりは必ず素の紙へ戻す**（矩形の中は 0、外へ 0.27 かけて 1 へ復帰）。強度を上げても文字が背景と competing しないのはこれによる。矩形は `uv` の (0.30, 0.50) ± (0.20, 0.14) |
 | 負荷制御 | DPR上限1.5×内部解像度0.75倍、rAFは `gsap.ticker` に一本化、hero画面外・タブ非表示・幅860px未満で停止 |
 | 色の取得 | シェーダの2色はハードコードせず `--paper` / `--accent` から読む。カスタムプロパティは `getComputedStyle` で解決されないため、プローブ要素の実プロパティへ一度乗せ、canvas2d に sRGB へ展開させる（`oklch()` と `light-dark()` をそのまま扱える）。`themechange` イベントで再取得し即再描画 |
 | **初期クリア** | `alpha: false` のため、初描画までクリアカラー（既定=黒）が**不透明の黒板として露出する**。描画バッファのリサイズ後に紙色で `clearColor`+`clear` し、さらに1フレーム即 `render()` してから運転判定へ渡す（バックグラウンドタブで初期化された場合に復帰時へ黒が差すのを防ぐ） |
@@ -574,7 +578,7 @@ gsap/Lenis 不在時はアンカーリンクもネイティブスクロールに
 | レイアウトシフト対策 | `.work-thumb` は `aspect-ratio`（16/10・860px以下4/3）で領域確保、`favicon`/`note-avatar` に `width`/`height` 明示 |
 | 画像変換 | スクリーンショットは長辺1200px・JPG（quality 80-82）。OGPは1200幅JPG。faviconは128px PNG。**nav アイコンは別ファイル `nav-mark.png`**（256px・透過）— favicon は白地の不透明PNGで、夜の紙では白い四角として浮くため、白地からの距離をアルファ化（ノイズ床28・径方向の窓）した透過版を用意している |
 | 動画 | `freq-video-dark.mp4` は720幅・無音・H.264（CRF30）で再エンコード（3.0MB→112KB） |
-| WebFont | `fonts/` 合計 143KB（サブセット済み woff2 × 6。5.8 参照） |
+| WebFont | `fonts/` 合計 130KB（サブセット済み woff2 × 6。5.8 参照） |
 | 合計 | `images/` 約1.0MB（最適化前 約13MB） |
 
 ### 5.7 配色の同期（夜明け／日没）
@@ -643,11 +647,24 @@ node tools/build-fonts.mjs           # 書体ごとに必要な文字だけを�
 node tools/build-fonts.mjs --union   # 全書体に全文字（ブラウザ不要・383KB）
 ```
 
-Google Fonts の `css2?family=…&text=…` API が最適サブセットの woff2 を返すため、ローカルに fonttools 等のツールチェーンを置かずに生成できる。生成物は**内容ハッシュ付きのファイル名**で `fonts/` に置き、`style.css` の `@font-face` と `index.html` の `preload` を**マーカー間で自動書き換え**する（`@generated:fonts start` 〜 `end`。この範囲は手で編集しない）。
+Google Fonts の `css2?family=…&text=…` API が最適サブセットの woff2 を返す。生成物は**内容ハッシュ付きのファイル名**で `fonts/` に置き、`style.css` の `@font-face` と `index.html` の `preload` を**マーカー間で自動書き換え**する（`@generated:fonts start` 〜 `end`。この範囲は手で編集しない）。
+
+**⚠ Google の `text=` は書体によって効かなくなる（2026-08-31 実測）。** Noto Sans JP は、3文字だけ渡しても `unicode-range` は正しく3字を宣言しながら**実体は全字形 2.2MB** が返る。`css` v1・`css2`・ウェイト無指定のいずれでも同じで、同時刻に Shippori Mincho B1 と Inter は従来どおり最適サブセットを返すため、API 全体ではなく**書体固有の事象**である。気付かずに通すと `fonts/` が 130KB → 4.5MB になる（ファイル名にハッシュが入るので差分では気付きにくい）。
+
+このため `fetchSubset()` は応答が **200KB（`LOCAL_SUBSET_THRESHOLD`）** を超えたら、**その応答自体をフル書体の素材として扱い、手元でサブセットし直す**。
+
+```
+python3 -m fontTools.subset <full.woff2> --text-file=… --flavor=woff2 \
+        --layout-features+=palt,halt,vpal --output-file=…
+```
+
+依存は python3 + fonttools + brotli（`python3 -m pip install fonttools brotli`）。無ければ何が足りないかを述べて失敗する。**フル書体は追加でダウンロードしない**（閾値を超えた応答がフル書体そのものなので使い回す）。手元でのサブセットは Google の `text=` より小さく、`noto-sans-jp-300` は 67.8 → 54.6KB になった。Google 側が直れば閾値に掛からなくなり、自動的に元の経路へ戻る。
 
 既定モードは index.html を実際にレンダリングし、「どの書体・ウェイトでどの文字が組まれているか」を計測して書体別の文字集合を作る。明朝の見出しにしか出ない字をゴシック側に含めずに済むため `--union` の 1/3 になる。
 
 **⚠ `text-transform` の適用後の文字で集めること。** ソースの `about` から集めると、実際に描画される `ABOUT` の大文字が丸ごと subset から漏れ、ナビ・eyebrow・work-cat が端末のフォントに落ちる。Inter は欧文のみで軽いため ASCII 印字可能文字を丸ごと含めて保険にしてあるが、和文2書体は高価なので厳密に絞っている。
+
+**⚠ 和文が Latin スタックの重みで組まれる場合は、その重みの和文 face が要る。** `--font-latin` は `'Inter', 'Noto Sans JP', sans-serif` なので、weight 500 のラベルに和文を混ぜると Noto Sans JP 500 が必要になる。`FACES` は weight 完全一致でしか文字を割り当てないため、face が無いと**その和文だけ端末のゴシックへ落ちる**（v4.6.0 で肩書きを一度「AI / WEB / 自動化」にした際に踏み、`verify-fonts` が検出した）。最終的に肩書きは `AI / Web / DX` の欧文のみになったため 500 の face は不要となり、`FACES` から外してある。
 
 #### 検証（`tools/verify-fonts.mjs`）
 
@@ -672,7 +689,7 @@ node tools/verify-fonts.mjs [url]    # 既定 http://localhost:3000
 | 項目 | 値 |
 |---|---|
 | og:title | 滝本 哲也 |
-| og:description | Web開発・自動化フロー・ツール開発。生活を豊かにするアイデアを形にしています。 |
+| og:description | AI・Web開発・DX。見えぬものに、輪郭を。 |
 | og:type | website |
 | og:url | https://takimototetsuya.vercel.app |
 | og:image | `images/ogp.jpg`（1200×630px・84KB） |

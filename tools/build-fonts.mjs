@@ -19,7 +19,9 @@
  *
  * 依存: Node 18+。既定モードは playwright と Google Chrome を使う。
  */
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, unlinkSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
 import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -137,6 +139,49 @@ async function charsetsByFace() {
   return byFace;
 }
 
+/**
+ * Google が `text=` を無視して全字形を返す書体があるため、閾値を超えたら
+ * その応答（＝フル書体）をそのまま素材にして手元でサブセットし直す。
+ * 2026-08-31 時点で Noto Sans JP が該当（何文字を渡しても 2.2MB が返る）。
+ * 依存: python3 + fonttools + brotli（`python3 -m pip install fonttools brotli`）
+ */
+const LOCAL_SUBSET_THRESHOLD = 200 * 1024;
+
+function subsetLocally(face, text, full) {
+  const stem = join(tmpdir(), `fx-${face.key}-${process.pid}`);
+  const src = `${stem}.src.woff2`;
+  const txt = `${stem}.txt`;
+  const dst = `${stem}.out.woff2`;
+  writeFileSync(src, full);
+  writeFileSync(txt, text, 'utf8');
+  try {
+    execFileSync('python3', [
+      '-m', 'fontTools.subset', src,
+      `--text-file=${txt}`,
+      '--flavor=woff2',
+      '--layout-features+=palt,halt,vpal',
+      `--output-file=${dst}`,
+    ], { stdio: ['ignore', 'ignore', 'pipe'] });
+  } catch (e) {
+    const detail = (e.stderr && e.stderr.toString().trim()) || e.message;
+    throw new Error(
+      `${face.family} ${face.weight}: 手元でのサブセットに失敗しました。\n` +
+      `python3 と fonttools・brotli が要ります（python3 -m pip install fonttools brotli）。\n${detail}`
+    );
+  }
+  const buf = readFileSync(dst);
+  for (const f of [src, txt, dst]) { try { unlinkSync(f); } catch {} }
+  return buf;
+}
+
+function emit(face, buf) {
+  // 内容ハッシュをファイル名に入れ、immutable キャッシュを安全に効かせる
+  const hash = createHash('sha256').update(buf).digest('hex').slice(0, 8);
+  const file = `${face.key}.${hash}.woff2`;
+  writeFileSync(join(OUT, file), buf);
+  return { size: buf.length, file };
+}
+
 async function fetchSubset(face, text) {
   const url = 'https://fonts.googleapis.com/css2'
     + `?family=${encodeURIComponent(face.family)}:wght@${face.weight}`
@@ -150,11 +195,8 @@ async function fetchSubset(face, text) {
   const m = css.match(/url\((https:\/\/[^)]+)\)\s*format\('woff2'\)/);
   if (!m) throw new Error(`${face.family} ${face.weight}: woff2 の URL が見つからない\n${css.slice(0, 400)}`);
   const buf = Buffer.from(await fetch(m[1], { headers: { 'User-Agent': UA } }).then(r => r.arrayBuffer()));
-  // 内容ハッシュをファイル名に入れ、immutable キャッシュを安全に効かせる
-  const hash = createHash('sha256').update(buf).digest('hex').slice(0, 8);
-  const file = `${face.key}.${hash}.woff2`;
-  writeFileSync(join(OUT, file), buf);
-  return { size: buf.length, file };
+  if (buf.length <= LOCAL_SUBSET_THRESHOLD) return { ...emit(face, buf), local: false };
+  return { ...emit(face, subsetLocally(face, text, buf)), local: true };
 }
 
 /** 生成物に合わせて style.css の @font-face と index.html の preload を書き換える */
@@ -221,10 +263,10 @@ for (const face of FACES) {
     console.log(`  ${face.key.padEnd(24)} — 使用箇所なし。FACES から外せます`);
     continue;
   }
-  const { size, file } = await fetchSubset(face, chars);
+  const { size, file, local } = await fetchSubset(face, chars);
   total += size;
   built.push({ ...face, file });
-  console.log(`  ${file.padEnd(38)} ${String([...chars].length).padStart(4)}字 ${(size / 1024).toFixed(1).padStart(7)} KB`);
+  console.log(`  ${file.padEnd(38)} ${String([...chars].length).padStart(4)}字 ${(size / 1024).toFixed(1).padStart(7)} KB${local ? '  ← 手元でサブセット' : ''}`);
 }
 rewriteGenerated(built);
 console.log(`合計 ${(total / 1024).toFixed(1)} KB`);
