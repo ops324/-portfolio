@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# 紙面から辿れない内部ファイル（Vercel はリポジトリ直下をそのまま配信するため公開されている）
+Disallow: /spec.md
+Disallow: /tools/
+
+Sitemap: https://takimototetsuya.vercel.app/sitemap.xml
